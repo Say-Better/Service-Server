@@ -13,9 +13,7 @@ import lombok.Getter;
 public enum SuccessStatus implements BaseCode {
 
 	// Success
-	OK(HttpStatus.OK, "SUCCESS_200", "OK"),
-
-	;
+	OK(HttpStatus.OK, "SUCCESS_200", "OK");
 
 	private final HttpStatus httpStatus;
 	private final String code;

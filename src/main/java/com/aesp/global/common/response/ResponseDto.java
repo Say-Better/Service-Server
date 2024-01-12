@@ -27,17 +27,31 @@ public class ResponseDto<T> {
 
 	// 성공한 경우
 	public static <T> ResponseDto<T> onSuccess(T result) {
-		return new ResponseDto<>(true, SuccessStatus.OK.getCode(), SuccessStatus.OK.getMessage(), result);
+		return new ResponseDto<>(
+				true,
+				SuccessStatus.OK.getCode(),
+				SuccessStatus.OK.getMessage(),
+				result
+		);
 	}
 
 	public static <T> ResponseDto<T> of(BaseCode code, T result) {
-		return new ResponseDto<>(true, code.getReasonHttpStatus().getCode(), code.getReasonHttpStatus().getMessage(),
-				result);
+		return new ResponseDto<>(
+				true,
+				code.getReasonHttpStatus().getCode(),
+				code.getReasonHttpStatus().getMessage(),
+				result
+		);
 	}
 
 	// 실패한 경우
 	public static <T> ResponseDto<T> onFailure(String code, String message, T result) {
-		return new ResponseDto<>(false, code, message, result);
+		return new ResponseDto<>(
+				false,
+				code,
+				message,
+				result
+		);
 	}
 
 	@Getter

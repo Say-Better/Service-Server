@@ -4,8 +4,8 @@ import com.aesp.global.common.response.ResponseDto;
 
 public interface BaseErrorCode {
 
-	public ResponseDto.ErrorReasonDto getReason();
+	ResponseDto.ErrorReasonDto getReason();
 
-	public ResponseDto.ErrorReasonDto getReasonHttpStatus();
+	ResponseDto.ErrorReasonDto getReasonHttpStatus();
 
 }
