@@ -4,8 +4,8 @@ import com.aesp.global.common.response.ResponseDto;
 
 public interface BaseCode {
 
-	public ResponseDto.ReasonDto getReason();
+	ResponseDto.ReasonDto getReason();
 
-	public ResponseDto.ReasonDto getReasonHttpStatus();
+	ResponseDto.ReasonDto getReasonHttpStatus();
 
 }
