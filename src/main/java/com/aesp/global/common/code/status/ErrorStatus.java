@@ -32,11 +32,13 @@ public enum ErrorStatus implements BaseErrorCode {
 
 	// Common Error & Global Error
 	BAD_REQUEST(HttpStatus.BAD_REQUEST, "COMMON_400", "잘못된 요청입니다."),
-	UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "AUTH_401", "인증 과정에서 오류가 발생했습니다."),
+	METHOD_ARGUMENT_ERROR(HttpStatus.BAD_REQUEST, "COMMON_400", "올바르지 않은 클라이언트 요청값입니다."),
 	FORBIDDEN(HttpStatus.FORBIDDEN, "COMMON_403", "금지된 요청입니다."),
 	METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "COMMON_405", "지원하지 않는 Http Method 입니다."),
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON_500", "서버 에러가 발생했습니다."),
-	METHOD_ARGUMENT_ERROR(HttpStatus.BAD_REQUEST, "METHOD_ARGUMENT_ERROR", "올바르지 않은 클라이언트 요청값입니다.");
+
+	// Temp Error
+	TEMP_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "TEMP_500", "임시 에러가 발생했습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;
