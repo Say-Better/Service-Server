@@ -1,0 +1,11 @@
+server:
+    port: ${APPLICATION_PORT:8080}
+
+spring:
+    application:
+        name: Say Better
+
+    profiles:
+      group:
+        "local": "local, auth, database, docs"
+        "dev": "dev, auth, database, docs"
