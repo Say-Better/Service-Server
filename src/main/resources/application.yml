@@ -5,6 +5,9 @@ spring:
     application:
         name: Say Better
 
+    jpa:
+      open-in-view: false
+
     profiles:
       group:
         "local": "local, auth, database, docs"
