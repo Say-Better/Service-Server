@@ -30,27 +30,31 @@ public class SecurityConfig {
 						corsCustomizer
 								.configurationSource(corsConfig.getCorsConfigurationSource())
 				)
-				.authorizeHttpRequests(authorize ->
-						authorize
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).authenticated()
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/temp/**")).authenticated()
+				.authorizeHttpRequests(authorizeRequest ->
+						authorizeRequest
+								/* 권한 관련
+								   permitAll : 모든 요청 허용
+								   authenticated : 권한 요청 필요
+								 */
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/temp/**")).permitAll()
 								.requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).authenticated()
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).authenticated()
 				)
 				.headers(headersConfigurer ->
 						headersConfigurer
 								.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
 				);
-
 		return http.build();
 	}
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return web -> web
-					.ignoring()
-					.requestMatchers(
-							PathRequest.toStaticResources().atCommonLocations()
-					);
+				.ignoring()
+				.requestMatchers(
+						PathRequest.toStaticResources().atCommonLocations()
+				);
 	}
 }
