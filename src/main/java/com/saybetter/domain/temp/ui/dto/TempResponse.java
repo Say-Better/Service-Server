@@ -1,4 +1,4 @@
-package com.saybetter.domain.temp.dto;
+package com.saybetter.domain.temp.ui.dto;
 
 import lombok.Builder;
 import lombok.Getter;
