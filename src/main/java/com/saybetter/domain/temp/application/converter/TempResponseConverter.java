@@ -1,6 +1,6 @@
-package com.saybetter.domain.temp.converter;
+package com.saybetter.domain.temp.application.converter;
 
-import com.saybetter.domain.temp.dto.TempResponse;
+import com.saybetter.domain.temp.ui.dto.TempResponse;
 
 public class TempResponseConverter {
 	public static TempResponse.ExceptionTestDto toExceptionTestDto(String message) {

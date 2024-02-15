@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.saybetter.domain.temp.application.TempService;
-import com.saybetter.domain.temp.converter.TempResponseConverter;
-import com.saybetter.domain.temp.dto.TempResponse;
+import com.saybetter.domain.temp.application.converter.TempResponseConverter;
+import com.saybetter.domain.temp.ui.dto.TempResponse;
 import com.saybetter.global.common.response.ResponseDto;
 
 import io.swagger.v3.oas.annotations.Operation;
