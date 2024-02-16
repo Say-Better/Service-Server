@@ -97,9 +97,6 @@ jobs:
           
           docker -v
           docker ps
-          docker stop $(docker ps -aq)
-          docker rm $(docker ps -aq)
-          docker image rm $(docker images -q)
           docker pull ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
           docker run -d -p 8080:8080 \
                 --name ${{ env.CONTAINER_NAME }} \
