@@ -32,8 +32,8 @@ public class Record {
 	@JoinColumn(name = "review_id", nullable = false)
 	private Review review;
 
-	@Column(name = "order", nullable = false, columnDefinition = "int default 0")
-	private Integer order;
+	@Column(name = "order_num", nullable = false, columnDefinition = "int default 0")
+	private Integer orderNum;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "reaction_type", nullable = false, length = 20)
