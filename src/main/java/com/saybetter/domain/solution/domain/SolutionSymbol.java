@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,11 +27,11 @@ public class SolutionSymbol {
 	private Long ssId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Column(name = "solution_id", nullable = false)
+	@JoinColumn(name = "solution_id", nullable = false)
 	private Solution solution;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Column(name = "symbol_id", nullable = false)
+	@JoinColumn(name = "symbol_id", nullable = false)
 	private Symbol symbol;
-	
+
 }
