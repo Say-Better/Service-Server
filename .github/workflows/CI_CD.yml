@@ -76,34 +76,34 @@ jobs:
     needs: build
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: google auth
         id: auth
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ env.SA_KEY }}
 
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-
       - name: Use gcloud CLI
         run: gcloud info
 
       - name: Deploy to GCE
-        run: |-
-          gcloud compute ssh \
-          --project ${{ env.PROJECT_ID }} \
-          --zone ${{ env.INSTANCE_ZONE }} ${{ env.INSTANCE_NAME }} 
-          
-          ls /home/jyi0106
-          
-          docker -v
-          docker ps
-          docker pull ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
-          docker images
-          docker run -d -p 8080:8080 \
-                --name ${{ env.CONTAINER_NAME }} \
-                --env-file ${{ env.ENV_FILE }} \
-                ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
-          docker ps
+        id: compute-ssh
+        uses: google-github-actions/compute-engine-ssh@v1
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          zone: ${{ env.INSTANCE_ZONE }}
+          instance_name: ${{ env.INSTANCE_NAME }}
+          ssh_private_key: ${{ secrets.GCE_SSH_PRIVATE_KEY }}
+          command: |
+            docker -v
+            docker ps
+            docker pull ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
+            docker stop ${{ env.CONTAINER_NAME }}
+            docker rm ${{ env.CONTAINER_NAME }}
+            docker run -d -p 8080:8080 \
+              --name ${{ env.CONTAINER_NAME }} \
+              --env-file ${{ env.ENV_FILE }} \
+              ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
+            docker ps
