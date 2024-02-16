@@ -90,7 +90,7 @@ jobs:
 
       - name: Deploy to GCE
         id: compute-ssh
-        uses: google-github-actions/compute-engine-ssh@v1
+        uses: google-github-actions/ssh-compute@v1
         with:
           project_id: ${{ env.PROJECT_ID }}
           zone: ${{ env.INSTANCE_ZONE }}
