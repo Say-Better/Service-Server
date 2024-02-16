@@ -2,3 +2,9 @@ spring:
   config:
     activate:
       on-profile: "dev-datasource"
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT:3306}/${DB_NAME:say-better}?&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&autoReconnect=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
