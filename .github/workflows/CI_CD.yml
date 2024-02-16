@@ -92,11 +92,10 @@ jobs:
         id: compute-ssh
         uses: google-github-actions/ssh-compute@v1
         with:
-          project_id: ${{ env.PROJECT_ID }}
           zone: ${{ env.INSTANCE_ZONE }}
           instance_name: ${{ env.INSTANCE_NAME }}
           ssh_private_key: ${{ secrets.GCE_SSH_PRIVATE_KEY }}
-          command: |
+          command: |-
             docker -v
             docker ps
             docker pull ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
