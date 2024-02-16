@@ -100,5 +100,5 @@ jobs:
           docker pull ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
           docker run -d -p 8080:8080 \
                 --name ${{ env.CONTAINER_NAME }} \
-                --env-file .env ${{ env.DOCKERHUB_USERNAME }}/say-better:latest"
+                --env-file .env ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
           docker ps
