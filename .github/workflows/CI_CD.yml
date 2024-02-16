@@ -96,6 +96,8 @@ jobs:
           --zone ${{ env.INSTANCE_ZONE }} ${{ env.INSTANCE_NAME }} 
           
           pwd
+          cd ~
+          ls -al
           
           docker -v
           docker ps
