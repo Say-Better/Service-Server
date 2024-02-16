@@ -2,3 +2,21 @@ spring:
   config:
     activate:
       on-profile: "dev"
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        format_sql: true
+
+## 운영 환경 = info
+logging:
+  level:
+    org.hibernate.SQL: info
+    org.hibernate.type: info

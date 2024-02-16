@@ -1,14 +1,14 @@
 server:
-    port: ${APPLICATION_PORT:8080}
+  port: ${APP_PORT:8080}
 
 spring:
-    application:
-        name: Say Better
+  application:
+    name: Say Better
 
-    jpa:
-      open-in-view: false
+  jpa:
+    open-in-view: false
 
-    profiles:
-      group:
-        "local": "local, auth, local-datasource, docs"
-        "dev": "dev, auth, dev-datasource, docs"
+  profiles:
+    group:
+      "local": "local, auth, local-datasource, docs"
+      "dev": "dev, auth, dev-datasource, docs"
