@@ -38,3 +38,4 @@ out/
 
 ### database ###
 *.mv.db
+*.trace.db
