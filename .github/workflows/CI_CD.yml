@@ -99,7 +99,9 @@ jobs:
           docker -v
           docker ps
           docker pull ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
+          docker images
           docker run -d -p 8080:8080 \
                 --name ${{ env.CONTAINER_NAME }} \
-                --env-file ${{ env.ENV_FILE }} ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
+                --env-file ${{ env.ENV_FILE }} \
+                ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
           docker ps
