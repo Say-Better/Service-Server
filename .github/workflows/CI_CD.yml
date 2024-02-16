@@ -95,6 +95,8 @@ jobs:
           --project ${{ env.PROJECT_ID }} \
           --zone ${{ env.INSTANCE_ZONE }} ${{ env.INSTANCE_NAME }} 
           
+          pwd
+          
           docker -v
           docker ps
           docker pull ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
