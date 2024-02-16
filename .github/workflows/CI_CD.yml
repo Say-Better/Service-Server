@@ -19,6 +19,7 @@ env:
   INSTANCE_ZONE: ${{ secrets.GCE_INSTANCE_ZONE }}
   SA_KEY: ${{ secrets.GCE_SA_KEY }}
   CONTAINER_NAME: say-better
+  ENV_FILE: ${{ secrets.SERVER_ENV_FILE }}
 
 jobs:
   build:
@@ -95,14 +96,10 @@ jobs:
           --project ${{ env.PROJECT_ID }} \
           --zone ${{ env.INSTANCE_ZONE }} ${{ env.INSTANCE_NAME }} 
           
-          pwd
-          cd ~
-          ls -al
-          
           docker -v
           docker ps
           docker pull ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
           docker run -d -p 8080:8080 \
                 --name ${{ env.CONTAINER_NAME }} \
-                --env-file .env ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
+                --env-file ${{ env.ENV_FILE }} ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
           docker ps
