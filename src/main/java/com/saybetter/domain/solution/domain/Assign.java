@@ -1,7 +1,9 @@
 package com.saybetter.domain.solution.domain;
 
 import com.saybetter.domain.member.domain.Member;
+import com.saybetter.domain.solution.domain.constant.AssignState;
 import com.saybetter.domain.solution.domain.constant.AssignStep;
+import com.saybetter.global.common.constant.Status;
 import com.saybetter.global.common.entity.BaseTimeEntity;
 
 import jakarta.persistence.Column;
@@ -50,10 +52,10 @@ public class Assign extends BaseTimeEntity {
 	// 현재 회기 상태
 	@Enumerated(EnumType.STRING)
 	@Column(name = "now_state", nullable = false, length = 20)
-	private AssignStep nowState;
+	private AssignState nowState;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false, length = 20)
-	private AssignStep status;
+	private Status status;
 
 }
