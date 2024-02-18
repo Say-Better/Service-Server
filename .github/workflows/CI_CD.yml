@@ -80,33 +80,27 @@ jobs:
       id-token: 'write'
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: google auth
-        id: auth
-        uses: google-github-actions/auth@v2
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.1
         with:
-          credentials_json: ${{ env.SA_KEY }}
-
-      - name: Use gcloud CLI
-        run: gcloud info
+          project_id: ${{ env.PROJECT_ID }}
+          service_account_key: ${{ env.SA_KEY }}
+          export_default_credentials: true
 
       - name: Deploy to GCE
-        id: compute-ssh
-        uses: google-github-actions/ssh-compute@v1
-        with:
-          zone: ${{ env.INSTANCE_ZONE }}
-          instance_name: ${{ env.INSTANCE_NAME }}
-          ssh_private_key: ${{ secrets.GCE_SSH_PRIVATE_KEY }}
-          command: |-
-            docker -v
-            docker ps
-            docker pull ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
-            docker stop ${{ env.CONTAINER_NAME }}
-            docker rm ${{ env.CONTAINER_NAME }}
-            docker run -d -p 8080:8080 \
-              --name ${{ env.CONTAINER_NAME }} \
-              --env-file ${{ env.ENV_FILE }} \
-              ${{ env.DOCKERHUB_USERNAME }}/say-better:latest
-            docker ps
+        run: |
+          gcloud compute ssh ${{ env.INSTANCE_NAME }} --zone ${{ env.INSTANCE_ZONE }} \
+            --command \
+              "docker pull ${{ env.DOCKERHUB_USERNAME }}/say-better:latest && \
+              docker stop ${{ env.CONTAINER_NAME }} || true && \
+              docker rm ${{ env.CONTAINER_NAME }} || true && \
+              echo 'docker run -d -p 8080:8080 \
+                --name ${{ env.CONTAINER_NAME }} \
+                --env-file ${{ env.ENV_FILE }} \
+                ${{ env.DOCKERHUB_USERNAME }}/say-better:latest' \
+                > run_docker.sh && \
+              chmod +x run_docker.sh && \
+              ./run_docker.sh"
