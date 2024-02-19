@@ -1,5 +1,6 @@
 package com.saybetter.domain.member.domain;
 
+import com.saybetter.global.common.constant.Provider;
 import com.saybetter.global.common.constant.RoleType;
 import com.saybetter.global.common.constant.Status;
 import com.saybetter.global.common.entity.BaseTimeEntity;
@@ -41,4 +42,10 @@ public class Member extends BaseTimeEntity {
 	@Column(name = "role", nullable = false, length = 20)
 	private RoleType role;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "provider", nullable = false, length = 20)
+	private Provider provider;
+
+	@Column(name = "provider_id", nullable = false)
+	private String providerId;
 }
