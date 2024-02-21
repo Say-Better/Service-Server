@@ -10,5 +10,5 @@ spring:
 
   profiles:
     group:
-      "local": "local, auth, local-datasource, docs"
-      "dev": "dev, auth, dev-datasource, docs"
+      "local": "local, auth, redis, local-datasource, docs"
+      "dev": "dev, auth, redis, dev-datasource, docs"
