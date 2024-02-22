@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/temp")
+@RequestMapping("/api/temp")
 public class TempController {
 
 	private final TempService tempService;

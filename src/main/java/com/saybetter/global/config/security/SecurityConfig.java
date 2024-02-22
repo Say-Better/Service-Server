@@ -59,8 +59,9 @@ public class SecurityConfig {
 								.requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll()
 								.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()
 								.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/temp/**")).permitAll()
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).authenticated()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/api/temp/**")).permitAll()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).authenticated()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/oauth2/**")).authenticated()
 				)
 				.oauth2Login(oauth2Login ->
 						oauth2Login
