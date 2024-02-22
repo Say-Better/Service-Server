@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -27,32 +26,31 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@EnableConfigurationProperties(JwtProperties.class)
 public class JwtUtil {
 	private final JwtProperties jwtProperties;
 	private final RedisUtil redisUtil;
 
 	// HttpServletRequest 부터 Access Token 추출
 	public Optional<String> extractAccessToken(HttpServletRequest request) {
-		return Optional.ofNullable(request.getHeader(this.jwtProperties.getAccessHeader()))
+		return Optional.ofNullable(request.getHeader(this.jwtProperties.accessHeader()))
 				.filter(StringUtils::hasText)
-				.filter(accessToken -> accessToken.startsWith(jwtProperties.getBearer()))
-				.map(accessToken -> accessToken.replace(jwtProperties.getBearer(), ""));
+				.filter(accessToken -> accessToken.startsWith(jwtProperties.bearer()))
+				.map(accessToken -> accessToken.replace(jwtProperties.bearer(), ""));
 	}
 
 	// HttpServletRequest 부터 Refresh Token 추출
 	public String extractRefreshToken(HttpServletRequest request) {
-		return request.getHeader(this.jwtProperties.getRefreshHeader());
+		return request.getHeader(this.jwtProperties.refreshHeader());
 	}
 
 	// access token 생성
 	public String createAccessToken(String payload) {
-		return this.createToken(payload, this.jwtProperties.getAccessExpiration());
+		return this.createToken(payload, this.jwtProperties.accessExpiration());
 	}
 
 	// refresh token 생성
 	public String createRefreshToken() {
-		return this.createToken(UUID.randomUUID().toString(), this.jwtProperties.getRefreshExpiration());
+		return this.createToken(UUID.randomUUID().toString(), this.jwtProperties.refreshExpiration());
 
 	}
 
@@ -60,7 +58,7 @@ public class JwtUtil {
 	public String getUserIdFromToken(String token) {
 		try {
 			return Jwts.parser()
-					.setSigningKey(this.jwtProperties.getSecret())
+					.setSigningKey(this.jwtProperties.secret())
 					.parseClaimsJws(token)
 					.getBody()
 					.getSubject();
@@ -69,16 +67,16 @@ public class JwtUtil {
 		}
 	}
 
-	// kakao oauth 로그인 & 일반 로그인 시 jwt 응답 생성 + redis refresh 저장
+	// oauth 로그인 & 일반 로그인 시 jwt 응답 생성 + redis refresh 저장
 	public JwtTokenResponseDto createServiceToken(Member member) {
 		String accessToken = this.createAccessToken(String.valueOf(member.getMemberId()));
 		String refreshToken = this.createRefreshToken();
 
 		/* 서비스 토큰 생성 */
 		JwtTokenResponseDto jwtTokenResponseDto = JwtTokenResponseDto.builder()
-				.accessToken(this.jwtProperties.getBearer() + " " + accessToken)
+				.accessToken(this.jwtProperties.bearer() + " " + accessToken)
 				.refreshToken(refreshToken)
-				.expiredTime(LocalDateTime.now().plusSeconds(this.jwtProperties.getAccessExpiration() / 1000))
+				.expiredTime(LocalDateTime.now().plusSeconds(this.jwtProperties.accessExpiration() / 1000))
 				.isExisted(member.getLoginId() != null)
 				.build();
 
@@ -86,7 +84,7 @@ public class JwtUtil {
 		this.redisUtil.setDataExpire(
 				String.valueOf(member.getMemberId()),
 				jwtTokenResponseDto.getRefreshToken(),
-				this.jwtProperties.getRefreshExpiration());
+				this.jwtProperties.refreshExpiration());
 
 		return jwtTokenResponseDto;
 	}
@@ -94,7 +92,7 @@ public class JwtUtil {
 	// token 유효성 검증
 	public boolean validateToken(String token) {
 		try {
-			Jws<Claims> claimsJws = Jwts.parser().setSigningKey(this.jwtProperties.getSecret()).parseClaimsJws(token);
+			Jws<Claims> claimsJws = Jwts.parser().setSigningKey(this.jwtProperties.secret()).parseClaimsJws(token);
 			return !claimsJws.getBody().getExpiration().before(new Date());
 		} catch (ExpiredJwtException exception) {
 			log.warn("만료된 jwt 입니다.");
@@ -115,7 +113,7 @@ public class JwtUtil {
 				.setClaims(claims)
 				.setIssuedAt(new Date())
 				.setExpiration(tokenExpiresIn)
-				.signWith(SignatureAlgorithm.HS512, this.jwtProperties.getSecret())
+				.signWith(SignatureAlgorithm.HS512, this.jwtProperties.secret())
 				.compact();
 	}
 }
