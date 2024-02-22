@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,4 +49,42 @@ public class Member extends BaseTimeEntity {
 
 	@Column(name = "provider_id", nullable = false)
 	private String providerId;
+
+	@Column(name = "login_id", nullable = false)
+	private String loginId;
+
+	@Column(name = "name", nullable = false, length = 100)
+	private String name;
+
+	@Builder
+	private Member(
+			final String email,
+			final String birthDate,
+			final RoleType role,
+			final Provider provider,
+			final String providerId,
+			final String loginId,
+			final String name
+	) {
+		this.status = Status.ACTIVE;
+		this.email = email;
+		this.birthDate = birthDate;
+		this.role = role;
+		this.provider = provider;
+		this.providerId = providerId;
+		this.loginId = loginId;
+		this.name = name;
+	}
+
+	public static Member createMember(
+			final String email,
+			final String birthDate,
+			final RoleType role,
+			final Provider provider,
+			final String providerId,
+			final String loginId,
+			final String name
+	) {
+		return new Member(email, birthDate, role, provider, providerId, loginId, name);
+	}
 }
