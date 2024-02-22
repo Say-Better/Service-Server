@@ -29,10 +29,6 @@ public class JwtUtil {
 	private final JwtProperties jwtProperties;
 	private final RedisUtil redisUtil;
 
-	/**
-	 * JWT의 Subject와 Claim으로 email 사용 -> 클레임의 name을 "email"으로 설정
-	 * JWT의 헤더에 들어오는 값 : 'Authorization(Key) = Bearer {토큰} (Value)' 형식
-	 */
 	private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
 	private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
 	private static final String EMAIL_CLAIM = "email";
@@ -40,6 +36,9 @@ public class JwtUtil {
 
 	/**
 	 * AccessToken 생성 메소드
+	 *
+	 * @param email AccessToken에 담을 email
+	 * @return AccessToken
 	 */
 	public String createAccessToken(String email) {
 		Claims claims = Jwts.claims(Map.of(EMAIL_CLAIM, email));
@@ -54,8 +53,9 @@ public class JwtUtil {
 	}
 
 	/**
-	 * RefreshToken 생성
-	 * RefreshToken은 Claim에 email도 넣지 않으므로 withClaim() X
+	 * RefreshToken 생성 메소드
+	 *
+	 * @return RefreshToken
 	 */
 	public String createRefreshToken() {
 		Date now = new Date();
@@ -68,6 +68,9 @@ public class JwtUtil {
 
 	/**
 	 * AccessToken 헤더에 실어서 보내기
+	 *
+	 * @param response    HttpServletResponse
+	 * @param accessToken AccessToken
 	 */
 	public void sendAccessToken(
 			HttpServletResponse response,
@@ -80,6 +83,10 @@ public class JwtUtil {
 
 	/**
 	 * AccessToken + RefreshToken 헤더에 실어서 보내기
+	 *
+	 * @param response     HttpServletResponse
+	 * @param accessToken  AccessToken
+	 * @param refreshToken RefreshToken
 	 */
 	public void sendAccessAndRefreshToken(
 			HttpServletResponse response,
@@ -94,8 +101,12 @@ public class JwtUtil {
 
 	/**
 	 * 헤더에서 RefreshToken 추출
-	 * 토큰 형식 : Bearer XXX에서 Bearer를 제외하고 순수 토큰만 가져오기 위해서
-	 * 헤더를 가져온 후 "Bearer"를 삭제(""로 replace)
+	 * <p>
+	 * 1. HttpServletRequest에서 RefeshHeader 추출 <br>
+	 * 2. Optional로 반환
+	 *
+	 * @param request HttpServletRequest
+	 * @return Optional<String> RefreshToken
 	 */
 	public Optional<String> extractRefreshToken(HttpServletRequest request) {
 		return Optional.ofNullable(request.getHeader(this.jwtProperties.refreshHeader()))
@@ -104,22 +115,14 @@ public class JwtUtil {
 	}
 
 	/**
-	 * 헤더에서 AccessToken 추출
-	 * 토큰 형식 : Bearer XXX에서 Bearer를 제외하고 순수 토큰만 가져오기 위해서
-	 * 헤더를 가져온 후 "Bearer"를 삭제(""로 replace)
-	 */
-	public Optional<String> extractAccessToken(HttpServletRequest request) {
-		return Optional.ofNullable(request.getHeader(this.jwtProperties.accessHeader()))
-				.filter(refreshToken -> refreshToken.startsWith(BEARER))
-				.map(refreshToken -> refreshToken.replace(BEARER, ""));
-	}
-
-	/**
 	 * AccessToken에서 Email 추출
-	 * 추출 전에 JWT.require()로 검증기 생성
-	 * verify로 AceessToken 검증 후
-	 * 유효하다면 getClaim()으로 이메일 추출
-	 * 유효하지 않다면 빈 Optional 객체 반환
+	 * <p>
+	 * 1. AccessToken을 파싱하여 <br>
+	 * 2. email claim을 추출하여 <br>
+	 * 3. Optional로 반환
+	 *
+	 * @param accessToken AccessToken
+	 * @return Optional<String> Email
 	 */
 	public Optional<String> extractEmail(String accessToken) {
 		try {
@@ -135,6 +138,9 @@ public class JwtUtil {
 
 	/**
 	 * AccessToken 헤더 설정
+	 *
+	 * @param response    HttpServletResponse
+	 * @param accessToken AccessToken
 	 */
 	public void setAccessTokenHeader(HttpServletResponse response, String accessToken) {
 		response.setHeader(this.jwtProperties.accessHeader(), accessToken);
@@ -142,6 +148,9 @@ public class JwtUtil {
 
 	/**
 	 * RefreshToken 헤더 설정
+	 *
+	 * @param response     HttpServletResponse
+	 * @param refreshToken RefreshToken
 	 */
 	public void setRefreshTokenHeader(HttpServletResponse response, String refreshToken) {
 		response.setHeader(this.jwtProperties.refreshHeader(), refreshToken);
@@ -149,11 +158,23 @@ public class JwtUtil {
 
 	/**
 	 * RefreshToken DB 저장(업데이트)
+	 *
+	 * @param email Email
 	 */
 	public void updateRefreshToken(String email, String refreshToken) {
 		redisUtil.setDataExpire(email, refreshToken, this.jwtProperties.refreshExpiration());
 	}
 
+	/**
+	 * token 유효성 검사
+	 * <p>
+	 * 1. 만료된 토큰인지 확인 <br>
+	 * 2. 지원되는 토큰인지 확인 <br>
+	 * 3. 토큰에 오류가 있는지 확인
+	 *
+	 * @param token JWT 토큰
+	 * @return 유효한 토큰인지 여부
+	 */
 	public boolean isTokenValid(String token) {
 		try {
 			Jws<Claims> claimsJws = Jwts.parser().setSigningKey(this.jwtProperties.secret()).parseClaimsJws(token);

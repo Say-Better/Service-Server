@@ -27,10 +27,12 @@ public class OAuthAttributes {
 	}
 
 	/**
-	 * SocialType에 맞는 메소드 호출하여 OAuthAttributes 객체 반환
-	 * 파라미터 : userNameAttributeName -> OAuth2 로그인 시 키(PK)가 되는 값 / attributes : OAuth 서비스의 유저 정보들
-	 * 소셜별 of 메소드(ofGoogle, ofKaKao, ofNaver)들은 각각 소셜 로그인 API에서 제공하는
-	 * 회원의 식별값(id), attributes, nameAttributeKey를 저장 후 build
+	 * OAuth2User의 attribute를 담은 Map
+	 *
+	 * @param provider              OAuth2 로그인 진행 시 키가 되는 필드값
+	 * @param userNameAttributeName OAuth2 로그인 진행 시 키가 되는 필드값
+	 * @param attributes            OAuth2User의 attribute를 담은 Map
+	 * @return OAuthAttributes
 	 */
 	public static OAuthAttributes of(
 			Provider provider,
@@ -52,10 +54,11 @@ public class OAuthAttributes {
 	}
 
 	/**
-	 * of메소드로 OAuthAttributes 객체가 생성되어, 유저 정보들이 담긴 OAuth2UserInfo가 소셜 타입별로 주입된 상태
-	 * OAuth2UserInfo에서 socialId(식별값), nickname, imageUrl을 가져와서 build
-	 * email에는 UUID로 중복 없는 랜덤 값 생성
-	 * role은 GUEST로 설정
+	 * OAuth2User의 attribute를 담은 Map을 Member로 변환
+	 *
+	 * @param provider       소셜 로그인 제공자 (구글)
+	 * @param oauth2UserInfo 소셜 로그인 유저 정보
+	 * @return Member
 	 */
 	public Member toEntity(Provider provider, OAuth2UserInfo oauth2UserInfo) {
 		String loginId = oauth2UserInfo.getProvider() + "_" + oauth2UserInfo.getProviderId();
