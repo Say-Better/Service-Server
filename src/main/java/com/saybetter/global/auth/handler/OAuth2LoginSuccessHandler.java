@@ -5,7 +5,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import com.saybetter.global.auth.CustomOAuth2User;
-import com.saybetter.global.utils.JwtUtil;
+import com.saybetter.global.jwt.service.JwtService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-	private final JwtUtil jwtUtils;
+	private final JwtService jwtUtils;
 
 	@Override
 	public void onAuthenticationSuccess(

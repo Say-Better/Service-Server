@@ -38,7 +38,12 @@ public enum ErrorStatus implements BaseErrorCode {
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON_500", "서버 에러가 발생했습니다."),
 
 	// Temp Error
-	TEMP_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "TEMP_500", "임시 에러가 발생했습니다.");
+	TEMP_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "TEMP_500", "임시 에러가 발생했습니다."),
+
+	// Member Error
+	MEMBER_EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_001", "해당 이메일을 가진 회원이 존재하지 않습니다."),
+
+	;
 
 	private final HttpStatus httpStatus;
 	private final String code;

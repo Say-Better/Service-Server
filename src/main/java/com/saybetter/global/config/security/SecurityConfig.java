@@ -8,12 +8,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.saybetter.domain.member.dao.repository.MemberReadRepository;
 import com.saybetter.global.auth.handler.OAuth2LoginFailureHandler;
 import com.saybetter.global.auth.handler.OAuth2LoginSuccessHandler;
 import com.saybetter.global.auth.service.CustomOAuth2UserService;
+import com.saybetter.global.config.properties.JwtProperties;
 import com.saybetter.global.config.web.CorsConfig;
+import com.saybetter.global.jwt.filter.JwtAuthenticationProcessingFilter;
+import com.saybetter.global.jwt.service.JwtService;
+import com.saybetter.global.utils.RedisUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +28,13 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final CorsConfig corsConfig;
+
+	private final RedisUtil redisUtil;
+
+	private final JwtService jwtService;
+	private final JwtProperties jwtProperties;
+
+	private final MemberReadRepository memberReadRepository;
 
 	private final CustomOAuth2UserService customOAuth2UserService;
 	private final OAuth2LoginSuccessHandler OAuth2LoginSuccessHandler;
@@ -52,14 +65,16 @@ public class SecurityConfig {
 				.oauth2Login(oauth2Login ->
 						oauth2Login
 								.userInfoEndpoint(userInfoEndpoint ->
-										userInfoEndpoint.userService(customOAuth2UserService))
+										userInfoEndpoint.userService(customOAuth2UserService)
+								)
 								.successHandler(OAuth2LoginSuccessHandler)
 								.failureHandler(OAuth2LoginFailureHandler)
 				)
 				.headers(headersConfigurer ->
 						headersConfigurer
 								.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
-				);
+				)
+				.addFilterAfter(jwtAuthenticationProcessingFilter(), LogoutFilter.class);
 		return http.build();
 	}
 
@@ -70,5 +85,15 @@ public class SecurityConfig {
 				.requestMatchers(
 						PathRequest.toStaticResources().atCommonLocations()
 				);
+	}
+
+	@Bean
+	public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
+		return new JwtAuthenticationProcessingFilter(
+				memberReadRepository,
+				jwtProperties,
+				jwtService,
+				redisUtil
+		);
 	}
 }
