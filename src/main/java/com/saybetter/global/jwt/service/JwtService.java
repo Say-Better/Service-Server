@@ -1,4 +1,4 @@
-package com.saybetter.global.utils;
+package com.saybetter.global.jwt.service;
 
 import java.util.Date;
 import java.util.Map;
@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.saybetter.global.config.properties.JwtProperties;
+import com.saybetter.global.utils.RedisUtil;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -23,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class JwtUtil {
+public class JwtService {
 
 	@Getter
 	private final JwtProperties jwtProperties;
@@ -115,6 +116,21 @@ public class JwtUtil {
 	}
 
 	/**
+	 * 헤더에서 AccessToken 추출
+	 * <p>
+	 * 1. HttpServletRequest에서 AccessHeader 추출 <br>
+	 * 2. Optional로 반환
+	 *
+	 * @param request HttpServletRequest
+	 * @return Optional<String> AccessToken
+	 */
+	public Optional<String> extractAccessToken(HttpServletRequest request) {
+		return Optional.ofNullable(request.getHeader(this.jwtProperties.accessHeader()))
+				.filter(accessToken -> accessToken.startsWith(BEARER))
+				.map(accessToken -> accessToken.replace(BEARER, ""));
+	}
+
+	/**
 	 * AccessToken에서 Email 추출
 	 * <p>
 	 * 1. AccessToken을 파싱하여 <br>
@@ -162,7 +178,7 @@ public class JwtUtil {
 	 * @param email Email
 	 */
 	public void updateRefreshToken(String email, String refreshToken) {
-		redisUtil.setDataExpire(email, refreshToken, this.jwtProperties.refreshExpiration());
+		redisUtil.setDataExpire(refreshToken, email, this.jwtProperties.refreshExpiration());
 	}
 
 	/**
