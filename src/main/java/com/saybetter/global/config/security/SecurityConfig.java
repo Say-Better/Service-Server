@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.saybetter.global.auth.handler.OAuth2LoginFailureHandler;
+import com.saybetter.global.auth.handler.OAuth2LoginSuccessHandler;
+import com.saybetter.global.auth.service.CustomOAuth2UserService;
 import com.saybetter.global.config.web.CorsConfig;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,10 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final CorsConfig corsConfig;
+
+	private final CustomOAuth2UserService customOAuth2UserService;
+	private final OAuth2LoginSuccessHandler OAuth2LoginSuccessHandler;
+	private final OAuth2LoginFailureHandler OAuth2LoginFailureHandler;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -41,6 +48,13 @@ public class SecurityConfig {
 								.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
 								.requestMatchers(AntPathRequestMatcher.antMatcher("/temp/**")).permitAll()
 								.requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).authenticated()
+				)
+				.oauth2Login(oauth2Login ->
+						oauth2Login
+								.userInfoEndpoint(userInfoEndpoint ->
+										userInfoEndpoint.userService(customOAuth2UserService))
+								.successHandler(OAuth2LoginSuccessHandler)
+								.failureHandler(OAuth2LoginFailureHandler)
 				)
 				.headers(headersConfigurer ->
 						headersConfigurer
