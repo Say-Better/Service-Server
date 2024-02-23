@@ -87,4 +87,8 @@ public class Member extends BaseTimeEntity {
 	) {
 		return new Member(email, birthDate, role, provider, providerId, loginId, name);
 	}
+
+	public void assignRole(RoleType role) {
+		this.role = role;
+	}
 }
