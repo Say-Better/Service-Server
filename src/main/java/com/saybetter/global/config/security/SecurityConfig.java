@@ -15,6 +15,7 @@ import com.saybetter.domain.member.dao.repository.MemberReadRepository;
 import com.saybetter.global.auth.handler.OAuth2LoginFailureHandler;
 import com.saybetter.global.auth.handler.OAuth2LoginSuccessHandler;
 import com.saybetter.global.auth.service.CustomOAuth2UserService;
+import com.saybetter.global.common.constant.RoleType;
 import com.saybetter.global.config.properties.JwtProperties;
 import com.saybetter.global.config.web.CorsConfig;
 import com.saybetter.global.jwt.filter.JwtAuthenticationProcessingFilter;
@@ -56,12 +57,20 @@ public class SecurityConfig {
 								   permitAll : 모든 요청 허용
 								   authenticated : 권한 요청 필요
 								 */
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll()
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/api/temp/**")).permitAll()
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**")).authenticated()
-								.requestMatchers(AntPathRequestMatcher.antMatcher("/oauth2/**")).authenticated()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**"))
+								.permitAll()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**"))
+								.permitAll()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**"))
+								.permitAll()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/api/temp/**"))
+								.permitAll()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**"))
+								.permitAll()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/oauth2/**"))
+								.permitAll()
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/assign/**"))
+								.hasRole(RoleType.NONE.name())
 				)
 				.oauth2Login(oauth2Login ->
 						oauth2Login
