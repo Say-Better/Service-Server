@@ -71,6 +71,8 @@ public class SecurityConfig {
 								.permitAll()
 								.requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/assign/**"))
 								.hasRole(RoleType.NONE.name())
+								.requestMatchers(AntPathRequestMatcher.antMatcher("/api/**"))
+								.authenticated()
 				)
 				.oauth2Login(oauth2Login ->
 						oauth2Login
