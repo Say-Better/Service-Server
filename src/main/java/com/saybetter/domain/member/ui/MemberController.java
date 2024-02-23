@@ -1,6 +1,8 @@
 package com.saybetter.domain.member.ui;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +22,16 @@ public class MemberController {
 
 	@GetMapping("/connect/code")
 	public ResponseDto<String> getConnectCode() {
-		memberFacade.createConnectCode();
-		return ResponseDto.onSuccess(memberFacade.getConnectCode());
+		String code = memberFacade.createConnectCode();
+		return ResponseDto.onSuccess(code);
 	}
+
+	@PostMapping("/connect/{code}")
+	public ResponseDto<Void> connect(
+			@PathVariable String code
+	) {
+		memberFacade.connect(code);
+		return ResponseDto.onSuccess(null);
+	}
+
 }

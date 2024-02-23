@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,5 +34,10 @@ public class Connect extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "learner_id")
 	private Member learner;
-	
+
+	@Builder
+	public Connect(Member educator, Member learner) {
+		this.educator = educator;
+		this.learner = learner;
+	}
 }
