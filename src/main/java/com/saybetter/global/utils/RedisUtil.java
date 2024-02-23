@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class RedisUtil {
 
+	private final Long CONNECT_CODE_EXPIRE = 60 * 5L;
 	private final StringRedisTemplate stringRedisTemplate;
 
 	/* key 에 해당하는 데이터 얻어오는 메소드 */
@@ -42,5 +43,9 @@ public class RedisUtil {
 
 	private ValueOperations<String, String> getStringStringValueOperations() {
 		return this.stringRedisTemplate.opsForValue();
+	}
+
+	public void setConnectCode(String code, String email) {
+		setDataExpire(code, email, CONNECT_CODE_EXPIRE);
 	}
 }
