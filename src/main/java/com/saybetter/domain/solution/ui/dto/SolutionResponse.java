@@ -11,7 +11,7 @@ public class SolutionResponse {
 	}
 
 	@Builder
-	public static class SymbolRecommend {
+	public static class SymbolList {
 		private String name;
 		private List<SymbolInfo> symbols;
 	}

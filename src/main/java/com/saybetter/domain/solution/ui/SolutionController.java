@@ -21,8 +21,13 @@ public class SolutionController {
 	private final SolutionFacade solutionFacade;
 
 	@GetMapping("/symbol/recommend/{name}")
-	public ResponseDto<SolutionResponse.SymbolRecommend> recommendSymbol(@PathVariable String name) {
+	public ResponseDto<SolutionResponse.SymbolList> recommendSymbol(@PathVariable String name) {
 		return ResponseDto.onSuccess(solutionFacade.recommendSymbol(name));
+	}
+
+	@GetMapping("/symbol/search/{name}")
+	public ResponseDto<SolutionResponse.SymbolList> searchSymbol(@PathVariable String name) {
+		return ResponseDto.onSuccess(solutionFacade.searchSymbol(name));
 	}
 
 }

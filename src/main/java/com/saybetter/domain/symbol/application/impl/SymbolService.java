@@ -22,4 +22,8 @@ public class SymbolService {
 	public List<Symbol> getSymbols(List<String> symbols) {
 		return symbolReadRepository.findByTitleIn(symbols);
 	}
+
+	public List<Symbol> getSymbols(String name) {
+		return symbolReadRepository.findByTitleStartingWith(name);
+	}
 }

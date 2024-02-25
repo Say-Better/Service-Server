@@ -22,10 +22,14 @@ public class SolutionFacade {
 	private final SymbolService symbolService;
 	private final RecommendClient recommendClient;
 
-	public SolutionResponse.SymbolRecommend recommendSymbol(String name) {
+	public SolutionResponse.SymbolList recommendSymbol(String name) {
 		RecommendResult.SymbolRecommend recommend = recommendClient.recommend(name);
 		List<Symbol> symbols = symbolService.getSymbols(recommend.getSymbols());
 		return SolutionResponseConverter.toSymbolRecommend(name, symbols);
 	}
 
+	public SolutionResponse.SymbolList searchSymbol(String name) {
+		List<Symbol> symbols = symbolService.getSymbols(name);
+		return SolutionResponseConverter.toSymbolRecommend(name, symbols);
+	}
 }

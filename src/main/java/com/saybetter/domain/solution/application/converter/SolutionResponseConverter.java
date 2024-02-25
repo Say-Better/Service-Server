@@ -11,12 +11,12 @@ public class SolutionResponseConverter {
 		throw new IllegalStateException("Utility class");
 	}
 
-	public static SolutionResponse.SymbolRecommend toSymbolRecommend(String name, List<Symbol> symbols) {
+	public static SolutionResponse.SymbolList toSymbolRecommend(String name, List<Symbol> symbols) {
 		List<SolutionResponse.SymbolInfo> symbolInfos = symbols.stream()
 				.map(SolutionResponseConverter::toSymbolInfo)
 				.toList();
 
-		return SolutionResponse.SymbolRecommend.builder()
+		return SolutionResponse.SymbolList.builder()
 				.name(name)
 				.symbols(symbolInfos)
 				.build();

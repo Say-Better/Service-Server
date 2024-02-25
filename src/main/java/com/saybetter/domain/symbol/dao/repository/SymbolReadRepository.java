@@ -9,4 +9,5 @@ import com.saybetter.domain.symbol.domain.Symbol;
 public interface SymbolReadRepository extends JpaRepository<Symbol, Long> {
 	List<Symbol> findByTitleIn(List<String> symbols);
 
+	List<Symbol> findByTitleStartingWith(String name);
 }
