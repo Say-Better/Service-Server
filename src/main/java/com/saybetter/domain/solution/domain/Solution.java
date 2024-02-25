@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -71,4 +72,30 @@ public class Solution extends BaseTimeEntity {
 	@Column(name = "status", nullable = false, length = 20)
 	private Status status;
 
+	@Builder
+	public Solution(
+			Member writer,
+			String title,
+			Integer learnerLinkCnt,
+			Integer baselineSessionTime,
+			Double interCompleteThresh,
+			Integer interMaintainTerm,
+			Integer commOptTimes,
+			Integer commOptCnt
+	) {
+		this.writer = writer;
+		this.title = title;
+		this.learnerLinkCnt = learnerLinkCnt;
+		this.baselineSessionTime = baselineSessionTime;
+		this.interCompleteThresh = interCompleteThresh;
+		this.interMaintainTerm = interMaintainTerm;
+		this.maintainSessionTime = baselineSessionTime; // TODO: 관련 내용이 없어서 임시로 추가
+		this.commOptTimes = commOptTimes;
+		this.commOptCnt = commOptCnt;
+		this.status = Status.INACTIVE;
+	}
+
+	public void onActivated() {
+		this.status = Status.ACTIVE;
+	}
 }

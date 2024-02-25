@@ -2,10 +2,13 @@ package com.saybetter.domain.solution.ui;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.saybetter.domain.solution.application.SolutionFacade;
+import com.saybetter.domain.solution.ui.dto.SolutionRequest;
 import com.saybetter.domain.solution.ui.dto.SolutionResponse;
 import com.saybetter.global.common.response.ResponseDto;
 
@@ -28,6 +31,14 @@ public class SolutionController {
 	@GetMapping("/symbol/search/{name}")
 	public ResponseDto<SolutionResponse.SymbolList> searchSymbol(@PathVariable String name) {
 		return ResponseDto.onSuccess(solutionFacade.searchSymbol(name));
+	}
+
+	@PostMapping("")
+	public ResponseDto<Void> createSolution(
+			@RequestBody SolutionRequest.CreateSolution request
+	) {
+		solutionFacade.createSolution(request);
+		return ResponseDto.onSuccess(null);
 	}
 
 }

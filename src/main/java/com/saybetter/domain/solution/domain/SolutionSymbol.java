@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,4 +35,10 @@ public class SolutionSymbol {
 	@JoinColumn(name = "symbol_id", nullable = false)
 	private Symbol symbol;
 
+	@Builder
+	public SolutionSymbol(Solution solution, Symbol symbol) {
+		this.solution = solution;
+		this.symbol = symbol;
+	}
+	
 }
