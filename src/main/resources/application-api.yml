@@ -1,0 +1,18 @@
+spring:
+  config:
+    activate:
+      on-profile: "api"
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 5000
+
+## recommend
+recommend:
+  api:
+    base-url: ${RECOMMEND_API_BASE_URL}
+    jwt-secret: ${RECOMMEND_API_JWT_SECRET}
