@@ -15,4 +15,4 @@ spring:
 recommend:
   api:
     base-url: ${RECOMMEND_API_BASE_URL}
-    jwt-secret: ${RECOMMEND_API_JWT_SECRET}
+    identity-token: ${RECOMMEND_API_IDENTITY_TOKEN}
