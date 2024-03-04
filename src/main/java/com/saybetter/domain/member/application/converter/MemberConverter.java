@@ -6,6 +6,10 @@ import com.saybetter.global.common.constant.RoleType;
 
 public class MemberConverter {
 
+	private MemberConverter() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	public static Member toMember(
 			final String email,
 			final String birthDate,

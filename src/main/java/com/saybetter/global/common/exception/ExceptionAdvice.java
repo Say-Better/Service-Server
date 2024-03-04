@@ -76,7 +76,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 			Exception exception,
 			WebRequest request
 	) {
-		exception.printStackTrace();
+		log.error("Exception 발생", exception);
 
 		return handleExceptionInternalFalse(
 				exception,

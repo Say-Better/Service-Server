@@ -66,18 +66,19 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 				.filter(jwtService::isTokenValid)
 				.orElse(null);
 
-		// 리프레시 토큰이 요청 헤더에 존재했다면, 사용자가 AccessToken이 만료되어서
-		// RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
-		// 일치한다면 AccessToken을 재발급해준다.
 		if (refreshToken != null) {
+			/*
+			 리프레시 토큰이 요청 헤더에 존재했다면, 사용자가 AccessToken이 만료되어서
+			 RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
+			 일치한다면 AccessToken을 재발급해준다.
+			*/
 			checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
-			return;
-		}
-
-		// RefreshToken이 없거나 유효하지 않다면, AccessToken을 검사하고 인증을 처리하는 로직 수행
-		// AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
-		// AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
-		if (refreshToken == null) {
+		} else {
+			/*
+			 RefreshToken이 없거나 유효하지 않다면, AccessToken을 검사하고 인증을 처리하는 로직 수행
+			 AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
+			 AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
+			*/
 			checkAccessTokenAndAuthentication(request, response, filterChain);
 		}
 
