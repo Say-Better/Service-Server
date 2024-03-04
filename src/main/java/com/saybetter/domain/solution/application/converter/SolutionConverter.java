@@ -6,6 +6,10 @@ import com.saybetter.domain.solution.ui.dto.SolutionRequest;
 
 public class SolutionConverter {
 
+	private SolutionConverter() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	public static Solution toSolution(SolutionRequest.CreateSolution request, Member member) {
 		return Solution.builder()
 				.writer(member)

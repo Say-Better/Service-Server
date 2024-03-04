@@ -9,6 +9,10 @@ import com.saybetter.client.api.dto.RecommendResult;
 
 public class RecommendResultConverter {
 
+	private RecommendResultConverter() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	public static RecommendResult.SymbolRecommend toSymbolRecommend(RecommendResponse.SymbolRecommend recommend) {
 		return RecommendResult.SymbolRecommend.builder()
 				.symbols(getSymbols(recommend))

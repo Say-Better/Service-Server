@@ -28,7 +28,7 @@ public class RecordSymbol {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "record_id", nullable = false)
-	private Record record;
+	private Record recorded;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "symbol_id", nullable = false)

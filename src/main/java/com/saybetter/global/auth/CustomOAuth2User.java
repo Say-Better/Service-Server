@@ -13,8 +13,8 @@ import lombok.Getter;
 @Getter
 public class CustomOAuth2User extends DefaultOAuth2User {
 
-	private String email;
-	private RoleType role;
+	private final String email;
+	private final RoleType role;
 
 	/**
 	 * Constructs a {@code DefaultOAuth2User} using the provided parameters.
@@ -34,5 +34,33 @@ public class CustomOAuth2User extends DefaultOAuth2User {
 		super(authorities, attributes, nameAttributeKey);
 		this.email = email;
 		this.role = role;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+
+		CustomOAuth2User that = (CustomOAuth2User)obj;
+
+		if (!email.equals(that.email)) {
+			return false;
+		}
+		return role == that.role;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = 31 * result + email.hashCode();
+		result = 31 * result + role.hashCode();
+		return result;
 	}
 }

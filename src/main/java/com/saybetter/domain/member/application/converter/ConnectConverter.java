@@ -5,6 +5,10 @@ import com.saybetter.domain.member.domain.Member;
 
 public class ConnectConverter {
 
+	private ConnectConverter() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	public static Connect toConnect(Member educator, Member learner) {
 		return Connect.builder()
 				.educator(educator)
