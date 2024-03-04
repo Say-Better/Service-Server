@@ -40,5 +40,5 @@ public class SolutionSymbol {
 		this.solution = solution;
 		this.symbol = symbol;
 	}
-	
+
 }

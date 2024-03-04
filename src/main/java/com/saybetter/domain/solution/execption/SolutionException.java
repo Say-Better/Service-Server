@@ -8,5 +8,5 @@ public class SolutionException extends GeneralException {
 	public SolutionException(BaseErrorCode code) {
 		super(code);
 	}
-	
+
 }

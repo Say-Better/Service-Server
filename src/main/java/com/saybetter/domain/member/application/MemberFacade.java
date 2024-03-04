@@ -34,8 +34,9 @@ public class MemberFacade {
 	public void connect(String code) {
 		String email = redisUtil.getData(code);
 
-		if (email == null)
+		if (email == null) {
 			throw new MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID);
+		}
 
 		redisUtil.deleteData(code);
 

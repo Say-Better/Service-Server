@@ -20,5 +20,5 @@ public class RecommendResultConverter {
 		String[] symbols = symbolString.split(",");
 		return new ArrayList<>(Arrays.asList(symbols));
 	}
-	
+
 }

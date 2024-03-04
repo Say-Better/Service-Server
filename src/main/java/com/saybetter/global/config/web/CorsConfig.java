@@ -1,7 +1,6 @@
 package com.saybetter.global.config.web;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;

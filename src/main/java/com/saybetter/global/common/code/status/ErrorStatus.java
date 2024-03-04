@@ -45,8 +45,7 @@ public enum ErrorStatus implements BaseErrorCode {
 	CONNECT_CODE_NOT_VALID(HttpStatus.BAD_REQUEST, "MEMBER_400_402", "유효하지 않은 연결 코드입니다."),
 
 	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_001", "해당 회원을 찾을 수 없습니다."),
-	MEMBER_EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_002", "해당 이메일을 가진 회원이 존재하지 않습니다."),
-	;
+	MEMBER_EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_002", "해당 이메일을 가진 회원이 존재하지 않습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;

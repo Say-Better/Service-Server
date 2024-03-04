@@ -1,4 +1,4 @@
-package com.saybetter.global.auth.userInfo;
+package com.saybetter.global.auth.info;
 
 import java.util.Map;
 
