@@ -36,8 +36,9 @@ public class MemberService {
 	public void assignUserRole(String userEmail, RoleType role) {
 		Member member = getMember(userEmail);
 
-		if (member.getRole() != RoleType.NONE)
+		if (member.getRole() != RoleType.NONE) {
 			throw new MemberException(ErrorStatus.MEMBER_HAVE_ROLE_SIGN);
+		}
 
 		member.assignRole(role);
 		memberWriteRepository.save(member);

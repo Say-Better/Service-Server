@@ -8,5 +8,5 @@ public class ReviewException extends GeneralException {
 	public ReviewException(BaseErrorCode code) {
 		super(code);
 	}
-	
+
 }

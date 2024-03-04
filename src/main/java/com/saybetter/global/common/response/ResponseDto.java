@@ -2,11 +2,11 @@ package com.saybetter.global.common.response;
 
 import org.springframework.http.HttpStatus;
 
-import com.saybetter.global.common.code.BaseCode;
-import com.saybetter.global.common.code.status.SuccessStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.saybetter.global.common.code.BaseCode;
+import com.saybetter.global.common.code.status.SuccessStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

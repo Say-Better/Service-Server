@@ -15,7 +15,7 @@ public class CodeUtil {
 		int connectCodeLength = 6;
 		boolean useLetters = true;
 		boolean useNumbers = true;
-		
+
 		return RandomStringUtils.random(connectCodeLength, useLetters, useNumbers);
 	}
 }
