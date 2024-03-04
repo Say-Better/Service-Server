@@ -1,0 +1,58 @@
+filters:
+    #######################
+    # Common Task Labels  #
+    #######################
+  - label: ':sparkles: feature'
+    regexs:
+      - /^- \[(x|X)\] Feature\b/m
+    events: [ pull_request, issues ]
+    targets: [ comment ]
+  - label: ':bug: bug'
+    regexs:
+      - /^- \[(x|X)\] Bug Fix\b/m
+    events: [ pull_request, issues ]
+    targets: [ comment ]
+  - label: ':memo: documentation'
+    regexs:
+      - /^- \[(x|X)\] Documentation\b/m
+    events: [ pull_request, issues ]
+    targets: [ comment ]
+  - label: ':art: style'
+    regexs:
+      - /^- \[(x|X)\] Style\b/m
+    events: [ pull_request, issues ]
+    targets: [ comment ]
+  - label: ':recycle: refactor'
+    regexs:
+      - /^- \[(x|X)\] Refactor\b/m
+    events: [ pull_request, issues ]
+    targets: [ comment ]
+  - label: ':test_tube: test'
+    regexs:
+      - /^- \[(x|X)\] Test\b/m
+    events: [ pull_request, issues ]
+    targets: [ comment ]
+  - label: ':wrench: chore'
+    regexs:
+      - /^- \[(x|X)\] Chore\b/m
+    events: [ pull_request, issues ]
+    targets: [ comment ]
+  - label: ':bookmark: release'
+    regexs:
+      - /^- \[(x|X)\] Release\b/m
+    events: [ pull_request, issues ]
+    targets: [ comment ]
+  - label: ':construction_worker: ci/cd'
+    regexs:
+      - /^- \[(x|X)\] CI/CD 작업\b/m
+    events: [ pull_request, issues ]
+    targets: [ comment ]
+
+    #######################
+    # Issue Labels        #
+    #######################
+  - label: ':question: question'
+    regexs:
+      - /\[(question)(\]|\/)/i
+    events: [ issues ]
+    targets: [ title ]

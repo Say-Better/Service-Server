@@ -1,0 +1,26 @@
+name: 🏷️ Auto labeler
+
+on:
+  pull_request:
+    types: [ opened, edited ]
+  issues:
+    types: [ opened, edited ]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read        # configuration yml file 을 읽기 위한 권한
+      issues: write         # issue 에 라벨을 추가하기 위한 권한
+      pull-requests: write  # pull request 에 라벨을 추가하기 위한 권한
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name : Auto labeling
+        uses: hoho4190/issue-pr-labeler@v2.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          yaml-file: .github/github-label-config.yml
