@@ -99,14 +99,6 @@ subprojects {
     bootJar.enabled = false
     jar.enabled = true
 
-    tasks.named('bootJar') { //빌드할 때 bootjar 파일로 하겠다는 의미
-        enabled = false
-    }
-
-    tasks.named('jar') { //빌드할 때 jar 파일로 하겠다는 의미
-        enabled = true
-    }
-
     test {
         useJUnitPlatform {
             excludeTags('develop', 'restdocs')
