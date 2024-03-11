@@ -7,3 +7,12 @@ pluginManagement {
 }
 
 rootProject.name = 'Say-Better'
+
+include 'core:core-api'
+include 'core:core-enum'
+include 'storage:storage-mysql'
+include 'storage:storage-redis'
+include 'client:client-symbol'
+include 'support:logging'
+include 'support:monitoring'
+include 'test:api-docs'
