@@ -71,14 +71,9 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'java'
+    apply plugin: 'java-library'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
-
-    group = 'com'
-    version = '0.0.1-SNAPSHOT'
-
-    sourceCompatibility = '17'
 
     repositories {
         mavenCentral()
