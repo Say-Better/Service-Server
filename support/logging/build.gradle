@@ -1,19 +1,4 @@
-plugins {
-    id 'java'
-}
-
-group = 'io.say.better'
-version = '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
+    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+    implementation "io.sentry:sentry-logback:${property("sentryVersion")}"
 }
