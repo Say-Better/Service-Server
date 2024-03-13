@@ -1,0 +1,34 @@
+spring.application.name: core-api
+spring.profiles.active: local
+
+spring:
+  config:
+    import:
+      - monitoring.yml
+      - logging.yml
+      - auth.yml
+      - swagger.yml
+      - mysql.yml
+      - redis.yml
+      - client-symbol.yml
+  web.resources.add-mappings: false
+
+server:
+  port: ${APP_PORT:8080}
+  tomcat:
+    max-connections: 20000
+    threads:
+      max: 600
+      min-spare: 100
+
+---
+spring.config.activate.on-profile: local
+
+
+---
+spring.config.activate.on-profile: local-dev
+
+
+---
+spring.config.activate.on-profile: dev
+
