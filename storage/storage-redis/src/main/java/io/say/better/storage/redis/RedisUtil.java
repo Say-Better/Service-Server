@@ -1,4 +1,4 @@
-package com.saybetter.global.utils;
+package io.say.better.storage.redis;
 
 import java.time.Duration;
 
