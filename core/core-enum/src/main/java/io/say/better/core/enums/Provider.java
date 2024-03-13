@@ -1,4 +1,4 @@
-package com.saybetter.global.common.constant;
+package io.say.better.core.enums;
 
 import java.util.Collections;
 import java.util.Map;
@@ -6,9 +6,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import com.saybetter.global.auth.exception.AuthException;
-import com.saybetter.global.common.code.status.ErrorStatus;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +30,7 @@ public enum Provider {
 									)
 							));
 
-	public static Provider find(String description) {
-		return Optional
-				.ofNullable(descriptions.get(description))
-				.orElseThrow(() -> new AuthException(ErrorStatus.INTERNAL_SERVER_ERROR));
+	public static Optional<Provider> find(String description) {
+		return Optional.of(descriptions.get(description));
 	}
 }
