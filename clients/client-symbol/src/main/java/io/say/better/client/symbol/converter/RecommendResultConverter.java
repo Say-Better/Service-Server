@@ -1,11 +1,11 @@
-package com.saybetter.client.converter;
+package io.say.better.client.symbol.converter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.saybetter.client.api.dto.RecommendResponse;
-import com.saybetter.client.api.dto.RecommendResult;
+import io.say.better.client.symbol.api.dto.RecommendResult;
+import io.say.better.client.symbol.api.dto.RecommendResponse;
 
 public class RecommendResultConverter {
 

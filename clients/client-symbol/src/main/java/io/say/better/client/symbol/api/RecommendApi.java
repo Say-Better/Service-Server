@@ -1,4 +1,4 @@
-package com.saybetter.client.api;
+package io.say.better.client.symbol.api;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-import com.saybetter.client.api.dto.RecommendRequest;
-import com.saybetter.client.api.dto.RecommendResponse;
+import io.say.better.client.symbol.api.dto.RecommendRequest;
+import io.say.better.client.symbol.api.dto.RecommendResponse;
 
 @FeignClient(name = "recommend", url = "${recommend.api.base-url}")
 public interface RecommendApi {

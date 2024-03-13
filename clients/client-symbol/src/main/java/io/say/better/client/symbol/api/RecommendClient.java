@@ -1,11 +1,11 @@
-package com.saybetter.client.api;
+package io.say.better.client.symbol.api;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.saybetter.client.api.dto.RecommendRequest;
-import com.saybetter.client.api.dto.RecommendResult;
-import com.saybetter.client.converter.RecommendResultConverter;
+import io.say.better.client.symbol.api.dto.RecommendRequest;
+import io.say.better.client.symbol.api.dto.RecommendResult;
+import io.say.better.client.symbol.converter.RecommendResultConverter;
 
 import lombok.RequiredArgsConstructor;
 
