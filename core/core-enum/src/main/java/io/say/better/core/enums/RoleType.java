@@ -1,4 +1,4 @@
-package com.saybetter.global.common.constant;
+package io.say.better.core.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
