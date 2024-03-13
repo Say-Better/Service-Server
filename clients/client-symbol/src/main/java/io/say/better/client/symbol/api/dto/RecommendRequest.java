@@ -1,4 +1,4 @@
-package com.saybetter.client.api.dto;
+package io.say.better.client.symbol.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

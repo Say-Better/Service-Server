@@ -1,21 +1,20 @@
-package com.saybetter.client.api.dto;
-
-import java.util.List;
+package io.say.better.client.symbol.api.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-public class RecommendResult {
+public class RecommendResponse {
 
-	private RecommendResult() {
+	private RecommendResponse() {
 		throw new IllegalStateException("Utility class");
 	}
 
 	@Getter
-	@Builder
+	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class SymbolRecommend {
-		private List<String> symbols;
+		String symbol;
 	}
+
 }
