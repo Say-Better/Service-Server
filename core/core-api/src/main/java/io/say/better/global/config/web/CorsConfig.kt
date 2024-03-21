@@ -1,26 +1,22 @@
-package io.say.better.global.config.web;
+package io.say.better.global.config.web
 
-import java.util.Arrays;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import lombok.RequiredArgsConstructor;
+import lombok.RequiredArgsConstructor
+import org.springframework.context.annotation.Configuration
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @RequiredArgsConstructor
-public class CorsConfig {
+open class CorsConfig {
+    val corsConfigurationSource: CorsConfigurationSource
+        get() {
+            val configuration = CorsConfiguration()
+            configuration.allowedOrigins = mutableListOf("http://localhost:3000", "http://localhost:8080")
+            configuration.allowedMethods = mutableListOf("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
 
-	public CorsConfigurationSource getCorsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080"));
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"));
-
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		return source;
-	}
-
+            val source = UrlBasedCorsConfigurationSource()
+            source.registerCorsConfiguration("/**", configuration)
+            return source
+        }
 }
