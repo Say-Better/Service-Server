@@ -1,26 +1,24 @@
-package io.say.better.global.config.docs;
+package io.say.better.global.config.docs
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.Components
+import io.swagger.v3.oas.models.OpenAPI
+import io.swagger.v3.oas.models.info.Info
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 
 @Configuration
-public class SwaggerConfig {
+open class SwaggerConfig {
+    @Bean
+    open fun openAPI(): OpenAPI {
+        return OpenAPI()
+                .components(Components())
+                .info(apiInfo())
+    }
 
-	@Bean
-	public OpenAPI openAPI() {
-		return new OpenAPI()
-				.components(new Components())
-				.info(apiInfo());
-	}
-
-	private Info apiInfo() {
-		return new Info()
-				.title("Say Better API")
-				.description("API Documentation for Say Better")
-				.version("1.0.0");
-	}
+    private fun apiInfo(): Info {
+        return Info()
+                .title("Say Better API")
+                .description("API Documentation for Say Better")
+                .version("1.0.0")
+    }
 }
