@@ -1,12 +1,6 @@
-package io.say.better.domain.symbol.exception;
+package io.say.better.domain.symbol.exception
 
-import io.say.better.global.common.code.BaseErrorCode;
-import io.say.better.global.common.exception.GeneralException;
+import io.say.better.global.common.code.BaseErrorCode
+import io.say.better.global.common.exception.GeneralException
 
-public class SymbolException extends GeneralException {
-
-	public SymbolException(BaseErrorCode code) {
-		super(code);
-	}
-
-}
+class SymbolException(code: BaseErrorCode) : GeneralException(code)
