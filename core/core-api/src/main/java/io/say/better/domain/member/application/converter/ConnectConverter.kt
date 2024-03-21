@@ -1,19 +1,19 @@
-package io.say.better.domain.member.application.converter;
+package io.say.better.domain.member.application.converter
 
-import io.say.better.storage.mysql.domain.entity.Connect;
-import io.say.better.storage.mysql.domain.entity.Member;
+import io.say.better.storage.mysql.domain.entity.Connect
+import io.say.better.storage.mysql.domain.entity.Member
 
-public class ConnectConverter {
+class ConnectConverter private constructor() {
+    init {
+        throw IllegalStateException("Utility class")
+    }
 
-	private ConnectConverter() {
-		throw new IllegalStateException("Utility class");
-	}
-
-	public static Connect toConnect(Member educator, Member learner) {
-		return Connect.builder()
-				.educator(educator)
-				.learner(learner)
-				.build();
-	}
-
+    companion object {
+        fun toConnect(educator: Member?, learner: Member?): Connect {
+            return Connect.builder()
+                    .educator(educator)
+                    .learner(learner)
+                    .build()
+        }
+    }
 }

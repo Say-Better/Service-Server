@@ -1,46 +1,41 @@
-package io.say.better.domain.member.application;
+package io.say.better.domain.member.application
 
-import org.springframework.stereotype.Component;
-
-import io.say.better.domain.member.application.impl.ConnectService;
-import io.say.better.domain.member.application.impl.MemberService;
-import io.say.better.storage.mysql.domain.entity.Member;
-import io.say.better.domain.member.exception.MemberException;
-import io.say.better.global.common.code.status.ErrorStatus;
-import io.say.better.global.utils.CodeUtil;
-import io.say.better.storage.redis.RedisUtil;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import io.say.better.domain.member.application.impl.ConnectService
+import io.say.better.domain.member.application.impl.MemberService
+import io.say.better.domain.member.exception.MemberException
+import io.say.better.global.common.code.status.ErrorStatus
+import io.say.better.global.utils.CodeUtil
+import io.say.better.storage.redis.RedisUtil
+import lombok.RequiredArgsConstructor
+import lombok.extern.slf4j.Slf4j
+import org.springframework.stereotype.Component
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MemberFacade {
+class MemberFacade(
+        private val connectService: ConnectService,
+        private val memberService: MemberService,
+        private val codeUtil: CodeUtil,
+        private val redisUtil: RedisUtil
+) {
 
-	private final CodeUtil codeUtil;
-	private final RedisUtil redisUtil;
-	private final MemberService memberService;
-	private final ConnectService connectService;
+    fun createConnectCode(): String {
+        val member = memberService!!.currentMember()
+        val code = codeUtil!!.createConnectCode()
+        redisUtil!!.setConnectCode(code, member.email)
 
-	public String createConnectCode() {
-		Member member = memberService.getCurrentMember();
-		String code = codeUtil.createConnectCode();
-		redisUtil.setConnectCode(code, member.getEmail());
+        return code
+    }
 
-		return code;
-	}
+    fun connect(code: String?) {
+        val email = redisUtil!!.getData(code)
+                ?: throw MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID)
 
-	public void connect(String code) {
-		String email = redisUtil.getData(code);
+        redisUtil.deleteData(code)
 
-		if (email == null) {
-			throw new MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID);
-		}
-
-		redisUtil.deleteData(code);
-
-		Member educator = memberService.getCurrentMember();
-		Member learner = memberService.getMember(email);
-		connectService.connect(educator, learner);
-	}
+        val educator = memberService!!.currentMember()
+        val learner = memberService.getMember(email)
+        connectService!!.connect(educator, learner)
+    }
 }
