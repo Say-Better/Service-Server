@@ -1,14 +1,14 @@
-package io.say.better;
+package io.say.better
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
+import org.springframework.boot.runApplication
 
 @SpringBootApplication
-public class SayBetterApplication {
+@ConfigurationPropertiesScan
+open class SayBetterApplication
 
-	public static void main(String[] args) {
-		SpringApplication.run(SayBetterApplication.class, args);
-	}
-
+fun main(args: Array<String>) {
+    runApplication<SayBetterApplication>(*args)
 }
+
