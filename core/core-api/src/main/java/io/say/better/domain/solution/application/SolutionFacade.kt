@@ -1,65 +1,56 @@
-package io.say.better.domain.solution.application;
+package io.say.better.domain.solution.application
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import io.say.better.client.symbol.api.RecommendClient;
-import io.say.better.client.symbol.api.dto.RecommendResult;
-import io.say.better.domain.member.application.impl.MemberService;
-import io.say.better.domain.solution.application.converter.SolutionConverter;
-import io.say.better.domain.solution.application.converter.SolutionResponseConverter;
-import io.say.better.domain.solution.application.converter.SolutionSymbolConverter;
-import io.say.better.domain.solution.application.impl.SolutionService;
-import io.say.better.domain.solution.application.impl.SolutionSymbolService;
-import io.say.better.domain.solution.ui.dto.SolutionRequest;
-import io.say.better.domain.solution.ui.dto.SolutionResponse;
-import io.say.better.domain.symbol.application.impl.SymbolService;
-import io.say.better.storage.mysql.domain.entity.Member;
-import io.say.better.storage.mysql.domain.entity.Solution;
-import io.say.better.storage.mysql.domain.entity.SolutionSymbol;
-import io.say.better.storage.mysql.domain.entity.Symbol;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import io.say.better.client.symbol.api.RecommendClient
+import io.say.better.domain.member.application.impl.MemberService
+import io.say.better.domain.solution.application.converter.SolutionConverter
+import io.say.better.domain.solution.application.converter.SolutionResponseConverter
+import io.say.better.domain.solution.application.converter.SolutionSymbolConverter
+import io.say.better.domain.solution.application.impl.SolutionService
+import io.say.better.domain.solution.application.impl.SolutionSymbolService
+import io.say.better.domain.solution.ui.dto.SolutionRequest.CreateSolution
+import io.say.better.domain.solution.ui.dto.SolutionResponse.SymbolList
+import io.say.better.domain.symbol.application.impl.SymbolService
+import io.say.better.storage.mysql.domain.entity.SolutionSymbol
+import io.say.better.storage.mysql.domain.entity.Symbol
+import lombok.RequiredArgsConstructor
+import lombok.extern.slf4j.Slf4j
+import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class SolutionFacade {
+class SolutionFacade (
+        private val solutionService: SolutionService,
+        private val solutionSymbolService: SolutionSymbolService,
+        private val memberService: MemberService,
+        private val symbolService: SymbolService,
+        private val recommendClient: RecommendClient,
+) {
 
-	private final SolutionService solutionService;
-	private final SolutionSymbolService solutionSymbolService;
+    @Transactional(readOnly = true)
+    fun recommendSymbol(name: String?): SymbolList {
+        val recommend = recommendClient!!.recommend(name)
+        val symbols = symbolService!!.getSymbols(recommend.symbols)
+        return SolutionResponseConverter.toSymbolRecommend(name, symbols)
+    }
 
-	private final MemberService memberService;
-	private final SymbolService symbolService;
+    @Transactional(readOnly = true)
+    fun searchSymbol(name: String?): SymbolList {
+        val symbols = symbolService!!.getSymbols(name)
+        return SolutionResponseConverter.toSymbolRecommend(name, symbols)
+    }
 
-	private final RecommendClient recommendClient;
+    @Transactional
+    fun createSolution(request: CreateSolution) {
+        val member = memberService!!.currentMember()
+        val newSolution = SolutionConverter.toSolution(request, member)
+        val savedSolution = solutionService!!.createSolution(newSolution)
 
-	@Transactional(readOnly = true)
-	public SolutionResponse.SymbolList recommendSymbol(String name) {
-		RecommendResult.SymbolRecommend recommend = recommendClient.recommend(name);
-		List<Symbol> symbols = symbolService.getSymbols(recommend.getSymbols());
-		return SolutionResponseConverter.toSymbolRecommend(name, symbols);
-	}
+        val symbols: List<Symbol?> = symbolService!!.getSymbols(request.symbols)
+        val solutionSymbols: List<SolutionSymbol?> = SolutionSymbolConverter.toSolutionSymbols(savedSolution, symbols)
+        solutionSymbolService!!.createSolutionSymbols(solutionSymbols)
 
-	@Transactional(readOnly = true)
-	public SolutionResponse.SymbolList searchSymbol(String name) {
-		List<Symbol> symbols = symbolService.getSymbols(name);
-		return SolutionResponseConverter.toSymbolRecommend(name, symbols);
-	}
-
-	@Transactional
-	public void createSolution(SolutionRequest.CreateSolution request) {
-		Member member = memberService.getCurrentMember();
-		Solution newSolution = SolutionConverter.toSolution(request, member);
-		Solution savedSolution = solutionService.createSolution(newSolution);
-
-		List<Symbol> symbols = symbolService.getSymbols(request.getSymbols());
-		List<SolutionSymbol> solutionSymbols = SolutionSymbolConverter.toSolutionSymbols(savedSolution, symbols);
-		solutionSymbolService.createSolutionSymbols(solutionSymbols);
-
-		savedSolution.onActivated();
-	}
-
+        savedSolution.onActivated()
+    }
 }

@@ -1,24 +1,17 @@
-package io.say.better.domain.solution.ui.dto;
+package io.say.better.domain.solution.ui.dto
 
-import java.util.List;
+class SolutionResponse private constructor() {
+    init {
+        throw IllegalStateException("Utility class")
+    }
 
-import lombok.Builder;
+    data class SymbolList(
+            val name: String,
+            val symbols: List<SymbolInfo>? = null,
+    )
 
-public class SolutionResponse {
-
-	private SolutionResponse() {
-		throw new IllegalStateException("Utility class");
-	}
-
-	@Builder
-	public static class SymbolList {
-		private String name;
-		private List<SymbolInfo> symbols;
-	}
-
-	@Builder
-	public static class SymbolInfo {
-		private String description;
-		private String imageUrl;
-	}
+    data class SymbolInfo(
+            val description: String,
+            val imageUrl: String
+    )
 }

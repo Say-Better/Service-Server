@@ -1,8 +1,7 @@
-package io.say.better.domain.solution.application.converter;
+package io.say.better.domain.solution.application.converter
 
-public class AssignConverter {
-
-	private AssignConverter() {
-		throw new IllegalStateException("Utility class");
-	}
+class AssignConverter private constructor() {
+    init {
+        throw IllegalStateException("Utility class")
+    }
 }

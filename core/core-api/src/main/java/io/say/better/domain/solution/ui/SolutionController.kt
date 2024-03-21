@@ -1,43 +1,35 @@
-package io.say.better.domain.solution.ui;
+package io.say.better.domain.solution.ui
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import io.say.better.domain.solution.application.SolutionFacade;
-import io.say.better.domain.solution.ui.dto.SolutionRequest;
-import io.say.better.domain.solution.ui.dto.SolutionResponse;
-import io.say.better.global.common.response.ResponseDto;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
+import io.say.better.domain.solution.application.SolutionFacade
+import io.say.better.domain.solution.ui.dto.SolutionRequest.CreateSolution
+import io.say.better.domain.solution.ui.dto.SolutionResponse.SymbolList
+import io.say.better.global.common.response.ResponseDto
+import io.swagger.v3.oas.annotations.tags.Tag
+import lombok.RequiredArgsConstructor
+import org.springframework.web.bind.annotation.*
 
 @Tag(name = "Solution", description = "Solution API")
 @RestController
 @RequestMapping("/api/solution")
 @RequiredArgsConstructor
-public class SolutionController {
+class SolutionController(
+    private val solutionFacade: SolutionFacade
+) {
+    @GetMapping("/symbol/recommend/{name}")
+    fun recommendSymbol(@PathVariable name: String?): ResponseDto<SymbolList> {
+        return ResponseDto.onSuccess(solutionFacade!!.recommendSymbol(name))
+    }
 
-	private final SolutionFacade solutionFacade;
+    @GetMapping("/symbol/search/{name}")
+    fun searchSymbol(@PathVariable name: String?): ResponseDto<SymbolList> {
+        return ResponseDto.onSuccess(solutionFacade!!.searchSymbol(name))
+    }
 
-	@GetMapping("/symbol/recommend/{name}")
-	public ResponseDto<SolutionResponse.SymbolList> recommendSymbol(@PathVariable String name) {
-		return ResponseDto.onSuccess(solutionFacade.recommendSymbol(name));
-	}
-
-	@GetMapping("/symbol/search/{name}")
-	public ResponseDto<SolutionResponse.SymbolList> searchSymbol(@PathVariable String name) {
-		return ResponseDto.onSuccess(solutionFacade.searchSymbol(name));
-	}
-
-	@PostMapping("")
-	public ResponseDto<Void> createSolution(
-			@RequestBody SolutionRequest.CreateSolution request
-	) {
-		solutionFacade.createSolution(request);
-		return ResponseDto.onSuccess(null);
-	}
-
+    @PostMapping("")
+    fun createSolution(
+            @RequestBody request: CreateSolution?
+    ): ResponseDto<Void?> {
+        solutionFacade!!.createSolution(request!!)
+        return ResponseDto.onSuccess(null)
+    }
 }
