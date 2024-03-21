@@ -1,31 +1,18 @@
-package io.say.better.global.auth.info;
+package io.say.better.global.auth.info
 
-import java.util.Map;
+data class GoogleOAuth2UserInfo(
+    val attributes: Map<String, Any>?
+) : OAuth2UserInfo {
 
-import lombok.AllArgsConstructor;
+    override val providerId: String
+        get() = (attributes!!["sub"] as String)
 
-@AllArgsConstructor
-public class GoogleOAuth2UserInfo implements OAuth2UserInfo {
+    override val provider: String
+        get() = "google"
 
-	private Map<String, Object> attributes;
+    override val email: String
+        get() = attributes!!["email"] as String
 
-	@Override
-	public String getProviderId() {
-		return (String)attributes.get("sub");
-	}
-
-	@Override
-	public String getProvider() {
-		return "google";
-	}
-
-	@Override
-	public String getEmail() {
-		return (String)attributes.get("email");
-	}
-
-	@Override
-	public String getName() {
-		return (String)attributes.get("name");
-	}
+    override val name: String
+        get() = attributes!!["name"] as String
 }

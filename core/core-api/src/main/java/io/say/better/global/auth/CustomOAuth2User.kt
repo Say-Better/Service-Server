@@ -1,65 +1,32 @@
-package io.say.better.global.auth;
+package io.say.better.global.auth
 
-import java.util.Collection;
-import java.util.Map;
+import io.say.better.core.enums.RoleType
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 
-import io.say.better.core.enums.RoleType;
-import lombok.Getter;
+data class CustomOAuth2User(
+    val authorities: Collection<GrantedAuthority?>?,
+    val attributes: Map<String?, Any?>?,
+    val nameAttributeKey: String?,
+    val email: String,
+    val role: RoleType
+) : DefaultOAuth2User(authorities, attributes, nameAttributeKey) {
 
-@Getter
-public class CustomOAuth2User extends DefaultOAuth2User {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if ((other == null) || (javaClass != other.javaClass) || super.equals(other).not()) return false
 
-	private final String email;
-	private final RoleType role;
+        val that = other as CustomOAuth2User
 
-	/**
-	 * Constructs a {@code DefaultOAuth2User} using the provided parameters.
-	 *
-	 * @param authorities      the authorities granted to the user
-	 * @param attributes       the attributes about the user
-	 * @param nameAttributeKey the key used to access the user's &quot;name&quot; from
-	 *                         {@link #getAttributes()}
-	 */
-	public CustomOAuth2User(
-			Collection<? extends GrantedAuthority> authorities,
-			Map<String, Object> attributes,
-			String nameAttributeKey,
-			String email,
-			RoleType role
-	) {
-		super(authorities, attributes, nameAttributeKey);
-		this.email = email;
-		this.role = role;
-	}
+        if (email != that.email) return false
+        return role == that.role
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null || getClass() != obj.getClass()) {
-			return false;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-
-		CustomOAuth2User that = (CustomOAuth2User)obj;
-
-		if (!email.equals(that.email)) {
-			return false;
-		}
-		return role == that.role;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = super.hashCode();
-		result = 31 * result + email.hashCode();
-		result = 31 * result + role.hashCode();
-		return result;
-	}
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + email.hashCode()
+        result = 31 * result + role.hashCode()
+        return result
+    }
 }

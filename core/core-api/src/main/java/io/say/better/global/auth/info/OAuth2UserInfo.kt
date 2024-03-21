@@ -1,11 +1,11 @@
-package io.say.better.global.auth.info;
+package io.say.better.global.auth.info
 
-public interface OAuth2UserInfo {
-	String getProviderId();
+interface OAuth2UserInfo {
+    val providerId: String
 
-	String getProvider();
+    val provider: String
 
-	String getEmail();
+    val email: String
 
-	String getName();
+    val name: String
 }
