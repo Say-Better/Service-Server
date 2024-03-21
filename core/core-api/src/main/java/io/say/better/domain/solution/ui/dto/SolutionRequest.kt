@@ -1,25 +1,17 @@
-package io.say.better.domain.solution.ui.dto;
+package io.say.better.domain.solution.ui.dto
 
-import java.util.List;
+class SolutionRequest private constructor() {
+    init {
+        throw IllegalStateException("Utility class")
+    }
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-public class SolutionRequest {
-
-	private SolutionRequest() {
-		throw new IllegalStateException("Utility class");
-	}
-
-	@Getter
-	@AllArgsConstructor
-	public static class CreateSolution {
-		private String title;
-		private Integer baselineSessionTime;
-		private Double interCompleteThresh;
-		private Integer interMaintainTerm;
-		private Integer commOptTimes;
-		private Integer commOptCnt;
-		private List<String> symbols;
-	}
+    data class CreateSolution (
+        val title: String? = null,
+        val baselineSessionTime: Int? = null,
+        val interCompleteThresh: Double? = null,
+        val interMaintainTerm: Int? = null,
+        val commOptTimes: Int? = null,
+        val commOptCnt: Int? = null,
+        val symbols: List<String>? = null,
+    )
 }
