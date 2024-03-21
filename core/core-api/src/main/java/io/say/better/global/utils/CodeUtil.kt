@@ -1,21 +1,19 @@
-package io.say.better.global.utils;
+package io.say.better.global.utils
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.stereotype.Component;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor
+import lombok.extern.slf4j.Slf4j
+import org.apache.commons.lang3.RandomStringUtils
+import org.springframework.stereotype.Component
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class CodeUtil {
+class CodeUtil {
+    fun createConnectCode(): String {
+        val connectCodeLength = 6
+        val useLetters = true
+        val useNumbers = true
 
-	public String createConnectCode() {
-		int connectCodeLength = 6;
-		boolean useLetters = true;
-		boolean useNumbers = true;
-
-		return RandomStringUtils.random(connectCodeLength, useLetters, useNumbers);
-	}
+        return RandomStringUtils.random(connectCodeLength, useLetters, useNumbers)
+    }
 }
