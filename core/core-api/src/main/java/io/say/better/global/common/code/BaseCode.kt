@@ -1,11 +1,10 @@
-package io.say.better.global.common.code;
+package io.say.better.global.common.code
 
-import io.say.better.global.common.response.ResponseDto;
+import io.say.better.global.common.code.status.SuccessStatus
+import io.say.better.global.common.response.ResponseDto.ReasonDto
 
-public interface BaseCode {
+interface BaseCode {
+    fun reason(status: SuccessStatus): ReasonDto
 
-	ResponseDto.ReasonDto getReason();
-
-	ResponseDto.ReasonDto getReasonHttpStatus();
-
+    fun reasonHttpStatus(status: SuccessStatus): ReasonDto
 }

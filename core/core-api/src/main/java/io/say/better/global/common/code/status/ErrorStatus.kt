@@ -1,17 +1,19 @@
-package io.say.better.global.common.code.status;
+package io.say.better.global.common.code.status
 
-import org.springframework.http.HttpStatus;
-
-import io.say.better.global.common.code.BaseErrorCode;
-import io.say.better.global.common.response.ResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import io.say.better.global.common.code.BaseErrorCode
+import io.say.better.global.common.response.ResponseDto.ErrorReasonDto
+import lombok.AllArgsConstructor
+import lombok.Getter
+import org.springframework.http.HttpStatus
 
 @Getter
 @AllArgsConstructor
-public enum ErrorStatus implements BaseErrorCode {
-
-	/* [ErrorStatus 작성 규칙]
+enum class ErrorStatus(
+        private val httpStatus: HttpStatus,
+        private val code: String,
+        private val message: String
+) : BaseErrorCode {
+    /* [ErrorStatus 작성 규칙]
         ErrorCode는 다음과 같은 형식으로 작성합니다.
 
         1. Success 및 Common Error
@@ -28,44 +30,38 @@ public enum ErrorStatus implements BaseErrorCode {
                     NOT_FOUND -> USER_404_001,
                     ALREADY_EXISTS -> USER_409_001
      */
+    // Common Error & Global Error
+    BAD_REQUEST(HttpStatus.BAD_REQUEST, "COMMON_400", "잘못된 요청입니다."),
+    METHOD_ARGUMENT_ERROR(HttpStatus.BAD_REQUEST, "COMMON_400", "올바르지 않은 클라이언트 요청값입니다."),
+    FORBIDDEN(HttpStatus.FORBIDDEN, "COMMON_403", "금지된 요청입니다."),
+    METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "COMMON_405", "지원하지 않는 Http Method 입니다."),
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON_500", "서버 에러가 발생했습니다."),
 
-	// Common Error & Global Error
-	BAD_REQUEST(HttpStatus.BAD_REQUEST, "COMMON_400", "잘못된 요청입니다."),
-	METHOD_ARGUMENT_ERROR(HttpStatus.BAD_REQUEST, "COMMON_400", "올바르지 않은 클라이언트 요청값입니다."),
-	FORBIDDEN(HttpStatus.FORBIDDEN, "COMMON_403", "금지된 요청입니다."),
-	METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "COMMON_405", "지원하지 않는 Http Method 입니다."),
-	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON_500", "서버 에러가 발생했습니다."),
+    // Temp Error
+    TEMP_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "TEMP_500", "임시 에러가 발생했습니다."),
 
-	// Temp Error
-	TEMP_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "TEMP_500", "임시 에러가 발생했습니다."),
+    // Member Error
+    MEMBER_HAVE_ROLE_SIGN(HttpStatus.BAD_REQUEST, "MEMBER_400_401", "이미 권한이 부여된 회원입니다."),
+    CONNECT_CODE_NOT_VALID(HttpStatus.BAD_REQUEST, "MEMBER_400_402", "유효하지 않은 연결 코드입니다."),
 
-	// Member Error
-	MEMBER_HAVE_ROLE_SIGN(HttpStatus.BAD_REQUEST, "MEMBER_400_401", "이미 권한이 부여된 회원입니다."),
-	CONNECT_CODE_NOT_VALID(HttpStatus.BAD_REQUEST, "MEMBER_400_402", "유효하지 않은 연결 코드입니다."),
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_001", "해당 회원을 찾을 수 없습니다."),
+    MEMBER_EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_002", "해당 이메일을 가진 회원이 존재하지 않습니다.");
 
-	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_001", "해당 회원을 찾을 수 없습니다."),
-	MEMBER_EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_002", "해당 이메일을 가진 회원이 존재하지 않습니다.");
 
-	private final HttpStatus httpStatus;
-	private final String code;
-	private final String message;
+    override fun reason(status: ErrorStatus): ErrorReasonDto {
+        return ErrorReasonDto(
+                isSuccess = false,
+                code = status.code,
+                message = status.message
+        )
+    }
 
-	@Override
-	public ResponseDto.ErrorReasonDto getReason() {
-		return ResponseDto.ErrorReasonDto.builder()
-				.isSuccess(false)
-				.code(this.code)
-				.message(this.message)
-				.build();
-	}
-
-	@Override
-	public ResponseDto.ErrorReasonDto getReasonHttpStatus() {
-		return ResponseDto.ErrorReasonDto.builder()
-				.httpStatus(this.httpStatus)
-				.isSuccess(false)
-				.code(this.code)
-				.message(this.message)
-				.build();
-	}
+    override fun reasonHttpStatus(status: ErrorStatus): ErrorReasonDto {
+        return ErrorReasonDto(
+                httpStatus = status.httpStatus,
+                isSuccess = false,
+                code = status.code,
+                message = status.message
+        )
+    }
 }
