@@ -3,6 +3,8 @@ pluginManagement {
         id 'org.springframework.boot' version "${springBootVersion}"
         id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
         id 'org.asciidoctor.jvm.convert' version "${asciidoctorConvertVersion}"
+        id 'org.jetbrains.kotlin.jvm' version "${kotlinVersion}"
+        id 'org.gradle.toolchains.foojay-resolver-convention' version "${foojayResolverVersion}"
     }
 }
 
