@@ -1,8 +1,7 @@
-package io.say.better.domain.review.ui.dto;
+package io.say.better.domain.review.ui.dto
 
-public class ReviewResponse {
-
-	private ReviewResponse() {
-		throw new IllegalStateException("Utility class");
-	}
+class ReviewResponse private constructor() {
+    init {
+        throw IllegalStateException("Utility class")
+    }
 }
