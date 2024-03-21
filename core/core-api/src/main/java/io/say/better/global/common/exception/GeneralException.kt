@@ -1,21 +1,19 @@
-package io.say.better.global.common.exception;
+package io.say.better.global.common.exception
 
-import io.say.better.global.common.code.BaseErrorCode;
-import io.say.better.global.common.response.ResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import io.say.better.global.common.code.BaseErrorCode
+import io.say.better.global.common.response.ResponseDto.ErrorReasonDto
+import lombok.AllArgsConstructor
+import lombok.Getter
 
 @Getter
 @AllArgsConstructor
-public class GeneralException extends RuntimeException {
+open class GeneralException(
+        private val code: BaseErrorCode
+) : RuntimeException() {
 
-	private final BaseErrorCode code;
+    val errorReasonDto: ErrorReasonDto?
+        get() = this.code.reason
 
-	public ResponseDto.ErrorReasonDto getErrorReasonDto() {
-		return this.code.getReason();
-	}
-
-	public ResponseDto.ErrorReasonDto getErrorReasonHttpStatus() {
-		return this.code.getReasonHttpStatus();
-	}
+    val errorReasonHttpStatus: ErrorReasonDto?
+        get() = this.code.reasonHttpStatus
 }

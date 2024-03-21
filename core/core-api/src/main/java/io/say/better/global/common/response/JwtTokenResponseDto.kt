@@ -1,24 +1,21 @@
-package io.say.better.global.common.response;
+package io.say.better.global.common.response
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonProperty
+import lombok.AllArgsConstructor
+import lombok.Builder
+import lombok.Getter
+import lombok.ToString
+import java.time.LocalDateTime
 
 @Getter
 @Builder
 @ToString
 @AllArgsConstructor
-public class JwtTokenResponseDto {
+class JwtTokenResponseDto {
+    private val accessToken: String? = null
+    private val refreshToken: String? = null
+    private val expiredTime: LocalDateTime? = null
 
-	private String accessToken;
-	private String refreshToken;
-	private LocalDateTime expiredTime;
-	@JsonProperty("isExisted")
-	private boolean isExisted;
-
+    @JsonProperty("isExisted")
+    private val isExisted = false
 }

@@ -1,39 +1,34 @@
-package io.say.better.global.common.code.status;
+package io.say.better.global.common.code.status
 
-import org.springframework.http.HttpStatus;
+import io.say.better.global.common.code.BaseCode
+import io.say.better.global.common.response.ResponseDto.ReasonDto
+import lombok.AllArgsConstructor
+import lombok.Getter
+import org.springframework.http.HttpStatus
 
-import io.say.better.global.common.code.BaseCode;
-import io.say.better.global.common.response.ResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+enum class SuccessStatus(
+        private val httpStatus: HttpStatus? = null,
+        private val code: String? = null,
+        private val message: String? = null
+) : BaseCode {
+    // Success
+    OK(HttpStatus.OK, "SUCCESS_200", "OK");
 
-@Getter
-@AllArgsConstructor
-public enum SuccessStatus implements BaseCode {
+    override fun reason(status: SuccessStatus): ReasonDto {
+        return ReasonDto(
+                isSuccess = true,
+                code = status.code,
+                message = status.message
+        )
+    }
 
-	// Success
-	OK(HttpStatus.OK, "SUCCESS_200", "OK");
+    override fun reasonHttpStatus(status: SuccessStatus): ReasonDto {
+        return ReasonDto(
+                httpStatus = status.httpStatus,
+                isSuccess = true,
+                code = status.code,
+                message = status.message
+        )
+    }
 
-	private final HttpStatus httpStatus;
-	private final String code;
-	private final String message;
-
-	@Override
-	public ResponseDto.ReasonDto getReason() {
-		return ResponseDto.ReasonDto.builder()
-				.isSuccess(true)
-				.code(this.code)
-				.message(this.message)
-				.build();
-	}
-
-	@Override
-	public ResponseDto.ReasonDto getReasonHttpStatus() {
-		return ResponseDto.ReasonDto.builder()
-				.httpStatus(this.httpStatus)
-				.isSuccess(true)
-				.code(this.code)
-				.message(this.message)
-				.build();
-	}
 }
