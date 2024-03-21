@@ -1,22 +1,20 @@
-package io.say.better.domain.member.application;
+package io.say.better.domain.member.application
 
-import org.springframework.stereotype.Component;
-
-import io.say.better.domain.member.application.impl.MemberService;
-import io.say.better.storage.mysql.domain.entity.Member;
-import io.say.better.core.enums.RoleType;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import io.say.better.core.enums.RoleType
+import io.say.better.domain.member.application.impl.MemberService
+import lombok.RequiredArgsConstructor
+import lombok.extern.slf4j.Slf4j
+import org.springframework.stereotype.Component
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AuthFacade {
+class AuthFacade(
+        private val memberService: MemberService,
+) {
 
-	private final MemberService memberService;
-
-	public void assignUserRole(RoleType role) {
-		Member member = memberService.getCurrentMember();
-		memberService.assignUserRole(member.getEmail(), role);
-	}
+    fun assignUserRole(role: RoleType?) {
+        val member = memberService!!.currentMember()
+        memberService.assignUserRole(member.email, role)
+    }
 }

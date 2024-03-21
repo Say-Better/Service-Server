@@ -1,8 +1,7 @@
-package io.say.better.domain.member.ui.dto;
+package io.say.better.domain.member.ui.dto
 
-public class MemberRequest {
-
-	private MemberRequest() {
-		throw new IllegalStateException("Utility class");
-	}
+class MemberRequest private constructor() {
+    init {
+        throw IllegalStateException("Utility class")
+    }
 }
