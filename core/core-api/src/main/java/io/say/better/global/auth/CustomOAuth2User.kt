@@ -6,9 +6,11 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User
 
 
 data class CustomOAuth2User(
-    val authorities: Collection<GrantedAuthority?>?,
-    val attributes: Map<String?, Any?>?,
-    val nameAttributeKey: String?,
+    @get:JvmName("getAuthorities_")
+    val authorities: Collection<GrantedAuthority>,
+    @get:JvmName("getAttributes_")
+    val attributes: Map<String, Any>,
+    val nameAttributeKey: String,
     val email: String,
     val role: RoleType
 ) : DefaultOAuth2User(authorities, attributes, nameAttributeKey) {
