@@ -1,6 +1,7 @@
 package io.say.better.global.auth.handler
 
 import io.say.better.global.auth.CustomOAuth2User
+import io.say.better.global.config.logger.logger
 import io.say.better.global.jwt.service.JwtService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -17,12 +18,14 @@ class OAuth2LoginSuccessHandler(
     private val jwtService: JwtService
 ) : AuthenticationSuccessHandler {
 
+    private val log = logger()
+
     override fun onAuthenticationSuccess(
             request: HttpServletRequest,
             response: HttpServletResponse,
             authentication: Authentication
     ) {
-        OAuth2LoginSuccessHandler.log.info("OAuth2 Login 성공!")
+        log.info("OAuth2 Login 성공!")
         val oAuth2User = authentication.principal as CustomOAuth2User
         loginSuccess(response, oAuth2User) // 로그인에 성공한 경우 access, refresh 토큰 생성
     }
