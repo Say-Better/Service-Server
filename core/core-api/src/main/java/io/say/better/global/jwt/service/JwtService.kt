@@ -1,6 +1,7 @@
 package io.say.better.global.jwt.service
 
 import io.jsonwebtoken.*
+import io.say.better.global.config.logger.logger
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.storage.redis.RedisUtil
 import jakarta.servlet.http.HttpServletRequest
@@ -18,6 +19,8 @@ class JwtService(
     private val redisUtil: RedisUtil
 ) {
 
+    private val log = logger()
+
     /**
      * AccessToken 생성 메소드
      *
@@ -25,7 +28,7 @@ class JwtService(
      * @return AccessToken
      */
     fun createAccessToken(email: String): String {
-        val claims = Jwts.claims(Map.of<String, Any>(EMAIL_CLAIM, email))
+        val claims = Jwts.claims(mapOf<String, Any>(EMAIL_CLAIM to email))
         val now = Date()
         return Jwts.builder() // JWT 토큰을 생성하는 빌더 반환
             .setClaims(claims) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
@@ -62,7 +65,7 @@ class JwtService(
     ) {
         response.status = HttpServletResponse.SC_OK
         response.setHeader(jwtProperties!!.accessHeader, accessToken)
-        JwtService.log.info("재발급된 Access Token : {}", accessToken)
+        log.info("재발급된 Access Token : {}", accessToken)
     }
 
     /**
@@ -80,7 +83,7 @@ class JwtService(
 
         setAccessTokenHeader(response, accessToken)
         setRefreshTokenHeader(response, refreshToken)
-        JwtService.log.info("Access Token, Refresh Token 헤더 설정 완료")
+        log.info("Access Token, Refresh Token 헤더 설정 완료")
     }
 
     /**
@@ -185,11 +188,11 @@ class JwtService(
             val claimsJws = Jwts.parser().setSigningKey(jwtProperties!!.secret).parseClaimsJws(token)
             return !claimsJws.body.expiration.before(Date())
         } catch (exception: ExpiredJwtException) {
-            JwtService.log.warn("만료된 jwt 입니다.")
+            log.warn("만료된 jwt 입니다.")
         } catch (exception: UnsupportedJwtException) {
-            JwtService.log.warn("지원되지 않는 jwt 입니다.")
+            log.warn("지원되지 않는 jwt 입니다.")
         } catch (exception: IllegalArgumentException) {
-            JwtService.log.warn("jwt 에 오류가 존재합니다.")
+            log.warn("jwt 에 오류가 존재합니다.")
         }
         return false
     }
