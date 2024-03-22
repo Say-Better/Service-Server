@@ -24,17 +24,17 @@ data class ResponseDto<T>(
 ) {
 
     data class ErrorReasonDto(
-            private val httpStatus: HttpStatus? = null,
-            private val isSuccess: Boolean = false,
-            private val code: String? = null,
-            private val message: String? = null
+            val httpStatus: HttpStatus? = null,
+            val isSuccess: Boolean = false,
+            val code: String,
+            val message: String
     )
 
     data class ReasonDto(
-            private val httpStatus: HttpStatus? = null,
-            private val isSuccess: Boolean = false,
-            private val code: String? = null,
-            private val message: String? = null
+            val httpStatus: HttpStatus? = null,
+            val isSuccess: Boolean = false,
+            val code: String,
+            val message: String
     )
 
     companion object {
@@ -42,8 +42,8 @@ data class ResponseDto<T>(
         fun <T> onSuccess(result: T): ResponseDto<T> {
             return ResponseDto(
                     isSuccess = true,
-                    code = SuccessStatus.OK.code.toString(),
-                    message = SuccessStatus.OK.message.toString(),
+                    code = SuccessStatus.OK.code,
+                    message = SuccessStatus.OK.message,
                     result = result
             )
         }
@@ -58,7 +58,7 @@ data class ResponseDto<T>(
         }
 
         // 실패한 경우
-        fun <T> onFailure(code: String?, message: String?, result: T): ResponseDto<T> {
+        fun <T> onFailure(code: String, message: String, result: T): ResponseDto<T> {
             return ResponseDto(
                     isSuccess = false,
                     code = code,
