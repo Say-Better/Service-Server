@@ -6,12 +6,10 @@ import lombok.AllArgsConstructor
 import lombok.Getter
 import org.springframework.http.HttpStatus
 
-@Getter
-@AllArgsConstructor
 enum class ErrorStatus(
-        private val httpStatus: HttpStatus,
-        private val code: String,
-        private val message: String
+        val httpStatus: HttpStatus,
+        val code: String,
+        val message: String
 ) : BaseErrorCode {
     /* [ErrorStatus 작성 규칙]
         ErrorCode는 다음과 같은 형식으로 작성합니다.
@@ -48,20 +46,18 @@ enum class ErrorStatus(
     MEMBER_EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_002", "해당 이메일을 가진 회원이 존재하지 않습니다.");
 
 
-    override fun reason(status: ErrorStatus): ErrorReasonDto {
-        return ErrorReasonDto(
+    override val reason: ErrorReasonDto
+        get() = ErrorReasonDto(
                 isSuccess = false,
-                code = status.code,
-                message = status.message
+                code = this.code,
+                message = this.message
         )
-    }
 
-    override fun reasonHttpStatus(status: ErrorStatus): ErrorReasonDto {
-        return ErrorReasonDto(
-                httpStatus = status.httpStatus,
+    override val reasonHttpStatus: ErrorReasonDto
+        get() = ErrorReasonDto(
+                httpStatus = this.httpStatus,
                 isSuccess = false,
-                code = status.code,
-                message = status.message
+                code = this.code,
+                message = this.message
         )
-    }
 }
