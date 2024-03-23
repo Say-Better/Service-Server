@@ -17,6 +17,7 @@ dependencies {
 
     testImplementation project(":tests:api-docs")
 
+    // application
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     // security && OAuth && Jwt
