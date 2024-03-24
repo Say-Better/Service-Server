@@ -1,14 +1,9 @@
-package io.say.better.core.enums;
+package io.say.better.core.enums
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@Getter
-@RequiredArgsConstructor
-public enum Status {
-	ACTIVE("활성"),
-	INACTIVE("비활성"),
-	DELETED("삭제 대기");
-
-	private final String description;
+enum class Status(
+    val description: String
+) {
+    ACTIVE("활성"),
+    INACTIVE("비활성"),
+    DELETED("삭제 대기");
 }
