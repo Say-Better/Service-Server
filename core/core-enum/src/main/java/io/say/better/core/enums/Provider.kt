@@ -1,36 +1,21 @@
-package io.say.better.core.enums;
+package io.say.better.core.enums
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*
+import java.util.stream.Stream
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+enum class Provider(
+    val description: String
+) {
+    GOOGLE("google"),
+    NAVER("naver"),
+    KAKAO("kakao"),
+    FACEBOOK("facebook");
 
-@Getter
-@RequiredArgsConstructor
-public enum Provider {
-	GOOGLE("google"),
-	NAVER("naver"),
-	KAKAO("kakao"),
-	FACEBOOK("facebook");
-
-	private final String description;
-
-	private static final Map<String, Provider> descriptions =
-			Collections.unmodifiableMap(
-					Stream.of(values())
-							.collect(
-									Collectors.toMap(
-											Provider::getDescription,
-											Function.identity()
-									)
-							));
-
-	public static Optional<Provider> find(String description) {
-		return Optional.of(descriptions.get(description));
-	}
+    companion object {
+        fun find(description: String): Optional<Provider> {
+            return Stream.of(*entries.toTypedArray())
+                .filter { it.description == description }
+                .findFirst()
+        }
+    }
 }
