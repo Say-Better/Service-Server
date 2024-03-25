@@ -10,16 +10,15 @@ import org.springframework.stereotype.Service
 @Slf4j
 @Service
 @RequiredArgsConstructor
-class
-SymbolService (
+class SymbolService (
         private val symbolReadRepository: SymbolReadRepository,
         private val symbolWriteRepository: SymbolWriteRepository
 ) {
-    fun getSymbols(symbols: List<String?>?): List<Symbol> {
-        return symbolReadRepository!!.findByTitleIn(symbols)
+    fun getSymbols(symbols: List<String>?): List<Symbol> {
+        return symbolReadRepository.findByTitleIn(symbols)
     }
 
-    fun getSymbols(name: String?): List<Symbol> {
-        return symbolReadRepository!!.findByTitleStartingWith(name)
+    fun getSymbols(name: String): List<Symbol> {
+        return symbolReadRepository.findByTitleStartingWith(name)
     }
 }
