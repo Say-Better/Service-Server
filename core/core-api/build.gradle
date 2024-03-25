@@ -13,7 +13,7 @@ dependencies {
     implementation project(":support:logging")
     implementation project(":storage:storage-mysql")
     implementation project(":storage:storage-redis")
-    implementation project(":clients:client-symbol")
+    implementation project(":clients:client-api")
 
     testImplementation project(":tests:api-docs")
 
