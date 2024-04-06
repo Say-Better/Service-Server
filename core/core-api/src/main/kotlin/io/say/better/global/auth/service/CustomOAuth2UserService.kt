@@ -71,8 +71,8 @@ class CustomOAuth2UserService(
      */
     private fun getUser(attributes: OAuthAttributes, provider: Provider): Member {
         val loginId = attributes.userInfo.provider + "_" + attributes.userInfo.providerId
-        val findUser = memberReadRepository!!.findByProviderAndLoginId(provider, loginId).orElse(null)
-            ?: return saveUser(attributes, provider)
+        val findUser = memberReadRepository.findByProviderAndLoginId(provider, loginId)
+            .orElse(null) ?: return saveUser(attributes, provider)
 
         return findUser
     }
@@ -86,6 +86,6 @@ class CustomOAuth2UserService(
      */
     private fun saveUser(attributes: OAuthAttributes, provider: Provider): Member {
         val createdUser = attributes.toEntity(provider, attributes.userInfo)
-        return memberWriteRepository!!.save(createdUser)
+        return memberWriteRepository.save(createdUser)
     }
 }
