@@ -8,7 +8,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'Say-Better'
+rootProject.name = 'io.say.better'
 
 include 'core:core-api'
 include 'core:core-enum'
