@@ -4,10 +4,8 @@ spring.security.oauth2:
       google:
         client-id: ${GOOGLE_CLIENT_ID}
         client-secret: ${GOOGLE_CLIENT_SECRET}
-        redirectUri: "http://localhost:8080/api/oauth2/login/callback/google"
-        scope:
-          - email
-          - profile
+        redirect-uri: http://localhost:8080/login/oauth2/code/google
+        scope: [email, profile]
 
 jwt:
   bearer: ${JWT_BEARER:Bearer}
