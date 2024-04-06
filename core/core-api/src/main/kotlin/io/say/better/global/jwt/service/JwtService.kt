@@ -1,6 +1,8 @@
 package io.say.better.global.jwt.service
 
+import com.nimbusds.jose.util.StandardCharset
 import io.jsonwebtoken.*
+import io.jsonwebtoken.security.Keys
 import io.say.better.global.config.logger.logger
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.storage.redis.RedisUtil
@@ -20,6 +22,7 @@ class JwtService(
 ) {
 
     private val log = logger()
+    private val signingKey = Keys.hmacShaKeyFor(jwtProperties.secret.toByteArray(StandardCharset.UTF_8))
 
     /**
      * AccessToken 생성 메소드
@@ -28,14 +31,14 @@ class JwtService(
      * @return AccessToken
      */
     fun createAccessToken(email: String): String {
-        val claims = Jwts.claims(mapOf<String, Any>(EMAIL_CLAIM to email))
+        val claims = Jwts.claims(mutableMapOf<String, Any>(EMAIL_CLAIM to email))
         val now = Date()
         return Jwts.builder() // JWT 토큰을 생성하는 빌더 반환
             .setClaims(claims) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
             .setSubject(ACCESS_TOKEN_SUBJECT)
             .setIssuedAt(now) // 토큰 발급 시간 설정
-            .setExpiration(Date(now.time + jwtProperties!!.accessExpiration)) // 토큰 만료 시간 설정
-            .signWith(SignatureAlgorithm.HS512, jwtProperties.secret) // 지정한 secret 키로 암호화
+            .setExpiration(Date(now.time + jwtProperties.accessExpiration)) // 토큰 만료 시간 설정
+            .signWith(signingKey, SignatureAlgorithm.HS256) // 지정한 secret 키로 암호화
             .compact()
     }
 
@@ -48,8 +51,8 @@ class JwtService(
         val now = Date()
         return Jwts.builder()
             .setSubject(REFRESH_TOKEN_SUBJECT)
-            .setExpiration(Date(now.time + jwtProperties!!.refreshExpiration))
-            .signWith(SignatureAlgorithm.HS512, jwtProperties.secret)
+            .setExpiration(Date(now.time + jwtProperties.refreshExpiration))
+            .signWith(signingKey, SignatureAlgorithm.HS256)
             .compact()
     }
 
@@ -61,10 +64,10 @@ class JwtService(
      */
     fun sendAccessToken(
         response: HttpServletResponse,
-        accessToken: String?
+        accessToken: String
     ) {
         response.status = HttpServletResponse.SC_OK
-        response.setHeader(jwtProperties!!.accessHeader, accessToken)
+        response.setHeader(jwtProperties.accessHeader, accessToken)
         log.info("재발급된 Access Token : {}", accessToken)
     }
 
@@ -77,10 +80,10 @@ class JwtService(
      */
     fun sendAccessAndRefreshToken(
         response: HttpServletResponse,
-        accessToken: String?, refreshToken: String?
+        accessToken: String,
+        refreshToken: String?
     ) {
         response.status = HttpServletResponse.SC_OK
-
         setAccessTokenHeader(response, accessToken)
         setRefreshTokenHeader(response, refreshToken)
         log.info("Access Token, Refresh Token 헤더 설정 완료")
@@ -95,9 +98,9 @@ class JwtService(
      *
      * @param request HttpServletRequest
      * @return Optional<String> RefreshToken
-    </String> */
+     */
     fun extractRefreshToken(request: HttpServletRequest): Optional<String> {
-        return Optional.ofNullable(request.getHeader(jwtProperties!!.refreshHeader))
+        return Optional.ofNullable(request.getHeader(jwtProperties.refreshHeader))
             .filter { refreshToken: String -> refreshToken.startsWith(BEARER) }
             .map { refreshToken: String -> refreshToken.replace(BEARER, "") }
     }
@@ -113,7 +116,7 @@ class JwtService(
      * @return Optional<String> AccessToken
     </String> */
     fun extractAccessToken(request: HttpServletRequest): Optional<String> {
-        return Optional.ofNullable(request.getHeader(jwtProperties!!.accessHeader))
+        return Optional.ofNullable(request.getHeader(jwtProperties.accessHeader))
             .filter { accessToken: String -> accessToken.startsWith(BEARER) }
             .map { accessToken: String -> accessToken.replace(BEARER, "") }
     }
@@ -121,26 +124,17 @@ class JwtService(
     /**
      * AccessToken에서 Email 추출
      *
-     *
      * 1. AccessToken을 파싱하여 <br></br>
      * 2. email claim을 추출하여 <br></br>
      * 3. Optional로 반환
      *
      * @param accessToken AccessToken
      * @return Optional<String> Email
-    </String> */
+     */
     fun extractEmail(accessToken: String?): Optional<String> {
-        return try {
-            Optional.ofNullable(
-                Jwts.parser()
-                    .setSigningKey(jwtProperties!!.secret)
-                    .parseClaimsJws(accessToken)
-                    .body
-                    .get(EMAIL_CLAIM, String::class.java)
-            )
-        } catch (e: Exception) {
-            Optional.empty()
-        }
+        return Optional.ofNullable(
+            getJwsClaim(accessToken).get(EMAIL_CLAIM, String::class.java)
+        )
     }
 
     /**
@@ -149,8 +143,8 @@ class JwtService(
      * @param response    HttpServletResponse
      * @param accessToken AccessToken
      */
-    fun setAccessTokenHeader(response: HttpServletResponse, accessToken: String?) {
-        response.setHeader(jwtProperties!!.accessHeader, accessToken)
+    private fun setAccessTokenHeader(response: HttpServletResponse, accessToken: String?) {
+        response.setHeader(jwtProperties.accessHeader, accessToken)
     }
 
     /**
@@ -159,8 +153,8 @@ class JwtService(
      * @param response     HttpServletResponse
      * @param refreshToken RefreshToken
      */
-    fun setRefreshTokenHeader(response: HttpServletResponse, refreshToken: String?) {
-        response.setHeader(jwtProperties!!.refreshHeader, refreshToken)
+    private fun setRefreshTokenHeader(response: HttpServletResponse, refreshToken: String?) {
+        response.setHeader(jwtProperties.refreshHeader, refreshToken)
     }
 
     /**
@@ -169,7 +163,7 @@ class JwtService(
      * @param email Email
      */
     fun updateRefreshToken(email: String?, refreshToken: String?) {
-        redisUtil!!.setDataExpire(refreshToken, email, jwtProperties!!.refreshExpiration)
+        redisUtil.setDataExpire(refreshToken, email, jwtProperties.refreshExpiration)
     }
 
     /**
@@ -185,8 +179,8 @@ class JwtService(
      */
     fun isTokenValid(token: String?): Boolean {
         try {
-            val claimsJws = Jwts.parser().setSigningKey(jwtProperties!!.secret).parseClaimsJws(token)
-            return !claimsJws.body.expiration.before(Date())
+            val claimsJws = getJwsClaim(token)
+            return !claimsJws.expiration.before(Date())
         } catch (exception: ExpiredJwtException) {
             log.warn("만료된 jwt 입니다.")
         } catch (exception: UnsupportedJwtException) {
@@ -196,6 +190,12 @@ class JwtService(
         }
         return false
     }
+
+    private fun getJwsClaim(accessToken: String?): Claims = Jwts.parserBuilder()
+        .setSigningKey(signingKey)
+        .build()
+        .parseClaimsJws(accessToken)
+        .body
 
     companion object {
         private const val ACCESS_TOKEN_SUBJECT = "AccessToken"

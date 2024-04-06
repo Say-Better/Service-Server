@@ -60,7 +60,7 @@ class JwtAuthenticationProcessingFilter(
         }
 
         // RefreshToken 추출, AccessToken이 만료되지 않은 이상 RefreshToken은 null
-        val refreshToken = jwtService!!.extractRefreshToken(request)
+        val refreshToken = jwtService.extractRefreshToken(request)
             .filter { token: String? -> jwtService.isTokenValid(token) }
             .orElse(null)
 
@@ -102,11 +102,11 @@ class JwtAuthenticationProcessingFilter(
         refreshToken: String
     ) {
         log.info("JwtAuthenticationProcessingFilter.checkRefreshTokenAndReIssueAccessToken() 실행 - RefreshToken 검증")
-        val email = redisUtil!!.getData(refreshToken)
-        memberReadRepository!!.findByEmail(email)
+        val email = redisUtil.getData(refreshToken)
+        memberReadRepository.findByEmail(email)
             .ifPresent { user: Member ->
                 val reIssuedRefreshToken = reIssueRefreshToken(user)
-                jwtService!!.sendAccessAndRefreshToken(
+                jwtService.sendAccessAndRefreshToken(
                     response,
                     jwtService.createAccessToken(user.email),
                     reIssuedRefreshToken
@@ -121,8 +121,8 @@ class JwtAuthenticationProcessingFilter(
      * @return 재발급된 RefreshToken
      */
     private fun reIssueRefreshToken(user: Member): String? {
-        val reIssuedRefreshToken = jwtService!!.createRefreshToken()
-        redisUtil!!.setDataExpire(reIssuedRefreshToken, user.email, jwtProperties!!.refreshExpiration)
+        val reIssuedRefreshToken = jwtService.createRefreshToken()
+        redisUtil.setDataExpire(reIssuedRefreshToken, user.email, jwtProperties.refreshExpiration)
         return reIssuedRefreshToken
     }
 
@@ -148,13 +148,13 @@ class JwtAuthenticationProcessingFilter(
         filterChain: FilterChain
     ) {
         log.info("JwtAuthenticationProcessingFilter.checkAccessTokenAndAuthentication() 실행 - AccessToken 검증")
-        jwtService!!.extractAccessToken(request)
+        jwtService.extractAccessToken(request)
             .filter { token: String? -> jwtService.isTokenValid(token) }
             .ifPresent { accessToken: String? ->
-                jwtService.extractEmail(accessToken)
-                    .ifPresent { email: String? ->
-                        memberReadRepository!!.findByEmail(email)
-                            .ifPresent { member: Member -> this.saveAuthentication(member) }
+                jwtService.extractEmail(accessToken).ifPresent { email: String? ->
+                    memberReadRepository
+                        .findByEmail(email)
+                        .ifPresent { member: Member -> this.saveAuthentication(member) }
                     }
             }
 
