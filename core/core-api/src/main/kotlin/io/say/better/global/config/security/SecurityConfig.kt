@@ -4,7 +4,6 @@ import io.say.better.core.enums.RoleType
 import io.say.better.global.auth.handler.OAuth2LoginFailureHandler
 import io.say.better.global.auth.handler.OAuth2LoginSuccessHandler
 import io.say.better.global.auth.service.CustomOAuth2UserService
-import io.say.better.global.config.logger.logger
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.global.config.web.CorsConfig
 import io.say.better.global.jwt.filter.JwtAuthenticationProcessingFilter
@@ -16,11 +15,9 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.logout.LogoutFilter
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @RequiredArgsConstructor
@@ -41,15 +38,19 @@ open class SecurityConfig(
         "/h2-console/**",
         "/api/temp/**",
         "/api/auth/**",
-        "/oauth2/**"
+        "/sing-up"
     )
 
     private val noneUserRoleUrls = arrayOf(
         "/api/auth/assign/**"
     )
 
-    private val authenticatedUrls = arrayOf(
-        "/api/**"
+    private val educatorUrls = arrayOf(
+        "/api/educator/**"
+    )
+
+    private val leanerUrls = arrayOf(
+        "/api/learner/**"
     )
 
     @Bean
@@ -63,7 +64,9 @@ open class SecurityConfig(
                 it
                     .requestMatchers(*permitUrls).permitAll()
                     .requestMatchers(*noneUserRoleUrls).hasRole(RoleType.NONE.name)
-                    .requestMatchers(*authenticatedUrls).authenticated()
+                    .requestMatchers(*educatorUrls).hasRole(RoleType.EDUCATOR.name)
+                    .requestMatchers(*leanerUrls).hasRole(RoleType.LEARNER.name)
+                    .anyRequest().authenticated()
             }
             .oauth2Login {
                 it
