@@ -20,7 +20,7 @@ data class OAuthAttributes(
      * @param oauth2UserInfo 소셜 로그인 유저 정보
      * @return Member
      */
-    fun toEntity(provider: Provider?, oauth2UserInfo: OAuth2UserInfo): Member {
+    fun toEntity(provider: Provider, oauth2UserInfo: OAuth2UserInfo): Member {
         val loginId = oauth2UserInfo.provider + "_" + oauth2UserInfo.providerId
 
         return MemberConverter.toMember(
