@@ -34,7 +34,7 @@ public class Member extends BaseTimeEntity {
 	@Column(name = "email", nullable = false, length = 100)
 	private String email;
 
-	@Column(name = "birth_date", nullable = false)
+	@Column(name = "birth_date")
 	private String birthDate;
 
 	@Enumerated(EnumType.STRING)
