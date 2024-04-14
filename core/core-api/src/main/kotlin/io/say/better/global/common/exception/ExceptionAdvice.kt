@@ -100,7 +100,7 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
         return handleExceptionInternal(
             exception = generalException,
             reason = errorReasonHttpStatus,
-            headers = null,
+            headers = HttpHeaders.EMPTY,
             request = request
         )
     }

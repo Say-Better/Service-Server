@@ -16,10 +16,13 @@ import org.springframework.http.HttpStatus
 data class ResponseDto<T>(
         @field:JsonProperty("isSuccess")
         private val isSuccess: Boolean,
+        @field:JsonProperty("code")
         private val code: String,
+        @field:JsonProperty("message")
         private val message: String,
 
         @field:JsonInclude(JsonInclude.Include.NON_NULL)
+        @field:JsonProperty("result")
         private val result: T,
 ) {
 
