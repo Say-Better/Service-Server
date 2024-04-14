@@ -5,7 +5,7 @@ plugins {
 }
 
 bootJar.enabled = true
-jar.enabled = false
+jar.enabled = true
 
 dependencies {
     implementation project(":core:core-enum")
