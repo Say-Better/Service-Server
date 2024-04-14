@@ -10,7 +10,7 @@ spring:
       - swagger.yml
       - mysql.yml
       - redis.yml
-      - client-symbol.yml
+      - client-api.yml
   web.resources.add-mappings: false
 
 server:
