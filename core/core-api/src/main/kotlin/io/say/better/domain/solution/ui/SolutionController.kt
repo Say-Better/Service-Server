@@ -16,12 +16,12 @@ class SolutionController(
     private val solutionFacade: SolutionFacade
 ) {
     @GetMapping("/symbol/recommend/{name}")
-    fun recommendSymbol(@PathVariable name: String): ResponseDto<SymbolList> {
+    fun recommendSymbol(@PathVariable(name = "name") name: String): ResponseDto<SymbolList> {
         return ResponseDto.onSuccess(solutionFacade!!.recommendSymbol(name))
     }
 
     @GetMapping("/symbol/search/{name}")
-    fun searchSymbol(@PathVariable name: String): ResponseDto<SymbolList> {
+    fun searchSymbol(@PathVariable(name = "name") name: String): ResponseDto<SymbolList> {
         return ResponseDto.onSuccess(solutionFacade!!.searchSymbol(name))
     }
 

@@ -21,7 +21,7 @@ class MemberController(
     }
 
     @PostMapping("/connect/{code}")
-    fun connect(@PathVariable code: String?): ResponseDto<Void?> {
+    fun connect(@PathVariable(value = "code") code: String?): ResponseDto<Void?> {
         memberFacade!!.connect(code)
         return ResponseDto.onSuccess(null)
     }
