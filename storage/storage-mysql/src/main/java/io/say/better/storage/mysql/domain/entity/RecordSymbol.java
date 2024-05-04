@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Getter
 @Entity(name = "RECORD_SYMBOL")
@@ -20,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 public class RecordSymbol {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name = "rs_id")
-	private Long rsId;
+	private String rsId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "record_id", nullable = false)
@@ -32,7 +34,10 @@ public class RecordSymbol {
 	@JoinColumn(name = "symbol_id", nullable = false)
 	private Symbol symbol;
 
-	@Column(name = "touch_count", nullable = false, columnDefinition = "int default 0")
-	private Integer touchCount;
+    @Column(name = "touch_order", nullable = false)
+    private Integer touchOrder;
+
+    @Column(name = "touch_time", nullable = false)
+    private LocalDateTime touchTime;
 
 }

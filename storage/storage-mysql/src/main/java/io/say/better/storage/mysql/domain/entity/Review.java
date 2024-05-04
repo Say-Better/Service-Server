@@ -1,7 +1,5 @@
 package io.say.better.storage.mysql.domain.entity;
 
-import io.say.better.storage.mysql.domain.entity.Assign;
-import io.say.better.storage.mysql.domain.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,11 +25,7 @@ public class Review extends BaseTimeEntity {
 	private Long reviewId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "assign_id", nullable = false)
-	private Assign assign;
-
-	// 회기 번호
-	@Column(name = "session", nullable = false, columnDefinition = "int default 0")
-	private Integer session;
+	@JoinColumn(name = "progress_id", nullable = false)
+	private Progress progress;
 
 }
