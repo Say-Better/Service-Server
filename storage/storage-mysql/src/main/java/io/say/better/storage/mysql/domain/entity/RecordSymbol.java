@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 public class RecordSymbol {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name = "rs_id")
 	private String rsId;
 
