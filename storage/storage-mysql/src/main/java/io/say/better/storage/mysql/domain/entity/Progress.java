@@ -1,7 +1,6 @@
 package io.say.better.storage.mysql.domain.entity;
 
 import io.say.better.core.enums.Status;
-import io.say.better.storage.mysql.domain.constant.AssignState;
 import io.say.better.storage.mysql.domain.constant.AssignStep;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,20 +21,16 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Entity(name = "ASSIGN")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Assign extends BaseTimeEntity {
+public class Progress extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "assign_id")
-	private Long assignId;
+	@Column(name = "progress_id")
+	private Long progressId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "solution_id", nullable = false)
 	private Solution solution;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "learner_id", nullable = false)
-	private Member learner;
 
 	// 현재 단계
 	@Enumerated(EnumType.STRING)
@@ -43,13 +38,16 @@ public class Assign extends BaseTimeEntity {
 	private AssignStep nowAssignStep;
 
 	// 현재 회기
-	@Column(name = "now_session", nullable = false, columnDefinition = "int default 0")
-	private Integer nowSession;
+	@Column(name = "session_order", nullable = false)
+	private Integer sessionOrder;
 
-	// 현재 회기 상태
-	@Enumerated(EnumType.STRING)
-	@Column(name = "now_state", nullable = false, length = 20)
-	private AssignState nowState;
+    // 세션 목표
+    @Column(name = "session_goal", nullable = false) // length 255
+    private String sessionGoal;
+
+    // 세션 설명
+    @Column(name = "session_description", nullable = false, columnDefinition = "") // length 255
+    private String sessionDescription;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false, length = 20)

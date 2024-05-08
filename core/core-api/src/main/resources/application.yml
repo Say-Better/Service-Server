@@ -10,6 +10,7 @@ spring:
       - swagger.yml
       - mysql.yml
       - redis.yml
+      - rabbitmq.yml
       - client-api.yml
   web.resources.add-mappings: false
 
