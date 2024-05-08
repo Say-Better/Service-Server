@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  spring-app:
+    image: 339712899775.dkr.ecr.ap-northeast-2.amazonaws.com/spring-dev:latest
+    container_name: spring-app
+    restart: always
+    ports:
+      - "8080:8080"
+
+  nginx:
+    image: 339712899775.dkr.ecr.ap-northeast-2.amazonaws.com/nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - spring-app
