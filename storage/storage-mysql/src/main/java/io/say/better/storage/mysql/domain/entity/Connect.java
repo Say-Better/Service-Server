@@ -1,7 +1,5 @@
 package io.say.better.storage.mysql.domain.entity;
 
-import io.say.better.storage.mysql.domain.entity.BaseTimeEntity;
-import io.say.better.storage.mysql.domain.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,14 +27,14 @@ public class Connect extends BaseTimeEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "educator_id")
-	private Member educator;
+	private Educator educator;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "learner_id")
-	private Member learner;
+	private Learner learner;
 
 	@Builder
-	public Connect(Member educator, Member learner) {
+	public Connect(Educator educator, Learner learner) {
 		this.educator = educator;
 		this.learner = learner;
 	}
