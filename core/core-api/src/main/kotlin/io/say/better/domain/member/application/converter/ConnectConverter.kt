@@ -1,7 +1,8 @@
 package io.say.better.domain.member.application.converter
 
 import io.say.better.storage.mysql.domain.entity.Connect
-import io.say.better.storage.mysql.domain.entity.Member
+import io.say.better.storage.mysql.domain.entity.Educator
+import io.say.better.storage.mysql.domain.entity.Learner
 
 class ConnectConverter private constructor() {
     init {
@@ -9,11 +10,11 @@ class ConnectConverter private constructor() {
     }
 
     companion object {
-        fun toConnect(educator: Member?, learner: Member?): Connect {
+        fun toConnect(educator: Educator?, learner: Learner?): Connect {
             return Connect.builder()
-                    .educator(educator)
-                    .learner(learner)
-                    .build()
+                .educator(educator)
+                .learner(learner)
+                .build()
         }
     }
 }
