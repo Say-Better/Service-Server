@@ -8,7 +8,8 @@ import io.say.better.global.config.properties.JwtProperties
 import io.say.better.global.config.web.CorsConfig
 import io.say.better.global.jwt.filter.JwtAuthenticationProcessingFilter
 import io.say.better.global.jwt.service.JwtService
-import io.say.better.storage.mysql.dao.repository.MemberReadRepository
+import io.say.better.storage.mysql.dao.repository.EducatorReadRepository
+import io.say.better.storage.mysql.dao.repository.LearnerReadRepository
 import io.say.better.storage.redis.RedisUtil
 import lombok.RequiredArgsConstructor
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
@@ -26,7 +27,8 @@ open class SecurityConfig(
     private val redisUtil: RedisUtil,
     private val jwtService: JwtService,
     private val jwtProperties: JwtProperties,
-    private val memberReadRepository: MemberReadRepository,
+    private val educatorReadRepository: EducatorReadRepository,
+    private val learnerReadRepository: LearnerReadRepository,
     private val customOAuth2UserService: CustomOAuth2UserService,
     private val OAuth2LoginSuccessHandler: OAuth2LoginSuccessHandler,
     private val OAuth2LoginFailureHandler: OAuth2LoginFailureHandler
@@ -94,7 +96,7 @@ open class SecurityConfig(
     @Bean
     open fun jwtAuthenticationProcessingFilter(): JwtAuthenticationProcessingFilter {
         return JwtAuthenticationProcessingFilter(
-            memberReadRepository, jwtProperties, jwtService, redisUtil
+            educatorReadRepository, learnerReadRepository, jwtProperties, jwtService, redisUtil
         )
     }
 }
