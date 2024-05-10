@@ -3,7 +3,8 @@ package io.say.better.global.jwt.filter
 import io.say.better.global.config.logger.logger
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.global.jwt.service.JwtService
-import io.say.better.storage.mysql.dao.repository.MemberReadRepository
+import io.say.better.storage.mysql.dao.repository.EducatorReadRepository
+import io.say.better.storage.mysql.dao.repository.LearnerReadRepository
 import io.say.better.storage.mysql.domain.entity.Member
 import io.say.better.storage.redis.RedisUtil
 import jakarta.servlet.FilterChain
@@ -39,7 +40,8 @@ import java.io.IOException
 @Slf4j
 @RequiredArgsConstructor
 class JwtAuthenticationProcessingFilter(
-    private val memberReadRepository: MemberReadRepository,
+    private val educatorReadRepository: EducatorReadRepository,
+    private val learnerReadRepository: LearnerReadRepository,
     private val jwtProperties: JwtProperties,
     private val jwtService: JwtService,
     private val redisUtil: RedisUtil,
@@ -103,7 +105,17 @@ class JwtAuthenticationProcessingFilter(
     ) {
         log.info("JwtAuthenticationProcessingFilter.checkRefreshTokenAndReIssueAccessToken() 실행 - RefreshToken 검증")
         val email = redisUtil.getData(refreshToken)
-        memberReadRepository.findByEmail(email)
+        educatorReadRepository.findByEmail(email)
+            .ifPresent { user: Member ->
+                val reIssuedRefreshToken = reIssueRefreshToken(user)
+                jwtService.sendAccessAndRefreshToken(
+                    response,
+                    jwtService.createAccessToken(user.email),
+                    reIssuedRefreshToken
+                )
+            }
+
+        learnerReadRepository.findByEmail(email)
             .ifPresent { user: Member ->
                 val reIssuedRefreshToken = reIssueRefreshToken(user)
                 jwtService.sendAccessAndRefreshToken(
@@ -152,10 +164,18 @@ class JwtAuthenticationProcessingFilter(
             .filter { token: String? -> jwtService.isTokenValid(token) }
             .ifPresent { accessToken: String? ->
                 jwtService.extractEmail(accessToken).ifPresent { email: String? ->
-                    memberReadRepository
-                        .findByEmail(email)
-                        .ifPresent { member: Member -> this.saveAuthentication(member) }
+                    run {
+                        val educatorOptional = educatorReadRepository.findByEmail(email)
+                        if (educatorOptional.isPresent) {
+                            this.saveAuthentication(educatorOptional.get())
+                            return@run
+                        }
+
+                        learnerReadRepository
+                            .findByEmail(email)
+                            .ifPresent { member: Member -> this.saveAuthentication(member) }
                     }
+                }
             }
 
         filterChain.doFilter(request, response)
