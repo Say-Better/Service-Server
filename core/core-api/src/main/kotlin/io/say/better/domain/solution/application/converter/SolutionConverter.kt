@@ -10,13 +10,10 @@ class SolutionConverter private constructor() {
     }
 
     companion object {
-        fun toSolution(request: CreateSolution, educator: Educator?): Solution {
+        fun toSolution(request: CreateSolution, member: Educator?): Solution {
             return Solution.builder()
-                .writer(educator)
+                .writer(member)
                 .title(request.title)
-                .baselineSessionTime(request.baselineSessionTime)
-                .interCompleteThresh(request.interCompleteThresh)
-                .interMaintainTerm(request.interMaintainTerm)
                 .commOptTimes(request.commOptTimes)
                 .commOptCnt(request.commOptCnt)
                 .build()
