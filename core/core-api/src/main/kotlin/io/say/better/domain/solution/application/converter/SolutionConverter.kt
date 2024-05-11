@@ -10,7 +10,7 @@ class SolutionConverter private constructor() {
     }
 
     companion object {
-        fun toSolution(request: CreateSolution, member: Educator?): Solution {
+        fun toSolution(request: CreateSolution, member: Educator): Solution {
             return Solution.builder()
                 .writer(member)
                 .title(request.title)
