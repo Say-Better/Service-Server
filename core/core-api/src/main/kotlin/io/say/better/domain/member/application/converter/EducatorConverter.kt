@@ -10,12 +10,12 @@ class EducatorConverter private constructor() {
 
     companion object {
         fun toEducator(
-                email: String?,
+                email: String,
                 birthDate: String?,
-                provider: Provider?,
-                providerId: String?,
-                loginId: String?,
-                name: String?
+                provider: Provider,
+                providerId: String,
+                loginId: String,
+                name: String
         ): Educator {
             return Educator.createEducator(email, birthDate, provider, providerId, loginId, name)
         }

@@ -17,7 +17,7 @@ class ConnectService(
     private val connectWriteRepository: ConnectWriteRepository
 ) {
 
-    fun connect(educator: Educator?, learner: Learner?) {
+    fun connect(educator: Educator, learner: Learner) {
         val newConnect = ConnectConverter.toConnect(educator, learner)
         connectWriteRepository!!.save(newConnect)
     }
