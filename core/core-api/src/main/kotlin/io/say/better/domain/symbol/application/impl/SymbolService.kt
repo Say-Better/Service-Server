@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 @Slf4j
 @Service
 @RequiredArgsConstructor
-class SymbolService (
+class SymbolService(
         private val symbolReadRepository: SymbolReadRepository,
         private val symbolWriteRepository: SymbolWriteRepository
 ) {
@@ -20,5 +20,9 @@ class SymbolService (
 
     fun getSymbols(name: String): List<Symbol> {
         return symbolReadRepository.findByTitleStartingWith(name)
+    }
+
+    fun getSymbol(symbolId: Long): Symbol {
+        return symbolReadRepository.findById(symbolId).get()
     }
 }

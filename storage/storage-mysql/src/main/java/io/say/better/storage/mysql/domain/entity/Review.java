@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +20,17 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseTimeEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "review_id")
-	private Long reviewId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id")
+    private Long reviewId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "progress_id", nullable = false)
-	private Progress progress;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "progress_id", nullable = false)
+    private Progress progress;
 
+    @Builder
+    public Review(Progress progress) {
+        this.progress = progress;
+    }
 }

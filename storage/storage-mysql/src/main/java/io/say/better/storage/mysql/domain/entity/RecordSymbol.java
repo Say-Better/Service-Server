@@ -9,11 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Slf4j
 @Getter
@@ -23,7 +25,7 @@ public class RecordSymbol {
 
 	@Id
 	@Column(name = "rs_id")
-	private String rsId;
+	private UUID rsId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "record_id", nullable = false)
@@ -39,4 +41,12 @@ public class RecordSymbol {
     @Column(name = "touch_time", nullable = false)
     private LocalDateTime touchTime;
 
+    @Builder
+    public RecordSymbol(UUID rsId, Record recorded, Symbol symbol, Integer touchOrder, LocalDateTime touchTime) {
+        this.rsId = rsId;
+        this.recorded = recorded;
+        this.symbol = symbol;
+        this.touchOrder = touchOrder;
+        this.touchTime = touchTime;
+    }
 }

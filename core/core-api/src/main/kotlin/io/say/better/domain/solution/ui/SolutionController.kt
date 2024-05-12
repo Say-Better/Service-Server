@@ -1,7 +1,10 @@
 package io.say.better.domain.solution.ui
 
 import io.say.better.domain.solution.application.SolutionFacade
+import io.say.better.domain.solution.ui.dto.SolutionRequest.EndSolution
+import io.say.better.domain.solution.ui.dto.SolutionRequest.StartSolution
 import io.say.better.domain.solution.ui.dto.SolutionRequest.CreateSolution
+import io.say.better.domain.solution.ui.dto.SolutionResponse.ProgressInfo
 import io.say.better.domain.solution.ui.dto.SolutionResponse.SymbolList
 import io.say.better.global.common.response.ResponseDto
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -30,6 +33,22 @@ class SolutionController(
             @RequestBody request: CreateSolution?
     ): ResponseDto<Void?> {
         solutionFacade!!.createSolution(request!!)
+        return ResponseDto.onSuccess(null)
+    }
+
+    @PostMapping("/start")
+    fun startSolution(
+        @RequestBody request: StartSolution?
+    ): ResponseDto<ProgressInfo> {
+
+        return ResponseDto.onSuccess(solutionFacade.startSolution(request!!))
+    }
+
+    @PostMapping("/end")
+    fun endSolution(
+        @RequestBody request: List<EndSolution>?
+    ): ResponseDto<Void?> {
+        solutionFacade.endSolution(request!!)
         return ResponseDto.onSuccess(null)
     }
 }

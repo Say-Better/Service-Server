@@ -14,4 +14,8 @@ class SolutionResponse private constructor() {
             val description: String,
             val imageUrl: String
     )
+
+    data class ProgressInfo(
+        val progressId: Long
+    )
 }

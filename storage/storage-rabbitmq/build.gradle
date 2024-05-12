@@ -1,4 +1,5 @@
 dependencies {
     implementation project(':core:core-enum')
+    implementation project(':storage:storage-mysql')
     api 'org.springframework.boot:spring-boot-starter-amqp'
 }

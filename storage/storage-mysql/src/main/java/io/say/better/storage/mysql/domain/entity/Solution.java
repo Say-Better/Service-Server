@@ -59,4 +59,16 @@ public class Solution extends BaseTimeEntity {
 	public void onActivated() {
 		this.status = Status.ACTIVE;
 	}
+
+	public void onStart() {
+		this.nowState = ProgressState.PROCESSING;
+	}
+
+	public void onEnd() {
+		this.nowState = ProgressState.HAVE_TO_REVIEW;
+	}
+
+	public void onReviewEnd() {
+		this.nowState = ProgressState.TERMINATED;
+	}
 }

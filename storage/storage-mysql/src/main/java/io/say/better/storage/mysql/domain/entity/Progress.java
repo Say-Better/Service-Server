@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,4 +54,16 @@ public class Progress extends BaseTimeEntity {
 	@Column(name = "status", nullable = false, length = 20)
 	private Status status;
 
+    @Builder
+    public Progress( Solution solution, AssignStep nowAssignStep, Integer sessionOrder, String sessionGoal, String sessionDescription) {
+        this.solution = solution;
+        this.nowAssignStep = nowAssignStep;
+        this.sessionOrder = sessionOrder;
+        this.sessionGoal = sessionGoal;
+        this.sessionDescription = sessionDescription;
+    }
+
+    public void onActivated() {
+        status = Status.ACTIVE;
+    }
 }
