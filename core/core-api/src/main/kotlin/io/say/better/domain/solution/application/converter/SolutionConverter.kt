@@ -2,6 +2,7 @@ package io.say.better.domain.solution.application.converter
 
 import io.say.better.domain.solution.ui.dto.SolutionRequest.CreateSolution
 import io.say.better.storage.mysql.domain.entity.Educator
+import io.say.better.storage.mysql.domain.entity.Learner
 import io.say.better.storage.mysql.domain.entity.Solution
 
 class SolutionConverter private constructor() {
@@ -10,9 +11,13 @@ class SolutionConverter private constructor() {
     }
 
     companion object {
-        fun toSolution(request: CreateSolution, member: Educator): Solution {
+        fun toSolution(request: CreateSolution, educator: Educator, learner: Learner): Solution {
             return Solution.builder()
-                .writer(member)
+                .nowState(request.nowState)
+                .educationGoal(request.educationGoal)
+                .description(request.description)
+                .writer(educator)
+                .learner(learner)
                 .title(request.title)
                 .commOptTimes(request.commOptTimes)
                 .commOptCnt(request.commOptCnt)
