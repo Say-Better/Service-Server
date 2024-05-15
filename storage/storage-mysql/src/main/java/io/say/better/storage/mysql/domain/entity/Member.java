@@ -4,89 +4,44 @@ import io.say.better.core.enums.Provider;
 import io.say.better.core.enums.RoleType;
 import io.say.better.core.enums.Status;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.experimental.SuperBuilder;
 
-@Slf4j
 @Getter
-@Entity(name = "MEMBER")
+@SuperBuilder
+@MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends BaseTimeEntity {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "member_id")
-	private Long memberId;
+public abstract class Member extends BaseTimeEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false, length = 20)
-	private Status status;
+	Status status;
 
 	@Column(name = "email", nullable = false, length = 100)
-	private String email;
+	String email;
 
 	@Column(name = "birth_date")
-	private String birthDate;
+	String birthDate;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", nullable = false, length = 20)
-	private RoleType role;
+	RoleType role;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "provider", nullable = false, length = 20)
-	private Provider provider;
+	Provider provider;
 
 	@Column(name = "provider_id", nullable = false)
-	private String providerId;
+	String providerId;
 
 	@Column(name = "login_id", nullable = false)
-	private String loginId;
+	String loginId;
 
 	@Column(name = "name", nullable = false, length = 100)
-	private String name;
-
-	@Builder
-	private Member(
-			final String email,
-			final String birthDate,
-			final RoleType role,
-			final Provider provider,
-			final String providerId,
-			final String loginId,
-			final String name
-	) {
-		this.status = Status.ACTIVE;
-		this.email = email;
-		this.birthDate = birthDate;
-		this.role = role;
-		this.provider = provider;
-		this.providerId = providerId;
-		this.loginId = loginId;
-		this.name = name;
-	}
-
-	public static Member createMember(
-			final String email,
-			final String birthDate,
-			final RoleType role,
-			final Provider provider,
-			final String providerId,
-			final String loginId,
-			final String name
-	) {
-		return new Member(email, birthDate, role, provider, providerId, loginId, name);
-	}
-
-	public void assignRole(RoleType role) {
-		this.role = role;
-	}
+	String name;
 }
