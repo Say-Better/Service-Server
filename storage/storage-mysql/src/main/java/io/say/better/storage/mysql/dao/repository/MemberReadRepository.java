@@ -1,15 +1,10 @@
 package io.say.better.storage.mysql.dao.repository;
 
-import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import io.say.better.storage.mysql.domain.entity.Member;
 import io.say.better.core.enums.Provider;
 
-public interface MemberReadRepository extends JpaRepository<Member, Long> {
+import java.util.Optional;
 
-	Optional<Member> findByProviderAndLoginId(Provider provider, String loginId);
-
-	Optional<Member> findByEmail(String email);
+public interface MemberReadRepository<T> {
+	Optional<T> findByProviderAndLoginId(Provider provider, String loginId);
+	Optional<T> findByEmail(String email);
 }

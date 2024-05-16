@@ -11,6 +11,7 @@ import io.say.better.domain.solution.ui.dto.SolutionRequest.CreateSolution
 import io.say.better.domain.symbol.application.impl.SymbolService
 import io.say.better.global.advice.Tx
 import io.say.better.global.config.logger.logger
+import io.say.better.storage.mysql.domain.entity.Educator
 import io.say.better.storage.mysql.domain.entity.SolutionSymbol
 import io.say.better.storage.mysql.domain.entity.Symbol
 import lombok.extern.slf4j.Slf4j
@@ -19,11 +20,11 @@ import org.springframework.stereotype.Component
 @Slf4j
 @Component
 class SolutionFacade (
-        private val solutionService: SolutionService,
-        private val solutionSymbolService: SolutionSymbolService,
-        private val memberService: MemberService,
-        private val symbolService: SymbolService,
-        private val recommendClient: RecommendClient,
+    private val solutionService: SolutionService,
+    private val solutionSymbolService: SolutionSymbolService,
+    private val memberService: MemberService,
+    private val symbolService: SymbolService,
+    private val recommendClient: RecommendClient,
 ) {
 
     private val log = logger()
@@ -40,7 +41,7 @@ class SolutionFacade (
     }
 
     fun createSolution(request: CreateSolution) = Tx.writeable {
-        val member = memberService.currentMember()
+        val member = memberService.currentMember() as Educator
         val newSolution = SolutionConverter.toSolution(request, member)
         val savedSolution = solutionService.createSolution(newSolution)
 

@@ -4,8 +4,7 @@ import io.say.better.core.enums.RoleType
 import io.say.better.domain.member.exception.MemberException
 import io.say.better.global.common.code.status.ErrorStatus
 import io.say.better.global.utils.SecurityUtil
-import io.say.better.storage.mysql.dao.repository.MemberReadRepository
-import io.say.better.storage.mysql.dao.repository.MemberWriteRepository
+import io.say.better.storage.mysql.dao.repository.*
 import io.say.better.storage.mysql.domain.entity.Member
 import lombok.RequiredArgsConstructor
 import lombok.extern.slf4j.Slf4j
@@ -16,8 +15,10 @@ import org.springframework.stereotype.Service
 @RequiredArgsConstructor
 class MemberService(
     private val securityUtil: SecurityUtil,
-    private val memberReadRepository: MemberReadRepository,
-    private val memberWriteRepository: MemberWriteRepository
+    private val educatorReadRepository: EducatorReadRepository,
+    private val educatorWriteRepository: EducatorWriteRepository,
+    private val learnerReadRepository: LearnerReadRepository,
+    private val learnerWriteRepository: LearnerWriteRepository
 ) {
 
     fun currentMember(): Member {
@@ -26,8 +27,20 @@ class MemberService(
     }
 
     fun getMember(email: String?): Member {
-        return memberReadRepository!!.findByEmail(email)
-            .orElseThrow { MemberException(ErrorStatus.MEMBER_NOT_FOUND) }
+        val isValidEducator = findByEmail(educatorReadRepository, email!!)
+        val isValidLearner = findByEmail(learnerReadRepository, email)
+
+        if (isValidEducator) {
+            return educatorReadRepository.findByEmail(email).get()
+        } else if (isValidLearner) {
+            return learnerReadRepository.findByEmail(email).get()
+        } else {
+            throw MemberException(ErrorStatus.MEMBER_NOT_FOUND)
+        }
+    }
+
+    private fun <T> findByEmail(repository: MemberReadRepository<T>, email: String): Boolean {
+        return repository.findByEmail(email).isPresent
     }
 
     fun assignUserRole(userEmail: String?, role: RoleType?) {
@@ -36,8 +49,5 @@ class MemberService(
         if (member.role != RoleType.NONE) {
             throw MemberException(ErrorStatus.MEMBER_HAVE_ROLE_SIGN)
         }
-
-        member.assignRole(role)
-        memberWriteRepository!!.save(member)
     }
 }

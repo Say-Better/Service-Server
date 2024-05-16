@@ -18,10 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Solution extends BaseTimeEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "solution_id")
-	private Long solutionId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "solution_id")
+    private Long solutionId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "now_state", nullable = false)
@@ -33,30 +33,30 @@ public class Solution extends BaseTimeEntity {
     @Column(name = "description", nullable = false) // length 255
     private String description;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "writer_id", nullable = false)
-	private Member writer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_id", nullable = false)
+    private Educator writer;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "learner_id")
-    private Member learner;
+    private Learner learner;
 
-	@Column(name = "title", nullable = false, length = 100)
-	private String title;
+    @Column(name = "title", nullable = false, length = 100)
+    private String title;
 
-	// 회기당 의사소통 기회 부여 횟수
-	@Column(name = "comm_opt_times", nullable = false, columnDefinition = "int default 0")
-	private Integer commOptTimes;
+    // 회기당 의사소통 기회 부여 횟수
+    @Column(name = "comm_opt_times", nullable = false, columnDefinition = "int default 0")
+    private Integer commOptTimes;
 
-	// 의사소통 기회 부여 시간
-	@Column(name = "comm_opt_cnt", nullable = false, columnDefinition = "int default 0")
-	private Integer commOptCnt;
+    // 의사소통 기회 부여 시간
+    @Column(name = "comm_opt_cnt", nullable = false, columnDefinition = "int default 0")
+    private Integer commOptCnt;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "status", nullable = false, length = 20)
-	private Status status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 20)
+    private Status status;
 
-	public void onActivated() {
-		this.status = Status.ACTIVE;
-	}
+    public void onActivated() {
+        this.status = Status.ACTIVE;
+    }
 }
