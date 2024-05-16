@@ -8,12 +8,12 @@ class SolutionRequest private constructor() {
     }
 
     data class CreateSolution constructor(
-        val learnerEmail: String? = null,
-        val nowState: ProgressState? = null,
-        val educationGoal: String? = null,
-        val description: String? = null,
-        val title: String? = null,
-        val commOptTimes: Int? = null,
-        val commOptCnt: Int? = null
+        val learnerEmail: String,
+        val nowState: ProgressState,
+        val educationGoal: String,
+        val description: String,
+        val title: String,
+        val commOptTimes: Int,
+        val commOptCnt: Int
     )
 }
