@@ -3,8 +3,6 @@ plugins {
 }
 
 dependencies {
-    testImplementation project(path: ':core:core-api')
-
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("com.jayway.jsonpath:json-path:2.9.0")
     testImplementation("com.google.code.gson:gson:2.10.1")

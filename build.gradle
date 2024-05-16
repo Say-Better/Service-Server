@@ -19,10 +19,7 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
-
-    repositories {
-        mavenCentral()
-    }
+    apply plugin: 'org.asciidoctor.jvm.convert'
 
     dependencies {
         compileOnly 'org.projectlombok:lombok'
