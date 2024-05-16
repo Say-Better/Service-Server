@@ -6,6 +6,7 @@ import io.say.better.domain.solution.ui.SolutionController
 import io.say.better.domain.solution.ui.dto.SolutionRequest
 import io.say.better.domain.solution.ui.dto.SolutionResponse
 import io.say.better.global.common.code.status.SuccessStatus
+import io.say.better.storage.mysql.domain.constant.ProgressState
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito
@@ -21,7 +22,7 @@ import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @WebMvcTest(SolutionController::class)
-class SolutionControllerTest @Autowired constructor(
+class SolutionInfoControllerTest @Autowired constructor(
     private val mockMvc: MockMvc,
     @MockBean private val solutionFacade: SolutionFacade
 ) {
@@ -51,9 +52,17 @@ class SolutionControllerTest @Autowired constructor(
     @Test
     @DisplayName("새로운 solution을 생성한다.")
     @WithMockUser
-    fun createSolutionTest(): Unit {
+    fun createSolutionSuccessTest(): Unit {
         // Given
-        val request: SolutionRequest.CreateSolution = SolutionRequest.CreateSolution("testTitle")
+        val request = SolutionRequest.CreateSolution(
+            learnerEmail = "learnerEmail@gmail.com",
+            nowState = ProgressState.READY,
+            educationGoal = "testEducationGoal",
+            description = "testDescription",
+            title = "testTitle",
+            commOptTimes = 1,
+            commOptCnt = 1
+        )
         BDDMockito.doNothing().`when`(solutionFacade).createSolution(request)
 
         // When
