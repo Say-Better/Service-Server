@@ -1,11 +1,13 @@
 package io.say.better.domain.solution.ui
 
 import io.say.better.domain.solution.application.SolutionFacade
-import io.say.better.domain.solution.ui.dto.SolutionRequest.CreateSolution
+import io.say.better.domain.solution.ui.dto.SolutionRequest
+import io.say.better.domain.solution.ui.dto.SolutionResponse
 import io.say.better.domain.solution.ui.dto.SolutionResponse.SymbolList
 import io.say.better.global.common.response.ResponseDto
 import io.swagger.v3.oas.annotations.tags.Tag
 import lombok.RequiredArgsConstructor
+import org.springframework.data.repository.query.Param
 import org.springframework.web.bind.annotation.*
 
 @Tag(name = "Solution", description = "Solution API")
@@ -27,9 +29,9 @@ class SolutionController(
 
     @PostMapping("")
     fun createSolution(
-            @RequestBody request: CreateSolution?
+            @RequestBody request: SolutionRequest.CreateSolution
     ): ResponseDto<Void?> {
-        solutionFacade!!.createSolution(request!!)
+        solutionFacade.createSolution(request)
         return ResponseDto.onSuccess(null)
     }
 }
