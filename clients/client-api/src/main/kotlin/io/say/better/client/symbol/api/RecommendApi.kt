@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.RequestHeader
 
 @FeignClient(name = "recommend", url = "\${recommend.api.base-url}")
 fun interface RecommendApi {
-
     @PostMapping(value = ["/recommend"], consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun recommend(
-        @RequestHeader("Authorization") identityToken: String?,
-        @RequestBody request: RecommendRequest.SymbolRecommend?
-    ): RecommendResponse.SymbolRecommend?
-
+        @RequestHeader("Authorization") identityToken: String,
+        @RequestBody request: RecommendRequest.SymbolRecommend,
+    ): RecommendResponse.SymbolRecommend
 }
