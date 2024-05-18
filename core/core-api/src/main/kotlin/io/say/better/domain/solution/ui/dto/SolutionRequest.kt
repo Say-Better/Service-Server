@@ -14,7 +14,7 @@ class SolutionRequest private constructor() {
         val description: String,
         val title: String,
         val commOptTimes: Int,
-        val commOptCnt: Int
+        val commOptCnt: Int,
     )
 
     data class StartSolution(
