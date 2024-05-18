@@ -113,6 +113,7 @@ class SolutionControllerTest @Autowired constructor(
         val endSolution: SolutionRequest.EndSolution = SolutionRequest.EndSolution(
                 1,
                 1,
+                1,
                 listOf(SolutionRequest.CreateRecordSymbol(
                         1,
                         1,

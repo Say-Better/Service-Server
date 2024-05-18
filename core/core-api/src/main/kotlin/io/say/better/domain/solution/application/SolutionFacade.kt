@@ -61,7 +61,7 @@ class SolutionFacade (
 
     fun startSolution(request: StartSolution) = Tx.writeable {
 
-        val solution: Solution = solutionService.getSolution(request.solutionId!!)
+        val solution: Solution = solutionService.getSolution(request.solutionId)
         solution.onStart()
         val progress: Progress = ProgressConverter.toProgress(request, solution)
         progress.onActivated()
@@ -73,7 +73,7 @@ class SolutionFacade (
 
     fun endSolution(request: List<EndSolution>) = Tx.writeable {
 
-        val progress: Progress = progressService.getProgress(request[0].progressId!!)
+        val progress: Progress = progressService.getProgress(request[0].progressId)
         val review: Review = ReviewConverter.toReview(progress)
         val savedReview: Review = reviewService.createReview(review)
 

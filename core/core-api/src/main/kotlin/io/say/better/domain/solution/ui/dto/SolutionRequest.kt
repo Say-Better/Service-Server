@@ -16,24 +16,24 @@ class SolutionRequest private constructor() {
     )
 
     data class StartSolution(
-            val sessionOrder: Int? = null,
-            val solutionId: Long? = null,
-            val nowStep: String? = null,
+            val sessionOrder: Int,
+            val solutionId: Long,
+            val nowStep: String,
             val sessionGoal: String? = null,
             val sessionDesc: String? = null
     )
 
     data class EndSolution(
-            val solutionId: Long? = null,
-            val progressId: Long? = null,
-            val orderNum: Int? = null,
-            val createRecordSymbols: List<CreateRecordSymbol>? = null,
+            val solutionId: Long,
+            val progressId: Long,
+            val orderNum: Int,
+            val createRecordSymbols: List<CreateRecordSymbol>,
             var reviewId: Long? = null
     )
 
     data class CreateRecordSymbol(
-            val symbolId: Long? = null,
-            val touchOrder: Int? = null,
-            val touchTime: String? = null
+            val symbolId: Long,
+            val touchOrder: Int,
+            val touchTime: String
     )
 }
