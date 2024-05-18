@@ -1,16 +1,16 @@
 package io.say.better.global.utils
 
-import lombok.NoArgsConstructor
-import lombok.extern.slf4j.Slf4j
+import io.say.better.global.config.logger.logger
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 
-@Slf4j
 @Component
-@NoArgsConstructor
-class SecurityUtil {
+class SecurityUtil constructor(){
+
+    private val log = logger()
+
     fun clearSecurityContext() {
         SecurityContextHolder.clearContext()
     }

@@ -12,8 +12,6 @@ import io.say.better.storage.mysql.dao.repository.LearnerReadRepository
 import io.say.better.storage.mysql.dao.repository.LearnerWriteRepository
 import io.say.better.storage.mysql.domain.entity.Educator
 import io.say.better.storage.mysql.domain.entity.Learner
-import lombok.RequiredArgsConstructor
-import lombok.extern.slf4j.Slf4j
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
@@ -22,9 +20,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Service
 
-@Slf4j
 @Service
-@RequiredArgsConstructor
 class CustomOAuth2UserService(
     private val educatorReadRepository: EducatorReadRepository,
     private val educatorWriteRepository: EducatorWriteRepository,
@@ -52,7 +48,7 @@ class CustomOAuth2UserService(
 
         // socialType에 따라 유저 정보를 통해 OAuthAttributes 객체 생성
         val extractAttributes: OAuthAttributes =
-            OAuthAttributes.Companion.of(provider, userNameAttributeName, attributes)
+            OAuthAttributes.of(provider, userNameAttributeName, attributes)
 
         val createdUser = getEducator(extractAttributes, provider) // getUser() 메소드로 User 객체 생성 후 반환
 

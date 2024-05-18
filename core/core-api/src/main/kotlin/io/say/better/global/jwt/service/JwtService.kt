@@ -8,16 +8,12 @@ import io.say.better.global.config.properties.JwtProperties
 import io.say.better.storage.redis.RedisUtil
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import lombok.RequiredArgsConstructor
-import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Service
 import java.util.*
 
-@Slf4j
 @Service
-@RequiredArgsConstructor
 class JwtService(
-    val jwtProperties: JwtProperties,
+    final val jwtProperties: JwtProperties,
     private val redisUtil: RedisUtil
 ) {
 

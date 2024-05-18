@@ -5,13 +5,9 @@ import io.say.better.global.common.exception.GeneralException
 import io.say.better.storage.mysql.dao.repository.ProgressReadRepository
 import io.say.better.storage.mysql.dao.repository.ProgressWriteRepository
 import io.say.better.storage.mysql.domain.entity.Progress
-import lombok.RequiredArgsConstructor
-import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Service
 
-@Slf4j
 @Service
-@RequiredArgsConstructor
 class ProgressService(
         private val progressWriteRepository: ProgressWriteRepository,
         private val progressReadRepository: ProgressReadRepository

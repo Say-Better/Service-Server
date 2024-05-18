@@ -7,7 +7,6 @@ import io.say.better.global.config.logger.logger
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolation
 import jakarta.validation.ConstraintViolationException
-import lombok.extern.slf4j.Slf4j
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
@@ -23,10 +22,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.*
 import java.util.function.Consumer
 
-@Slf4j
 @RestControllerAdvice(annotations = [RestController::class])
 class ExceptionAdvice : ResponseEntityExceptionHandler() {
-
     private val log = logger()
 
     @ExceptionHandler

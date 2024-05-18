@@ -8,13 +8,9 @@ import io.say.better.global.utils.CodeUtil
 import io.say.better.storage.mysql.domain.entity.Educator
 import io.say.better.storage.mysql.domain.entity.Learner
 import io.say.better.storage.redis.RedisUtil
-import lombok.RequiredArgsConstructor
-import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Component
 
-@Slf4j
 @Component
-@RequiredArgsConstructor
 class MemberFacade(
     private val connectService: ConnectService,
     private val memberService: MemberService,
@@ -23,21 +19,21 @@ class MemberFacade(
 ) {
 
     fun createConnectCode(): String {
-        val member = memberService!!.currentMember()
-        val code = codeUtil!!.createConnectCode()
-        redisUtil!!.setConnectCode(code, member.email)
+        val member = memberService.currentMember()
+        val code = codeUtil.createConnectCode()
+        redisUtil.setConnectCode(code, member.email)
 
         return code
     }
 
     fun connect(code: String?) {
-        val email = redisUtil!!.getData(code)
+        val email = redisUtil.getData(code)
             ?: throw MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID)
 
         redisUtil.deleteData(code)
 
-        val educator = memberService!!.currentMember() as Educator
+        val educator = memberService.currentMember() as Educator
         val learner = memberService.getMember(email) as Learner
-        connectService!!.connect(educator, learner)
+        connectService.connect(educator, learner)
     }
 }

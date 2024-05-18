@@ -2,14 +2,12 @@ package io.say.better.global.common.code.status
 
 import io.say.better.global.common.code.BaseErrorCode
 import io.say.better.global.common.response.ResponseDto.ErrorReasonDto
-import lombok.AllArgsConstructor
-import lombok.Getter
 import org.springframework.http.HttpStatus
 
 enum class ErrorStatus(
-        val httpStatus: HttpStatus,
-        val code: String,
-        val message: String
+    val httpStatus: HttpStatus,
+    val code: String,
+    val message: String
 ) : BaseErrorCode {
     /* [ErrorStatus 작성 규칙]
         ErrorCode는 다음과 같은 형식으로 작성합니다.
@@ -51,16 +49,16 @@ enum class ErrorStatus(
 
     override val reason: ErrorReasonDto
         get() = ErrorReasonDto(
-                isSuccess = false,
-                code = this.code,
-                message = this.message
+            isSuccess = false,
+            code = this.code,
+            message = this.message
         )
 
     override val reasonHttpStatus: ErrorReasonDto
         get() = ErrorReasonDto(
-                httpStatus = this.httpStatus,
-                isSuccess = false,
-                code = this.code,
-                message = this.message
+            httpStatus = this.httpStatus,
+            isSuccess = false,
+            code = this.code,
+            message = this.message
         )
 }
