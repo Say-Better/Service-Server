@@ -28,7 +28,7 @@ COPY support/monitoring/build.gradle ./support/monitoring/build.gradle
 COPY tests/api-docs/src/test ./tests/api-docs/src/test
 COPY tests/api-docs/build.gradle ./tests/api-docs/build.gradle
 
-COPY build.gradle settings.gradle gradle.properties ./
+COPY build.gradle.kts settings.gradle.kts gradle.properties ./
 
 RUN gradle :core:core-api:buildNeeded --stacktrace --info --refresh-dependencies -x test --warning-mode=all
 
