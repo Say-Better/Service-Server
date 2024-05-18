@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,12 @@ public class Record {
 	private Integer orderNum;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "reaction_type", nullable = false, length = 20)
+	@Column(name = "reaction_type", length = 20)
 	private ReactionType reactionType;
 
+	@Builder
+	public Record(Review review, Integer orderNum) {
+		this.review = review;
+		this.orderNum = orderNum;
+	}
 }

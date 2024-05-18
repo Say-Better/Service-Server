@@ -15,6 +15,6 @@ class SolutionSymbolService(
     private val solutionSymbolWriteRepository: SolutionSymbolWriteRepository
 ) {
     fun createSolutionSymbols(solutionSymbols: List<SolutionSymbol?>) {
-        solutionSymbolWriteRepository!!.saveAll(solutionSymbols)
+        solutionSymbolWriteRepository.saveAll(solutionSymbols)
     }
 }

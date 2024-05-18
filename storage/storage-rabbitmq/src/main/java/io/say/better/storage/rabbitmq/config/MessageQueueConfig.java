@@ -2,10 +2,13 @@ package io.say.better.storage.rabbitmq.config;
 
 
 import lombok.Getter;
+
+import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -82,6 +85,13 @@ public class MessageQueueConfig {
         return new Jackson2JsonMessageConverter();
     }
 
+	protected SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+		factory.setConnectionFactory(connectionFactory);
+		factory.setAcknowledgeMode(AcknowledgeMode.AUTO);
+
+		return factory;
+	}
     /**
      * RabbitTemplate 빈 세팅
      * */

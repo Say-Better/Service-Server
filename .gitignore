@@ -39,6 +39,3 @@ out/
 ### database ###
 *.mv.db
 *.trace.db
-
-### environment ###
-.env
