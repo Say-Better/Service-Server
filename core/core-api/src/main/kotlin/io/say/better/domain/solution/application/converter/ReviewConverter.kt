@@ -10,10 +10,9 @@ class ReviewConverter private constructor() {
 
     companion object {
         fun toReview(progress: Progress): Review {
-            return Review
-                    .builder()
-                    .progress(progress)
-                    .build()
+            return Review(
+                    progress = progress
+            )
         }
     }
 }

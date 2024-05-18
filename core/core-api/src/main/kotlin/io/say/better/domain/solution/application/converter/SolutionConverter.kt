@@ -12,16 +12,16 @@ class SolutionConverter private constructor() {
 
     companion object {
         fun toSolution(request: CreateSolution, educator: Educator, learner: Learner): Solution {
-            return Solution.builder()
-                .nowState(request.nowState)
-                .educationGoal(request.educationGoal)
-                .description(request.description)
-                .writer(educator)
-                .learner(learner)
-                .title(request.title)
-                .commOptTimes(request.commOptTimes)
-                .commOptCnt(request.commOptCnt)
-                .build()
+            return Solution(
+                    nowState = request.nowState,
+                    educationGoal = request.educationGoal,
+                    description = request.description,
+                    writer = educator,
+                    learner = learner,
+                    title = request.title,
+                    commOptTimes = request.commOptTimes,
+                    commOptCnt = request.commOptCnt
+            )
         }
     }
 }

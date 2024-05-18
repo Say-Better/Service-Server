@@ -12,25 +12,25 @@ import org.springframework.stereotype.Component
 
 @Component
 class MemberFacade(
-    private val connectService: ConnectService,
-    private val memberService: MemberService,
-    private val codeUtil: CodeUtil,
-    private val redisUtil: RedisUtil
+        private val connectService: ConnectService,
+        private val memberService: MemberService,
+        private val codeUtil: CodeUtil,
+        private val redisUtil: RedisUtil
 ) {
 
     fun createConnectCode(): String {
         val member = memberService.currentMember()
         val code = codeUtil.createConnectCode()
-        redisUtil.setConnectCode(code, member.email)
+        redisUtil.setConnectCode(code, member.email!!)
 
         return code
     }
 
     fun connect(code: String?) {
         val email = redisUtil.getData(code)
-            ?: throw MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID)
+                ?: throw MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID)
 
-        redisUtil.deleteData(code)
+        redisUtil.deleteData(code!!)
 
         val educator = memberService.currentMember() as Educator
         val learner = memberService.getMember(email) as Learner

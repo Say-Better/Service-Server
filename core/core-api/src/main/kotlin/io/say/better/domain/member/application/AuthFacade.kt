@@ -11,6 +11,6 @@ class AuthFacade(
 
     fun assignUserRole(role: RoleType) {
         val member = memberService.currentMember()
-        memberService.assignUserRole(member.email, role)
+        memberService.assignUserRole(member.email!!, role)
     }
 }
