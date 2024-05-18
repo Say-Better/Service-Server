@@ -38,8 +38,8 @@ class ReviewFacade(
         val record: Record = RecordConverter.toRecord(endSolution, review)
         val savedRecord: Record = recordService.createRecord(record)
 
-        for (createRecordSymbol in endSolution.createRecordSymbols!!) {
-            val symbol: Symbol = symbolService.getSymbol(createRecordSymbol.symbolId!!)
+        for (createRecordSymbol in endSolution.createRecordSymbols) {
+            val symbol: Symbol = symbolService.getSymbol(createRecordSymbol.symbolId)
             val recordSymbol = RecordSymbolConverter.toRecordSymbol(savedRecord, idUtil.getUUID(), symbol, createRecordSymbol)
 
             recordSymbolService.createRecordSymbol(recordSymbol)

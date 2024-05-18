@@ -19,7 +19,7 @@ class SolutionService(
 ) {
 
     fun createSolution(newSolution: Solution): Solution {
-        return solutionWriteRepository!!.save(newSolution)
+        return solutionWriteRepository.save(newSolution)
     }
 
     fun getSolution(solutionId: Long): Solution {
