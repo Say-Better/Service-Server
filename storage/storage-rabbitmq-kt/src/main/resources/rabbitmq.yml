@@ -1,0 +1,11 @@
+spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+
+rabbitmq:
+  queue.name: ${RABBITMQ_QUEUE_NAME:solution.queue}
+  exchange.name: ${RABBITMQ_EXCHANGE_NAME:solution.exchange}
+  routing.key: ${RABBITMQ_ROUTING_KEY:solution.key}

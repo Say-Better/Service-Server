@@ -17,7 +17,14 @@ class EducatorConverter private constructor() {
                 loginId: String,
                 name: String
         ): Educator {
-            return Educator.createEducator(email, birthDate, provider, providerId, loginId, name)
+            return Educator.createEducator(
+                    email = email,
+                    birthDate = birthDate!!,
+                    provider = provider,
+                    providerId = providerId,
+                    loginId = loginId,
+                    name = name
+            )
         }
     }
 }

@@ -11,9 +11,9 @@ dependencies {
     implementation(project(":core:core-enum"))
     implementation(project(":support:monitoring"))
     implementation(project(":support:logging"))
-    implementation(project(":storage:storage-mysql"))
-    implementation(project(":storage:storage-redis"))
-    implementation(project(":storage:storage-rabbitmq"))
+    implementation(project(":storage:storage-mysql-kt"))
+    implementation(project(":storage:storage-redis-kt"))
+    implementation(project(":storage:storage-rabbitmq-kt"))
     implementation(project(":clients:client-api"))
 
     // application

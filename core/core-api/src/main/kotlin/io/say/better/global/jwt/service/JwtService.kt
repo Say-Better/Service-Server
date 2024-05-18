@@ -13,8 +13,8 @@ import java.util.*
 
 @Service
 class JwtService(
-    final val jwtProperties: JwtProperties,
-    private val redisUtil: RedisUtil
+        final val jwtProperties: JwtProperties,
+        private val redisUtil: RedisUtil
 ) {
 
     private val log = logger()
@@ -30,12 +30,12 @@ class JwtService(
         val claims = Jwts.claims(mutableMapOf<String, Any>(EMAIL_CLAIM to email))
         val now = Date()
         return Jwts.builder() // JWT 토큰을 생성하는 빌더 반환
-            .setClaims(claims) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
-            .setSubject(ACCESS_TOKEN_SUBJECT)
-            .setIssuedAt(now) // 토큰 발급 시간 설정
-            .setExpiration(Date(now.time + jwtProperties.accessExpiration)) // 토큰 만료 시간 설정
-            .signWith(signingKey, SignatureAlgorithm.HS256) // 지정한 secret 키로 암호화
-            .compact()
+                .setClaims(claims) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
+                .setSubject(ACCESS_TOKEN_SUBJECT)
+                .setIssuedAt(now) // 토큰 발급 시간 설정
+                .setExpiration(Date(now.time + jwtProperties.accessExpiration)) // 토큰 만료 시간 설정
+                .signWith(signingKey, SignatureAlgorithm.HS256) // 지정한 secret 키로 암호화
+                .compact()
     }
 
     /**
@@ -46,10 +46,10 @@ class JwtService(
     fun createRefreshToken(): String {
         val now = Date()
         return Jwts.builder()
-            .setSubject(REFRESH_TOKEN_SUBJECT)
-            .setExpiration(Date(now.time + jwtProperties.refreshExpiration))
-            .signWith(signingKey, SignatureAlgorithm.HS256)
-            .compact()
+                .setSubject(REFRESH_TOKEN_SUBJECT)
+                .setExpiration(Date(now.time + jwtProperties.refreshExpiration))
+                .signWith(signingKey, SignatureAlgorithm.HS256)
+                .compact()
     }
 
     /**
@@ -59,8 +59,8 @@ class JwtService(
      * @param accessToken AccessToken
      */
     fun sendAccessToken(
-        response: HttpServletResponse,
-        accessToken: String
+            response: HttpServletResponse,
+            accessToken: String
     ) {
         response.status = HttpServletResponse.SC_OK
         response.setHeader(jwtProperties.accessHeader, accessToken)
@@ -75,9 +75,9 @@ class JwtService(
      * @param refreshToken RefreshToken
      */
     fun sendAccessAndRefreshToken(
-        response: HttpServletResponse,
-        accessToken: String,
-        refreshToken: String?
+            response: HttpServletResponse,
+            accessToken: String,
+            refreshToken: String?
     ) {
         response.status = HttpServletResponse.SC_OK
         setAccessTokenHeader(response, accessToken)
@@ -97,8 +97,8 @@ class JwtService(
      */
     fun extractRefreshToken(request: HttpServletRequest): Optional<String> {
         return Optional.ofNullable(request.getHeader(jwtProperties.refreshHeader))
-            .filter { refreshToken: String -> refreshToken.startsWith(BEARER) }
-            .map { refreshToken: String -> refreshToken.replace(BEARER, "") }
+                .filter { refreshToken: String -> refreshToken.startsWith(BEARER) }
+                .map { refreshToken: String -> refreshToken.replace(BEARER, "") }
     }
 
     /**
@@ -113,8 +113,8 @@ class JwtService(
     </String> */
     fun extractAccessToken(request: HttpServletRequest): Optional<String> {
         return Optional.ofNullable(request.getHeader(jwtProperties.accessHeader))
-            .filter { accessToken: String -> accessToken.startsWith(BEARER) }
-            .map { accessToken: String -> accessToken.replace(BEARER, "") }
+                .filter { accessToken: String -> accessToken.startsWith(BEARER) }
+                .map { accessToken: String -> accessToken.replace(BEARER, "") }
     }
 
     /**
@@ -129,7 +129,7 @@ class JwtService(
      */
     fun extractEmail(accessToken: String?): Optional<String> {
         return Optional.ofNullable(
-            getJwsClaim(accessToken).get(EMAIL_CLAIM, String::class.java)
+                getJwsClaim(accessToken).get(EMAIL_CLAIM, String::class.java)
         )
     }
 
@@ -159,7 +159,7 @@ class JwtService(
      * @param email Email
      */
     fun updateRefreshToken(email: String?, refreshToken: String?) {
-        redisUtil.setDataExpire(refreshToken, email, jwtProperties.refreshExpiration)
+        redisUtil.setDataExpire(refreshToken!!, email!!, jwtProperties.refreshExpiration)
     }
 
     /**
@@ -188,10 +188,10 @@ class JwtService(
     }
 
     private fun getJwsClaim(accessToken: String?): Claims = Jwts.parserBuilder()
-        .setSigningKey(signingKey)
-        .build()
-        .parseClaimsJws(accessToken)
-        .body
+            .setSigningKey(signingKey)
+            .build()
+            .parseClaimsJws(accessToken)
+            .body
 
     companion object {
         private const val ACCESS_TOKEN_SUBJECT = "AccessToken"

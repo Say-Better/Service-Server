@@ -13,14 +13,13 @@ class ProgressConverter {
 
     companion object {
         fun toProgress(request: StartSolution, solution: Solution): Progress {
-            return Progress
-                    .builder()
-                    .solution(solution)
-                    .nowAssignStep(AssignStep.valueOf(request.nowStep))
-                    .sessionOrder(request.sessionOrder)
-                    .sessionGoal(request.sessionGoal)
-                    .sessionDescription(request.sessionDesc)
-                    .build()
+            return Progress(
+                    solution = solution,
+                    nowAssignStep = AssignStep.valueOf(request.nowStep),
+                    sessionOrder = request.sessionOrder,
+                    sessionGoal = request.sessionGoal,
+                    sessionDescription = request.sessionDesc
+            )
         }
     }
 }

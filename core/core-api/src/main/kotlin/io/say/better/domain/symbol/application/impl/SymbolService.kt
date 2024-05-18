@@ -11,7 +11,7 @@ class SymbolService(
         private val symbolWriteRepository: SymbolWriteRepository
 ) {
     fun getSymbols(symbols: List<String>?): List<Symbol> {
-        return symbolReadRepository.findByTitleIn(symbols)
+        return symbolReadRepository.findByTitleIn(symbols!!)
     }
 
     fun getSymbols(name: String): List<Symbol> {

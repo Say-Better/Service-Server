@@ -36,21 +36,21 @@ import java.io.IOException
  * - 인증 성공 처리는 하지 않고 실패 처리 및 403 ERROR <br></br>
  */
 class JwtAuthenticationProcessingFilter(
-    private val educatorReadRepository: EducatorReadRepository,
-    private val learnerReadRepository: LearnerReadRepository,
-    private val jwtProperties: JwtProperties,
-    private val jwtService: JwtService,
-    private val redisUtil: RedisUtil,
-    private val authoritiesMapper: GrantedAuthoritiesMapper = NullAuthoritiesMapper()
+        private val educatorReadRepository: EducatorReadRepository,
+        private val learnerReadRepository: LearnerReadRepository,
+        private val jwtProperties: JwtProperties,
+        private val jwtService: JwtService,
+        private val redisUtil: RedisUtil,
+        private val authoritiesMapper: GrantedAuthoritiesMapper = NullAuthoritiesMapper()
 ) : OncePerRequestFilter() {
 
     private val log = logger()
 
     @Throws(ServletException::class, IOException::class)
     override fun doFilterInternal(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        filterChain: FilterChain
+            request: HttpServletRequest,
+            response: HttpServletResponse,
+            filterChain: FilterChain
     ) {
         if (isNoCheckUri(request)) {
             filterChain.doFilter(request, response)
@@ -59,8 +59,8 @@ class JwtAuthenticationProcessingFilter(
 
         // RefreshToken 추출, AccessToken이 만료되지 않은 이상 RefreshToken은 null
         val refreshToken = jwtService.extractRefreshToken(request)
-            .filter { token: String? -> jwtService.isTokenValid(token) }
-            .orElse(null)
+                .filter { token: String? -> jwtService.isTokenValid(token) }
+                .orElse(null)
 
         if (refreshToken != null) {
             /*
@@ -96,30 +96,30 @@ class JwtAuthenticationProcessingFilter(
      * @param refreshToken
      */
     private fun checkRefreshTokenAndReIssueAccessToken(
-        response: HttpServletResponse,
-        refreshToken: String
+            response: HttpServletResponse,
+            refreshToken: String
     ) {
         log.info("JwtAuthenticationProcessingFilter.checkRefreshTokenAndReIssueAccessToken() 실행 - RefreshToken 검증")
         val email = redisUtil.getData(refreshToken)
-        educatorReadRepository.findByEmail(email)
-            .ifPresent { user: Member ->
-                val reIssuedRefreshToken = reIssueRefreshToken(user)
-                jwtService.sendAccessAndRefreshToken(
-                    response,
-                    jwtService.createAccessToken(user.email),
-                    reIssuedRefreshToken
-                )
-            }
+        educatorReadRepository.findByEmail(email!!)
+                .ifPresent { user: Member ->
+                    val reIssuedRefreshToken = reIssueRefreshToken(user)
+                    jwtService.sendAccessAndRefreshToken(
+                            response,
+                            jwtService.createAccessToken(user.email!!),
+                            reIssuedRefreshToken
+                    )
+                }
 
         learnerReadRepository.findByEmail(email)
-            .ifPresent { user: Member ->
-                val reIssuedRefreshToken = reIssueRefreshToken(user)
-                jwtService.sendAccessAndRefreshToken(
-                    response,
-                    jwtService.createAccessToken(user.email),
-                    reIssuedRefreshToken
-                )
-            }
+                .ifPresent { user: Member ->
+                    val reIssuedRefreshToken = reIssueRefreshToken(user)
+                    jwtService.sendAccessAndRefreshToken(
+                            response,
+                            jwtService.createAccessToken(user.email!!),
+                            reIssuedRefreshToken
+                    )
+                }
     }
 
     /**
@@ -130,7 +130,7 @@ class JwtAuthenticationProcessingFilter(
      */
     private fun reIssueRefreshToken(user: Member): String? {
         val reIssuedRefreshToken = jwtService.createRefreshToken()
-        redisUtil.setDataExpire(reIssuedRefreshToken, user.email, jwtProperties.refreshExpiration)
+        redisUtil.setDataExpire(reIssuedRefreshToken, user.email!!, jwtProperties.refreshExpiration)
         return reIssuedRefreshToken
     }
 
@@ -151,28 +151,28 @@ class JwtAuthenticationProcessingFilter(
      */
     @Throws(ServletException::class, IOException::class)
     private fun checkAccessTokenAndAuthentication(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        filterChain: FilterChain
+            request: HttpServletRequest,
+            response: HttpServletResponse,
+            filterChain: FilterChain
     ) {
         log.info("JwtAuthenticationProcessingFilter.checkAccessTokenAndAuthentication() 실행 - AccessToken 검증")
         jwtService.extractAccessToken(request)
-            .filter { token: String? -> jwtService.isTokenValid(token) }
-            .ifPresent { accessToken: String? ->
-                jwtService.extractEmail(accessToken).ifPresent { email: String? ->
-                    run {
-                        val educatorOptional = educatorReadRepository.findByEmail(email)
-                        if (educatorOptional.isPresent) {
-                            this.saveAuthentication(educatorOptional.get())
-                            return@run
-                        }
+                .filter { token: String? -> jwtService.isTokenValid(token) }
+                .ifPresent { accessToken: String? ->
+                    jwtService.extractEmail(accessToken).ifPresent { email: String? ->
+                        run {
+                            val educatorOptional = educatorReadRepository.findByEmail(email!!)
+                            if (educatorOptional.isPresent) {
+                                this.saveAuthentication(educatorOptional.get())
+                                return@run
+                            }
 
-                        learnerReadRepository
-                            .findByEmail(email)
-                            .ifPresent { member: Member -> this.saveAuthentication(member) }
+                            learnerReadRepository
+                                    .findByEmail(email)
+                                    .ifPresent { member: Member -> this.saveAuthentication(member) }
+                        }
                     }
                 }
-            }
 
         filterChain.doFilter(request, response)
     }
@@ -186,14 +186,14 @@ class JwtAuthenticationProcessingFilter(
         log.info("JwtAuthenticationProcessingFilter.saveAuthentication() 실행 - 인증 객체 저장")
 
         val userDetails = User.builder()
-            .username(member.email)
-            .password(member.loginId)
-            .roles(member.role.name)
-            .build()
+                .username(member.email)
+                .password(member.loginId)
+                .roles(member.role?.name)
+                .build()
 
         val authentication: Authentication = UsernamePasswordAuthenticationToken(
-            userDetails, null,
-            authoritiesMapper.mapAuthorities(userDetails.authorities)
+                userDetails, null,
+                authoritiesMapper.mapAuthorities(userDetails.authorities)
         )
 
         SecurityContextHolder.getContext().authentication = authentication

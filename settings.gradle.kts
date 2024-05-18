@@ -1,15 +1,15 @@
 rootProject.name = "say-better-spring-boot"
 
 include(
-    ":core:core-api",
-    ":core:core-enum",
-    ":storage:storage-mysql",
-    ":storage:storage-redis",
-    ":storage:storage-rabbitmq",
-    ":clients:client-api",
-    ":support:logging",
-    ":support:monitoring",
-    ":tests:api-docs"
+        ":core:core-api",
+        ":core:core-enum",
+        "storage:storage-mysql-kt",
+        "storage:storage-rabbitmq-kt",
+        "storage:storage-redis-kt",
+        ":clients:client-api",
+        ":support:logging",
+        ":support:monitoring",
+        ":tests:api-docs"
 )
 
 pluginManagement {
@@ -33,4 +33,7 @@ pluginManagement {
             }
         }
     }
+}
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
 }

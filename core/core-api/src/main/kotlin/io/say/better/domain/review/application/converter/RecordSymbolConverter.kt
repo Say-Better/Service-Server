@@ -14,13 +14,13 @@ class RecordSymbolConverter {
 
     companion object {
         fun toRecordSymbol(record: Record, id: UUID, symbol: Symbol, createRecordSymbol: CreateRecordSymbol): RecordSymbol {
-            return RecordSymbol.builder()
-                    .rsId(id)
-                    .recorded(record)
-                    .symbol(symbol)
-                    .touchOrder(createRecordSymbol.touchOrder)
-                    .touchTime(LocalDateTime.parse(createRecordSymbol.touchTime))
-                    .build()
+            return RecordSymbol(
+                    rsId = id,
+                    recorded = record,
+                    symbol = symbol,
+                    touchOrder = createRecordSymbol.touchOrder,
+                    touchTime = LocalDateTime.parse(createRecordSymbol.touchTime)
+            )
         }
     }
 }
