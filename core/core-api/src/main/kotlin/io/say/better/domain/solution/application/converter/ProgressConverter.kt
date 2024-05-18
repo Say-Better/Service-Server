@@ -16,7 +16,7 @@ class ProgressConverter {
             return Progress
                     .builder()
                     .solution(solution)
-                    .nowAssignStep(AssignStep.valueOf(request.nowStep!!))
+                    .nowAssignStep(AssignStep.valueOf(request.nowStep))
                     .sessionOrder(request.sessionOrder)
                     .sessionGoal(request.sessionGoal)
                     .sessionDescription(request.sessionDesc)

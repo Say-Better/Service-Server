@@ -1,13 +1,11 @@
 package io.say.better.global.config.web
 
-import lombok.RequiredArgsConstructor
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
-@RequiredArgsConstructor
 open class CorsConfig {
     val corsConfigurationSource: CorsConfigurationSource
         get() {

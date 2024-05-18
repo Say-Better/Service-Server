@@ -1,14 +1,13 @@
 package io.say.better.global.utils
 
-import lombok.RequiredArgsConstructor
-import lombok.extern.slf4j.Slf4j
+import io.say.better.global.config.logger.logger
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.stereotype.Component
 
-@Slf4j
-@RequiredArgsConstructor
 @Component
-class CodeUtil {
+class CodeUtil constructor(){
+    private val log = logger()
+
     fun createConnectCode(): String {
         val connectCodeLength = 6
         val useLetters = true

@@ -11,8 +11,6 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import lombok.RequiredArgsConstructor
-import lombok.extern.slf4j.Slf4j
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper
@@ -37,8 +35,6 @@ import java.io.IOException
  * - DB의 RefreshToken과 비교하여 일치하면 AccessToken 재발급, RefreshToken 재발급 <br></br>
  * - 인증 성공 처리는 하지 않고 실패 처리 및 403 ERROR <br></br>
  */
-@Slf4j
-@RequiredArgsConstructor
 class JwtAuthenticationProcessingFilter(
     private val educatorReadRepository: EducatorReadRepository,
     private val learnerReadRepository: LearnerReadRepository,

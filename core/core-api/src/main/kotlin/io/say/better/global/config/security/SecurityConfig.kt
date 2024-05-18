@@ -11,7 +11,6 @@ import io.say.better.global.jwt.service.JwtService
 import io.say.better.storage.mysql.dao.repository.EducatorReadRepository
 import io.say.better.storage.mysql.dao.repository.LearnerReadRepository
 import io.say.better.storage.redis.RedisUtil
-import lombok.RequiredArgsConstructor
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -21,7 +20,6 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.logout.LogoutFilter
 
 @Configuration
-@RequiredArgsConstructor
 open class SecurityConfig(
     private val corsConfig: CorsConfig,
     private val redisUtil: RedisUtil,
@@ -35,53 +33,53 @@ open class SecurityConfig(
 ) {
 
     private val permitUrls = arrayOf(
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/h2-console/**",
-            "/api/temp/**",
-            "/api/auth/**",
-            "/sing-up",
-            "/api/tests/**",
+        "/v3/api-docs/**",
+        "/swagger-ui/**",
+        "/h2-console/**",
+        "/api/temp/**",
+        "/api/auth/**",
+        "/sing-up",
+        "/api/tests/**",
     )
 
     private val noneUserRoleUrls = arrayOf(
-            "/api/auth/assign/**"
+        "/api/auth/assign/**"
     )
 
     private val educatorUrls = arrayOf(
-            "/api/educator/**"
+        "/api/educator/**"
     )
 
     private val leanerUrls = arrayOf(
-            "/api/learner/**"
+        "/api/learner/**"
     )
 
     @Bean
     @Throws(Exception::class)
     open fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-                .csrf { it.disable() }
-                .formLogin { it.disable() }
-                .cors { it.configurationSource(corsConfig.corsConfigurationSource) }
-                .authorizeHttpRequests {
-                    it
-                            .requestMatchers(*permitUrls).permitAll()
-                            .requestMatchers(*noneUserRoleUrls).hasRole(RoleType.NONE.name)
-                            .requestMatchers(*educatorUrls).hasRole(RoleType.EDUCATOR.name)
-                            .requestMatchers(*leanerUrls).hasRole(RoleType.LEARNER.name)
-                            .anyRequest().authenticated()
-                }
-                .oauth2Login {
-                    it
-                            .userInfoEndpoint { it.userService(customOAuth2UserService) }
-                            .successHandler(OAuth2LoginSuccessHandler)
-                            .failureHandler(OAuth2LoginFailureHandler)
-                }
-                .headers {
-                    it
-                            .frameOptions { it.sameOrigin() }
-                }
-                .addFilterAfter(jwtAuthenticationProcessingFilter(), LogoutFilter::class.java)
+            .csrf { it.disable() }
+            .formLogin { it.disable() }
+            .cors { it.configurationSource(corsConfig.corsConfigurationSource) }
+            .authorizeHttpRequests {
+                it
+                    .requestMatchers(*permitUrls).permitAll()
+                    .requestMatchers(*noneUserRoleUrls).hasRole(RoleType.NONE.name)
+                    .requestMatchers(*educatorUrls).hasRole(RoleType.EDUCATOR.name)
+                    .requestMatchers(*leanerUrls).hasRole(RoleType.LEARNER.name)
+                    .anyRequest().authenticated()
+            }
+            .oauth2Login {
+                it
+                    .userInfoEndpoint { it.userService(customOAuth2UserService) }
+                    .successHandler(OAuth2LoginSuccessHandler)
+                    .failureHandler(OAuth2LoginFailureHandler)
+            }
+            .headers {
+                it
+                    .frameOptions { it.sameOrigin() }
+            }
+            .addFilterAfter(jwtAuthenticationProcessingFilter(), LogoutFilter::class.java)
         return http.build()
     }
 
@@ -89,8 +87,8 @@ open class SecurityConfig(
     open fun webSecurityCustomizer(): WebSecurityCustomizer {
         return WebSecurityCustomizer {
             it
-                    .ignoring()
-                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .ignoring()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
         }
     }
 

@@ -4,12 +4,13 @@ import java.util.*
 import java.util.stream.Stream
 
 enum class Provider(
-    val description: String
+    val description: String,
 ) {
     GOOGLE("google"),
     NAVER("naver"),
     KAKAO("kakao"),
-    FACEBOOK("facebook");
+    FACEBOOK("facebook"),
+    ;
 
     companion object {
         fun find(description: String): Optional<Provider> {
