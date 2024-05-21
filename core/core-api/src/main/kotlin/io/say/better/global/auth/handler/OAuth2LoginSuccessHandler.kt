@@ -11,22 +11,24 @@ import org.springframework.stereotype.Component
 
 @Component
 class OAuth2LoginSuccessHandler(
-    private val jwtService: JwtService
+    private val jwtService: JwtService,
 ) : AuthenticationSuccessHandler {
-
     private val log = logger()
 
     override fun onAuthenticationSuccess(
-            request: HttpServletRequest,
-            response: HttpServletResponse,
-            authentication: Authentication
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        authentication: Authentication,
     ) {
         log.info("OAuth2 Login 성공!")
         val oAuth2User = authentication.principal as CustomOAuth2User
         loginSuccess(response, oAuth2User) // 로그인에 성공한 경우 access, refresh 토큰 생성
     }
 
-    private fun loginSuccess(response: HttpServletResponse, oAuth2User: CustomOAuth2User) {
+    private fun loginSuccess(
+        response: HttpServletResponse,
+        oAuth2User: CustomOAuth2User,
+    ) {
         val accessToken = jwtService.createAccessToken(oAuth2User.email)
         val refreshToken = jwtService.createRefreshToken()
         response.addHeader(jwtService.jwtProperties.accessHeader, "Bearer $accessToken")

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class SymbolService(
-        private val symbolReadRepository: SymbolReadRepository,
-        private val symbolWriteRepository: SymbolWriteRepository
+    private val symbolReadRepository: SymbolReadRepository,
+    private val symbolWriteRepository: SymbolWriteRepository,
 ) {
     fun getSymbols(symbols: List<String>?): List<Symbol> {
         return symbolReadRepository.findByTitleIn(symbols!!)

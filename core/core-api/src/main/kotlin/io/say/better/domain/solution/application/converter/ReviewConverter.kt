@@ -11,7 +11,7 @@ class ReviewConverter private constructor() {
     companion object {
         fun toReview(progress: Progress): Review {
             return Review(
-                    progress = progress
+                progress = progress,
             )
         }
     }

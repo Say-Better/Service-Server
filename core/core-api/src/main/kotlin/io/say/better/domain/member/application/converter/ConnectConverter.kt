@@ -10,10 +10,13 @@ class ConnectConverter private constructor() {
     }
 
     companion object {
-        fun toConnect(educator: Educator, learner: Learner): Connect {
+        fun toConnect(
+            educator: Educator,
+            learner: Learner,
+        ): Connect {
             return Connect(
-                    educator = educator,
-                    learner = learner
+                educator = educator,
+                learner = learner,
             )
         }
     }

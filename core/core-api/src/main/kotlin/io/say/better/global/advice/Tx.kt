@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional
 class Tx(
     private val _txAdvice: TxAdvice,
 ) {
-
     init {
         txAdvice = _txAdvice
     }
@@ -28,7 +27,6 @@ class Tx(
 
     @Component("TxAdvice")
     open class TxAdvice {
-
         @Transactional
         open fun <T> writeable(function: () -> T): T {
             return function()

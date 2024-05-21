@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component
  */
 @Component
 class MessageQueueUtil(
-        private val config: MessageQueueConfig,
-        private val rabbitTemplate: RabbitTemplate
+    private val config: MessageQueueConfig,
+    private val rabbitTemplate: RabbitTemplate,
 ) {
     /**
      * RabbitMQ publish 메서드

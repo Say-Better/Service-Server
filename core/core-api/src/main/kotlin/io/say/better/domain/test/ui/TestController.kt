@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.RestController
 @Tag(name = "Test", description = "Test API")
 @RestController
 @RequestMapping("/api/tests")
-class TestController constructor(){
-
+class TestController constructor() {
     @GetMapping("")
     fun getTests(): ResponseDto<String> {
         return ResponseDto.onSuccess("Tests")
     }
-
 }

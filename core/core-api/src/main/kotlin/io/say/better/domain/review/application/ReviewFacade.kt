@@ -18,27 +18,33 @@ import org.springframework.stereotype.Component
 
 @Component
 class ReviewFacade(
-        private val reviewService: ReviewService,
-        private val recordService: RecordService,
-        private val symbolService: SymbolService,
-        private val recordSymbolService: RecordSymbolService,
-        private val idUtil: IdUtil
+    private val reviewService: ReviewService,
+    private val recordService: RecordService,
+    private val symbolService: SymbolService,
+    private val recordSymbolService: RecordSymbolService,
+    private val idUtil: IdUtil,
 ) {
     private val log = logger()
 
     @RabbitListener(queues = ["solution.queue"])
-    fun recordSubscriber(endSolution: EndSolution) = Tx.writeable {
+    fun recordSubscriber(endSolution: EndSolution) =
+        Tx.writeable {
+            val review: Review = reviewService.getReview(endSolution.reviewId!!)
 
-        val review: Review = reviewService.getReview(endSolution.reviewId!!)
+            val record: Record = RecordConverter.toRecord(endSolution, review)
+            val savedRecord: Record = recordService.createRecord(record)
 
-        val record: Record = RecordConverter.toRecord(endSolution, review)
-        val savedRecord: Record = recordService.createRecord(record)
+            for (createRecordSymbol in endSolution.createRecordSymbols) {
+                val symbol: Symbol = symbolService.getSymbol(createRecordSymbol.symbolId)
+                val recordSymbol =
+                    RecordSymbolConverter.toRecordSymbol(
+                        savedRecord,
+                        idUtil.getUUID(),
+                        symbol,
+                        createRecordSymbol,
+                    )
 
-        for (createRecordSymbol in endSolution.createRecordSymbols) {
-            val symbol: Symbol = symbolService.getSymbol(createRecordSymbol.symbolId)
-            val recordSymbol = RecordSymbolConverter.toRecordSymbol(savedRecord, idUtil.getUUID(), symbol, createRecordSymbol)
-
-            recordSymbolService.createRecordSymbol(recordSymbol)
+                recordSymbolService.createRecordSymbol(recordSymbol)
+            }
         }
-    }
 }

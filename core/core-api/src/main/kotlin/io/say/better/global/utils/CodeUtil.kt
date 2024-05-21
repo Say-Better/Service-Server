@@ -5,7 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.stereotype.Component
 
 @Component
-class CodeUtil constructor(){
+class CodeUtil constructor() {
     private val log = logger()
 
     fun createConnectCode(): String {

@@ -29,30 +29,33 @@ open class SecurityConfig(
     private val learnerReadRepository: LearnerReadRepository,
     private val customOAuth2UserService: CustomOAuth2UserService,
     private val OAuth2LoginSuccessHandler: OAuth2LoginSuccessHandler,
-    private val OAuth2LoginFailureHandler: OAuth2LoginFailureHandler
+    private val OAuth2LoginFailureHandler: OAuth2LoginFailureHandler,
 ) {
+    private val permitUrls =
+        arrayOf(
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/h2-console/**",
+            "/api/temp/**",
+            "/api/auth/**",
+            "/sing-up",
+            "/api/tests/**",
+        )
 
-    private val permitUrls = arrayOf(
-        "/v3/api-docs/**",
-        "/swagger-ui/**",
-        "/h2-console/**",
-        "/api/temp/**",
-        "/api/auth/**",
-        "/sing-up",
-        "/api/tests/**",
-    )
+    private val noneUserRoleUrls =
+        arrayOf(
+            "/api/auth/assign/**",
+        )
 
-    private val noneUserRoleUrls = arrayOf(
-        "/api/auth/assign/**"
-    )
+    private val educatorUrls =
+        arrayOf(
+            "/api/educator/**",
+        )
 
-    private val educatorUrls = arrayOf(
-        "/api/educator/**"
-    )
-
-    private val leanerUrls = arrayOf(
-        "/api/learner/**"
-    )
+    private val leanerUrls =
+        arrayOf(
+            "/api/learner/**",
+        )
 
     @Bean
     @Throws(Exception::class)
@@ -95,7 +98,11 @@ open class SecurityConfig(
     @Bean
     open fun jwtAuthenticationProcessingFilter(): JwtAuthenticationProcessingFilter {
         return JwtAuthenticationProcessingFilter(
-            educatorReadRepository, learnerReadRepository, jwtProperties, jwtService, redisUtil
+            educatorReadRepository,
+            learnerReadRepository,
+            jwtProperties,
+            jwtService,
+            redisUtil,
         )
     }
 }

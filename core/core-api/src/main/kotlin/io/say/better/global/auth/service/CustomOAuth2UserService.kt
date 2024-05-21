@@ -22,12 +22,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class CustomOAuth2UserService(
-        private val educatorReadRepository: EducatorReadRepository,
-        private val educatorWriteRepository: EducatorWriteRepository,
-        private val learnerReadRepository: LearnerReadRepository,
-        private val learnerWriteRepository: LearnerWriteRepository
+    private val educatorReadRepository: EducatorReadRepository,
+    private val educatorWriteRepository: EducatorWriteRepository,
+    private val learnerReadRepository: LearnerReadRepository,
+    private val learnerWriteRepository: LearnerWriteRepository,
 ) : OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-
     private val log = logger()
 
     @Throws(OAuth2AuthenticationException::class)
@@ -40,24 +39,26 @@ class CustomOAuth2UserService(
 
         // registrationId : OAuth2 로그인을 처리하는 서비스를 구분하는 코드
         val registrationId = userRequest.clientRegistration.registrationId
-        val provider = Provider.find(registrationId)
+        val provider =
+            Provider.find(registrationId)
                 .orElseThrow { AuthException(ErrorStatus.INTERNAL_SERVER_ERROR) }
-        val userNameAttributeName = userRequest.clientRegistration
+        val userNameAttributeName =
+            userRequest.clientRegistration
                 .providerDetails.userInfoEndpoint.userNameAttributeName // OAuth2 로그인 시 키(PK)가 되는 값
         val attributes = oAuth2User.attributes // 소셜 로그인에서 API가 제공하는 userInfo의 Json 값(유저 정보들)
 
         // socialType에 따라 유저 정보를 통해 OAuthAttributes 객체 생성
         val extractAttributes: OAuthAttributes =
-                OAuthAttributes.of(provider, userNameAttributeName, attributes)
+            OAuthAttributes.of(provider, userNameAttributeName, attributes)
 
         val createdUser = getEducator(extractAttributes, provider) // getUser() 메소드로 User 객체 생성 후 반환
 
         // DefaultOAuth2User를 구현한 CustomOAuth2User 객체를 생성해서 반환
         return CustomOAuth2User(
-                setOf(SimpleGrantedAuthority(createdUser.role?.description)),
-                attributes,
-                extractAttributes.key,
-                createdUser.email!!
+            setOf(SimpleGrantedAuthority(createdUser.role?.description)),
+            attributes,
+            extractAttributes.key,
+            createdUser.email!!,
         )
     }
 
@@ -69,17 +70,25 @@ class CustomOAuth2UserService(
      * @param provider   Provider 객체
      * @return Educator
      */
-    private fun getEducator(attributes: OAuthAttributes, provider: Provider): Educator {
+    private fun getEducator(
+        attributes: OAuthAttributes,
+        provider: Provider,
+    ): Educator {
         val loginId = attributes.userInfo.provider + "_" + attributes.userInfo.providerId
-        val findUser = educatorReadRepository.findByProviderAndLoginId(provider, loginId)
+        val findUser =
+            educatorReadRepository.findByProviderAndLoginId(provider, loginId)
                 .orElse(null) ?: return saveEducator(attributes, provider)
 
         return findUser
     }
 
-    private fun getLearner(attributes: OAuthAttributes, provider: Provider): Learner {
+    private fun getLearner(
+        attributes: OAuthAttributes,
+        provider: Provider,
+    ): Learner {
         val loginId = attributes.userInfo.provider + "_" + attributes.userInfo.providerId
-        val findUser = learnerReadRepository.findByProviderAndLoginId(provider, loginId)
+        val findUser =
+            learnerReadRepository.findByProviderAndLoginId(provider, loginId)
                 .orElse(null) ?: return saveLearner(attributes, provider)
 
         return findUser
@@ -92,7 +101,10 @@ class CustomOAuth2UserService(
      * @param provider   Provider 객체
      * @return Educator
      */
-    private fun saveEducator(attributes: OAuthAttributes, provider: Provider): Educator {
+    private fun saveEducator(
+        attributes: OAuthAttributes,
+        provider: Provider,
+    ): Educator {
         val createdUser = attributes.toEducatorEntity(provider, attributes.userInfo)
         return educatorWriteRepository.save(createdUser)
     }
@@ -104,7 +116,10 @@ class CustomOAuth2UserService(
      * @param provider   Provider 객체
      * @return Learner
      */
-    private fun saveLearner(attributes: OAuthAttributes, provider: Provider): Learner {
+    private fun saveLearner(
+        attributes: OAuthAttributes,
+        provider: Provider,
+    ): Learner {
         val createdUser = attributes.toLearnerEntity(provider, attributes.userInfo)
         return learnerWriteRepository.save(createdUser)
     }
