@@ -3,7 +3,6 @@ package io.say.better.global.auth
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User
 
-
 data class CustomOAuth2User(
     @get:JvmName("getAuthorities_")
     val authorities: Collection<GrantedAuthority>,
@@ -12,7 +11,6 @@ data class CustomOAuth2User(
     val nameAttributeKey: String,
     val email: String,
 ) : DefaultOAuth2User(authorities, attributes, nameAttributeKey) {
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if ((other == null) || (javaClass != other.javaClass) || super.equals(other).not()) return false

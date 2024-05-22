@@ -9,17 +9,16 @@ import org.springframework.stereotype.Service
 
 @Service
 class SolutionService(
-        private val solutionReadRepository: SolutionReadRepository,
-        private val solutionWriteRepository: SolutionWriteRepository
+    private val solutionReadRepository: SolutionReadRepository,
+    private val solutionWriteRepository: SolutionWriteRepository,
 ) {
-
     fun createSolution(newSolution: Solution): Solution {
         return solutionWriteRepository.save(newSolution)
     }
 
     fun getSolution(solutionId: Long): Solution {
-        return solutionReadRepository.findById(solutionId).orElseThrow() {
+        return solutionReadRepository.findById(solutionId).orElseThrow {
             throw GeneralException(ErrorStatus.START_SOLUTION_NOT_FOUND)
-        };
+        }
     }
 }

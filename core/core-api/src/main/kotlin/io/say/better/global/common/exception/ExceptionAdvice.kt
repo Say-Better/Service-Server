@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-import java.util.*
+import java.util.Optional
 import java.util.function.Consumer
 
 @RestControllerAdvice(annotations = [RestController::class])
@@ -29,18 +29,19 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
     @ExceptionHandler
     fun validation(
         violationException: ConstraintViolationException,
-        request: WebRequest
+        request: WebRequest,
     ): ResponseEntity<Any>? {
-        val errorMessage = violationException.constraintViolations.stream()
-            .map { obj: ConstraintViolation<*> -> obj.message }
-            .findFirst()
-            .orElseThrow { RuntimeException("ConstraintViolationException 추출 도중 에러 발생") }
+        val errorMessage =
+            violationException.constraintViolations.stream()
+                .map { obj: ConstraintViolation<*> -> obj.message }
+                .findFirst()
+                .orElseThrow { RuntimeException("ConstraintViolationException 추출 도중 에러 발생") }
 
         return handleExceptionInternalConstraint(
             violationException,
             ErrorStatus.valueOf(errorMessage),
             HttpHeaders.EMPTY,
-            request
+            request,
         )
     }
 
@@ -48,32 +49,38 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
         notValidException: MethodArgumentNotValidException,
         headers: HttpHeaders,
         status: HttpStatusCode,
-        request: WebRequest
+        request: WebRequest,
     ): ResponseEntity<Any>? {
         val errors: MutableMap<String, String> = LinkedHashMap()
 
         notValidException.bindingResult.fieldErrors
-            .forEach(Consumer { fieldError: FieldError ->
-                val fieldName = fieldError.field
-                val errorMessage = Optional.ofNullable(fieldError.defaultMessage).orElse("")
-                errors.merge(
-                    fieldName, errorMessage
-                ) { existingErrorMessage: String, newErrorMessage: String -> "$existingErrorMessage, $newErrorMessage" }
-            })
+            .forEach(
+                Consumer { fieldError: FieldError ->
+                    val fieldName = fieldError.field
+                    val errorMessage = Optional.ofNullable(fieldError.defaultMessage).orElse("")
+                    errors.merge(
+                        fieldName,
+                        errorMessage,
+                    ) { existingErrorMessage: String, newErrorMessage: String,
+                        ->
+                        "$existingErrorMessage, $newErrorMessage"
+                    }
+                },
+            )
 
         return handleExceptionInternalArgs(
             notValidException,
             HttpHeaders.EMPTY,
             ErrorStatus.valueOf("_BAD_REQUEST"),
             request,
-            errors
+            errors,
         )
     }
 
     @ExceptionHandler
     fun exception(
         exception: Exception,
-        request: WebRequest
+        request: WebRequest,
     ): ResponseEntity<Any>? {
         log.error("Exception 발생", exception)
 
@@ -83,14 +90,14 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
             HttpHeaders.EMPTY,
             ErrorStatus.INTERNAL_SERVER_ERROR.httpStatus,
             request,
-            exception.message
+            exception.message,
         )
     }
 
     @ExceptionHandler(value = [GeneralException::class])
     fun onThrowException(
         generalException: GeneralException,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ResponseEntity<Any>? {
         val errorReasonHttpStatus = generalException.errorReasonHttpStatus
 
@@ -98,7 +105,7 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
             exception = generalException,
             reason = errorReasonHttpStatus,
             headers = HttpHeaders.EMPTY,
-            request = request
+            request = request,
         )
     }
 
@@ -106,13 +113,14 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
         exception: Exception,
         reason: ErrorReasonDto?,
         headers: HttpHeaders?,
-        request: HttpServletRequest
+        request: HttpServletRequest,
     ): ResponseEntity<Any>? {
-        val body: ResponseDto<Any?> = ResponseDto.onFailure(
-            code = reason!!.code,
-            message = reason.message,
-            result = null
-        )
+        val body: ResponseDto<Any?> =
+            ResponseDto.onFailure(
+                code = reason!!.code,
+                message = reason.message,
+                result = null,
+            )
 
         val webRequest: WebRequest = ServletWebRequest(request)
         return super.handleExceptionInternal(
@@ -120,7 +128,7 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
             body,
             headers!!,
             reason.httpStatus!!,
-            webRequest
+            webRequest,
         )
     }
 
@@ -130,20 +138,21 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
         headers: HttpHeaders,
         status: HttpStatus,
         request: WebRequest,
-        errorPoint: String?
+        errorPoint: String?,
     ): ResponseEntity<Any>? {
-        val body: ResponseDto<Any?> = ResponseDto.onFailure(
-            errorCommonStatus.code,
-            errorCommonStatus.message,
-            errorPoint
-        )
+        val body: ResponseDto<Any?> =
+            ResponseDto.onFailure(
+                errorCommonStatus.code,
+                errorCommonStatus.message,
+                errorPoint,
+            )
 
         return super.handleExceptionInternal(
             exception,
             body,
             headers,
             status,
-            request
+            request,
         )
     }
 
@@ -152,20 +161,21 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
         headers: HttpHeaders,
         errorCommonStatus: ErrorStatus,
         request: WebRequest,
-        errorArgs: Map<String, String>
+        errorArgs: Map<String, String>,
     ): ResponseEntity<Any>? {
-        val body: ResponseDto<Any> = ResponseDto.onFailure(
-            errorCommonStatus.code,
-            errorCommonStatus.message,
-            errorArgs
-        )
+        val body: ResponseDto<Any> =
+            ResponseDto.onFailure(
+                errorCommonStatus.code,
+                errorCommonStatus.message,
+                errorArgs,
+            )
 
         return super.handleExceptionInternal(
             exception,
             body,
             headers,
             errorCommonStatus.httpStatus,
-            request
+            request,
         )
     }
 
@@ -173,20 +183,21 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
         exception: Exception,
         errorCommonStatus: ErrorStatus,
         headers: HttpHeaders,
-        request: WebRequest
+        request: WebRequest,
     ): ResponseEntity<Any>? {
-        val body: ResponseDto<Any?> = ResponseDto.onFailure(
-            errorCommonStatus.code,
-            errorCommonStatus.message,
-            null
-        )
+        val body: ResponseDto<Any?> =
+            ResponseDto.onFailure(
+                errorCommonStatus.code,
+                errorCommonStatus.message,
+                null,
+            )
 
         return super.handleExceptionInternal(
             exception,
             body,
             headers,
             errorCommonStatus.httpStatus,
-            request
+            request,
         )
     }
 }

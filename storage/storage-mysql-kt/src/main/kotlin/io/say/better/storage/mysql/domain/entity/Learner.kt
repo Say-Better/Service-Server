@@ -3,24 +3,25 @@ package io.say.better.storage.mysql.domain.entity
 import io.say.better.core.enums.Provider
 import io.say.better.core.enums.RoleType
 import io.say.better.core.enums.Status
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
 
 @Entity(name = "LEARNER")
 class Learner(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "learner_id")
-        private var learnerId: Long = 0,
-
-        email: String,
-        birthDate: String,
-        provider: Provider,
-        providerId: String,
-        loginId: String,
-        name: String
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "learner_id")
+    private var learnerId: Long = 0,
+    email: String,
+    birthDate: String,
+    provider: Provider,
+    providerId: String,
+    loginId: String,
+    name: String,
 ) : Member() {
-
-
     init {
         this.status = Status.ACTIVE
         this.email = email
@@ -34,20 +35,20 @@ class Learner(
 
     companion object {
         fun createLearner(
-                email: String,
-                birthDate: String,
-                provider: Provider,
-                providerId: String,
-                loginId: String,
-                name: String
+            email: String,
+            birthDate: String,
+            provider: Provider,
+            providerId: String,
+            loginId: String,
+            name: String,
         ): Learner {
             return Learner(
-                    email = email,
-                    birthDate = birthDate,
-                    provider = provider,
-                    providerId = providerId,
-                    loginId = loginId,
-                    name = name
+                email = email,
+                birthDate = birthDate,
+                provider = provider,
+                providerId = providerId,
+                loginId = loginId,
+                name = name,
             )
         }
     }

@@ -12,5 +12,5 @@ data class JwtProperties(
     @Value("\${jwt.access-expiration}") val accessExpiration: Long,
     @Value("\${jwt.access-header}") val accessHeader: String,
     @Value("\${jwt.refresh-expiration}") val refreshExpiration: Long,
-    @Value("\${jwt.refresh-header}") val refreshHeader: String
+    @Value("\${jwt.refresh-header}") val refreshHeader: String,
 )

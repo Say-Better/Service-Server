@@ -4,7 +4,7 @@ import io.say.better.global.common.code.BaseErrorCode
 import io.say.better.global.common.response.ResponseDto.ErrorReasonDto
 
 open class GeneralException(
-    private val code: BaseErrorCode
+    private val code: BaseErrorCode,
 ) : RuntimeException() {
     val errorReasonDto: ErrorReasonDto
         get() = this.code.reason

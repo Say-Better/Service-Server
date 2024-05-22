@@ -10,16 +10,22 @@ class SolutionSymbolConverter private constructor() {
     }
 
     companion object {
-        fun toSolutionSymbols(savedSolution: Solution, symbols: List<Symbol?>): List<SolutionSymbol> {
+        fun toSolutionSymbols(
+            savedSolution: Solution,
+            symbols: List<Symbol?>,
+        ): List<SolutionSymbol> {
             return symbols.stream()
-                    .map { symbol: Symbol? -> toSolutionSymbol(savedSolution, symbol) }
-                    .toList()
+                .map { symbol: Symbol? -> toSolutionSymbol(savedSolution, symbol) }
+                .toList()
         }
 
-        private fun toSolutionSymbol(solution: Solution, symbol: Symbol?): SolutionSymbol {
+        private fun toSolutionSymbol(
+            solution: Solution,
+            symbol: Symbol?,
+        ): SolutionSymbol {
             return SolutionSymbol(
-                    solution = solution,
-                    symbol = symbol!!
+                solution = solution,
+                symbol = symbol!!,
             )
         }
     }
