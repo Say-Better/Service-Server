@@ -10,10 +10,13 @@ class RecordConverter private constructor() {
     }
 
     companion object {
-        fun toRecord(endSolution: EndSolution, review: Review): Record {
+        fun toRecord(
+            endSolution: EndSolution,
+            review: Review,
+        ): Record {
             return Record(
-                    orderNum = endSolution.orderNum,
-                    review = review
+                orderNum = endSolution.orderNum,
+                review = review,
             )
         }
     }

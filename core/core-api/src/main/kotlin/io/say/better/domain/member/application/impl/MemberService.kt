@@ -4,7 +4,11 @@ import io.say.better.core.enums.RoleType
 import io.say.better.domain.member.exception.MemberException
 import io.say.better.global.common.code.status.ErrorStatus
 import io.say.better.global.utils.SecurityUtil
-import io.say.better.storage.mysql.dao.repository.*
+import io.say.better.storage.mysql.dao.repository.EducatorReadRepository
+import io.say.better.storage.mysql.dao.repository.EducatorWriteRepository
+import io.say.better.storage.mysql.dao.repository.LearnerReadRepository
+import io.say.better.storage.mysql.dao.repository.LearnerWriteRepository
+import io.say.better.storage.mysql.dao.repository.MemberReadRepository
 import io.say.better.storage.mysql.domain.entity.Member
 import org.springframework.stereotype.Service
 
@@ -14,9 +18,8 @@ class MemberService(
     private val educatorReadRepository: EducatorReadRepository,
     private val educatorWriteRepository: EducatorWriteRepository,
     private val learnerReadRepository: LearnerReadRepository,
-    private val learnerWriteRepository: LearnerWriteRepository
+    private val learnerWriteRepository: LearnerWriteRepository,
 ) {
-
     fun currentMember(): Member {
         val email = securityUtil.currentUserEmail
         return getMember(email)
@@ -35,11 +38,17 @@ class MemberService(
         }
     }
 
-    private fun <T> findByEmail(repository: MemberReadRepository<T>, email: String): Boolean {
+    private fun <T> findByEmail(
+        repository: MemberReadRepository<T>,
+        email: String,
+    ): Boolean {
         return repository.findByEmail(email).isPresent
     }
 
-    fun assignUserRole(userEmail: String, role: RoleType) {
+    fun assignUserRole(
+        userEmail: String,
+        role: RoleType,
+    ) {
         val member = getMember(userEmail)
 
         if (member.role != RoleType.NONE) {

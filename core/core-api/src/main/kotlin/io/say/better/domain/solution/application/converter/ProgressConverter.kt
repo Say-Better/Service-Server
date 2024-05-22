@@ -6,19 +6,21 @@ import io.say.better.storage.mysql.domain.entity.Progress
 import io.say.better.storage.mysql.domain.entity.Solution
 
 class ProgressConverter {
-
     init {
         throw IllegalStateException("Utility class")
     }
 
     companion object {
-        fun toProgress(request: StartSolution, solution: Solution): Progress {
+        fun toProgress(
+            request: StartSolution,
+            solution: Solution,
+        ): Progress {
             return Progress(
-                    solution = solution,
-                    nowAssignStep = AssignStep.valueOf(request.nowStep),
-                    sessionOrder = request.sessionOrder,
-                    sessionGoal = request.sessionGoal,
-                    sessionDescription = request.sessionDesc
+                solution = solution,
+                nowAssignStep = AssignStep.valueOf(request.nowStep),
+                sessionOrder = request.sessionOrder,
+                sessionGoal = request.sessionGoal,
+                sessionDescription = request.sessionDesc,
             )
         }
     }

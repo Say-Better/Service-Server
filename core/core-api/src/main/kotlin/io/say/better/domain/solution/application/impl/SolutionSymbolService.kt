@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class SolutionSymbolService(
     private val solutionSymbolReadRepository: SolutionSymbolReadRepository,
-    private val solutionSymbolWriteRepository: SolutionSymbolWriteRepository
+    private val solutionSymbolWriteRepository: SolutionSymbolWriteRepository,
 ) {
     fun createSolutionSymbols(solutionSymbols: List<SolutionSymbol?>) {
         solutionSymbolWriteRepository.saveAll(solutionSymbols)

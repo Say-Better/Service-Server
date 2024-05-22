@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.jlleitschuh.gradle.ktlint.tasks.GenerateReportsTask
 
 plugins {
     kotlin("jvm")
@@ -8,7 +10,7 @@ plugins {
     id("org.springframework.boot") apply false
     id("io.spring.dependency-management")
     id("org.asciidoctor.jvm.convert") apply false
-    id("org.jlleitschuh.gradle.ktlint") apply false
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 java.sourceCompatibility = JavaVersion.valueOf("VERSION_${property("javaVersion")}")
@@ -19,6 +21,33 @@ allprojects {
 
     repositories {
         mavenCentral()
+    }
+
+    apply {
+        plugin("org.jlleitschuh.gradle.ktlint")
+    }
+
+    ktlint {
+        verbose.set(true)
+        outputToConsole.set(true)
+        coloredOutput.set(true)
+
+        reporters {
+            reporter(ReporterType.CHECKSTYLE)
+            reporter(ReporterType.JSON)
+            reporter(ReporterType.HTML)
+        }
+
+        filter {
+            exclude("**/build.gradle.kts", "**/settings.gradle.kts")
+        }
+    }
+
+    // ktlint report directory location setting
+    tasks.withType<GenerateReportsTask> {
+        reportsOutputDirectory.set(
+            rootProject.layout.buildDirectory.dir("reports/ktlint/${project.name}")
+        )
     }
 }
 

@@ -11,14 +11,14 @@ open class SwaggerConfig {
     @Bean
     open fun openAPI(): OpenAPI {
         return OpenAPI()
-                .components(Components())
-                .info(apiInfo())
+            .components(Components())
+            .info(apiInfo())
     }
 
     private fun apiInfo(): Info {
         return Info()
-                .title("Say Better API")
-                .description("API Documentation for Say Better")
-                .version("1.0.0")
+            .title("Say Better API")
+            .description("API Documentation for Say Better")
+            .version("1.0.0")
     }
 }

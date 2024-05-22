@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/auth")
 class AuthController(
-    private val authFacade: AuthFacade
+    private val authFacade: AuthFacade,
 ) {
-
     @PostMapping("/assign/educator")
     fun assignEducator(): ResponseDto<Nothing?> {
         val role = RoleType.EDUCATOR

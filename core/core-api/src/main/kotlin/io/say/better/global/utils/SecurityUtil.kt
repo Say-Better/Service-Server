@@ -7,8 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 
 @Component
-class SecurityUtil constructor(){
-
+class SecurityUtil constructor() {
     private val log = logger()
 
     fun clearSecurityContext() {
@@ -18,14 +17,14 @@ class SecurityUtil constructor(){
     val currentUserEmail: String
         get() {
             val authentication =
-                    SecurityContextHolder.getContext().authentication as UsernamePasswordAuthenticationToken
+                SecurityContextHolder.getContext().authentication as UsernamePasswordAuthenticationToken
             return authentication.name
         }
 
     val userAuthorities: Collection<GrantedAuthority>
         get() {
             val authentication =
-                    SecurityContextHolder.getContext().authentication as UsernamePasswordAuthenticationToken
+                SecurityContextHolder.getContext().authentication as UsernamePasswordAuthenticationToken
             return authentication.authorities
         }
 }

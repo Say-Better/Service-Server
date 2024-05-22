@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class RecordService(
-        private val recordReadRepository: RecordReadRepository,
-        private val recordWriteRepository: RecordWriteRepository,
+    private val recordReadRepository: RecordReadRepository,
+    private val recordWriteRepository: RecordWriteRepository,
 ) {
     fun createRecord(record: Record): Record {
         return recordWriteRepository.save(record)

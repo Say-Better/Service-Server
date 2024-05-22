@@ -10,20 +10,20 @@ class LearnerConverter private constructor() {
 
     companion object {
         fun toLearner(
-                email: String,
-                birthDate: String?,
-                provider: Provider,
-                providerId: String,
-                loginId: String,
-                name: String
+            email: String,
+            birthDate: String?,
+            provider: Provider,
+            providerId: String,
+            loginId: String,
+            name: String,
         ): Learner {
             return Learner.createLearner(
-                    email = email,
-                    birthDate = birthDate!!,
-                    provider = provider,
-                    providerId = providerId,
-                    loginId = loginId,
-                    name = name
+                email = email,
+                birthDate = birthDate!!,
+                provider = provider,
+                providerId = providerId,
+                loginId = loginId,
+                name = name,
             )
         }
     }

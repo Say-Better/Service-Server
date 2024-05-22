@@ -8,8 +8,9 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.web.servlet.MockMvc
 
 @WebMvcTest(ReviewController::class)
-class ReviewControllerTest @Autowired constructor(
-    private val mockMvc: MockMvc,
-    @MockBean private val reviewFacade: ReviewFacade
-) {
-}
+class ReviewControllerTest
+    @Autowired
+    constructor(
+        private val mockMvc: MockMvc,
+        @MockBean private val reviewFacade: ReviewFacade,
+    )
