@@ -45,7 +45,7 @@ class MessageQueueConfig @Autowired constructor(
     }
 
     /**
-     * yml의 큐 이름을 이용햐 큐 생성 (Bean
+     * yml의 큐 이름을 이용해 큐 생성 (Bean)
      */
     @Bean
     protected fun queue(): Queue {
@@ -88,14 +88,6 @@ class MessageQueueConfig @Autowired constructor(
     @Bean
     protected fun converter(): MessageConverter {
         return Jackson2JsonMessageConverter()
-    }
-
-    protected fun rabbitListenerContainerFactory(connectionFactory: ConnectionFactory?): SimpleRabbitListenerContainerFactory {
-        val factory: SimpleRabbitListenerContainerFactory = SimpleRabbitListenerContainerFactory()
-        factory.setConnectionFactory(connectionFactory)
-        factory.setAcknowledgeMode(AcknowledgeMode.AUTO)
-
-        return factory
     }
 
     /**

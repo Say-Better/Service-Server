@@ -4,7 +4,7 @@ import io.say.better.core.enums.Status
 import io.say.better.storage.mysql.domain.constant.AssignStep
 import jakarta.persistence.*
 
-@Entity(name = "ASSIGN")
+@Entity(name = "PROGRESS")
 class Progress(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
