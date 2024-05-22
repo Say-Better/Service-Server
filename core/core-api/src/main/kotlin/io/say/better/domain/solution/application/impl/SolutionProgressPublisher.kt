@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class SolutionProgressPublisher(
-        private val messageQueueUtil: MessageQueueUtil
+    private val messageQueueUtil: MessageQueueUtil,
 ) {
     fun publishRecord(endSolution: SolutionRequest.EndSolution) {
         messageQueueUtil.publish(endSolution)

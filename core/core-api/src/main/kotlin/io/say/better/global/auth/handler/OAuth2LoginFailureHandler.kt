@@ -10,14 +10,13 @@ import java.io.IOException
 
 @Component
 class OAuth2LoginFailureHandler : AuthenticationFailureHandler {
-
     private val log = logger()
 
     @Throws(IOException::class)
     override fun onAuthenticationFailure(
-            request: HttpServletRequest,
-            response: HttpServletResponse,
-            exception: AuthenticationException
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        exception: AuthenticationException,
     ) {
         response.status = HttpServletResponse.SC_BAD_REQUEST
         response.writer.write("소셜 로그인 실패! 서버 로그를 확인해주세요.")

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class ReviewService(
-        private val reviewReadRepository: ReviewReadRepository,
-        private val reviewWriteRepository: ReviewWriteRepository,
+    private val reviewReadRepository: ReviewReadRepository,
+    private val reviewWriteRepository: ReviewWriteRepository,
 ) {
     fun createReview(review: Review): Review {
         return reviewWriteRepository.save(review)
@@ -17,5 +17,4 @@ class ReviewService(
     fun getReview(reviewId: Long): Review {
         return reviewReadRepository.findById(reviewId).get()
     }
-
 }

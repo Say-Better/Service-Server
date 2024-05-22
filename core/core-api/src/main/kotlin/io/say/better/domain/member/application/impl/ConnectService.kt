@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service
 @Service
 class ConnectService(
     private val connectReadRepository: ConnectReadRepository,
-    private val connectWriteRepository: ConnectWriteRepository
+    private val connectWriteRepository: ConnectWriteRepository,
 ) {
-
-    fun connect(educator: Educator, learner: Learner) {
+    fun connect(
+        educator: Educator,
+        learner: Learner,
+    ) {
         val newConnect = ConnectConverter.toConnect(educator, learner)
         connectWriteRepository.save(newConnect)
     }

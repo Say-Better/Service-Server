@@ -1,9 +1,8 @@
 package io.say.better.global.auth.info
 
 data class GoogleOAuth2UserInfo(
-    val attributes: Map<String, Any>?
+    val attributes: Map<String, Any>?,
 ) : OAuth2UserInfo {
-
     override val providerId: String
         get() = (attributes!!["sub"] as String)
 

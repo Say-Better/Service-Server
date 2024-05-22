@@ -6,16 +6,16 @@ class SolutionResponse private constructor() {
     }
 
     data class SymbolList(
-            val name: String,
-            val symbols: List<SymbolInfo>? = null,
+        val name: String,
+        val symbols: List<SymbolInfo>? = null,
     )
 
     data class SymbolInfo(
-            val description: String,
-            val imageUrl: String
+        val description: String,
+        val imageUrl: String,
     )
 
     data class ProgressInfo(
-        val progressId: Long
+        val progressId: Long,
     )
 }

@@ -9,16 +9,15 @@ import org.springframework.stereotype.Service
 
 @Service
 class ProgressService(
-        private val progressWriteRepository: ProgressWriteRepository,
-        private val progressReadRepository: ProgressReadRepository
+    private val progressWriteRepository: ProgressWriteRepository,
+    private val progressReadRepository: ProgressReadRepository,
 ) {
-
     fun createProgress(progress: Progress): Progress {
         return progressWriteRepository.save(progress)
     }
 
     fun getProgress(progressId: Long): Progress {
-        return progressReadRepository.findById(progressId).orElseThrow() {
+        return progressReadRepository.findById(progressId).orElseThrow {
             throw GeneralException(ErrorStatus.END_PROGRESS_NOT_FOUND)
         }
     }

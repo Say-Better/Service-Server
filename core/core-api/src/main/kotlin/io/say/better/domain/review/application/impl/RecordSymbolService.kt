@@ -7,10 +7,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class RecordSymbolService(
-        private val recordSymbolReadRepository: RecordSymbolReadRepository,
-        private val recordSymbolWriteRepository: RecordSymbolWriteRepository,
+    private val recordSymbolReadRepository: RecordSymbolReadRepository,
+    private val recordSymbolWriteRepository: RecordSymbolWriteRepository,
 ) {
-
     fun createRecordSymbol(recordSymbol: RecordSymbol) {
         recordSymbolWriteRepository.save(recordSymbol)
     }

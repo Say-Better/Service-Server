@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController
 @Tag(name = "Review", description = "Review API")
 @RestController
 @RequestMapping("/api/review")
-class ReviewController (
+class ReviewController(
     private val reviewFacade: ReviewFacade,
 )
