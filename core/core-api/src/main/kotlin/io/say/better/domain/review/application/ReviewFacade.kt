@@ -26,7 +26,7 @@ class ReviewFacade(
 ) {
     private val log = logger()
 
-    @RabbitListener(queues = ["solution.queue"])
+    @RabbitListener(queues = ["solution.queue"], ackMode = "AUTO")
     fun recordSubscriber(endSolution: EndSolution) =
         Tx.writeable {
             val review: Review = reviewService.getReview(endSolution.reviewId!!)

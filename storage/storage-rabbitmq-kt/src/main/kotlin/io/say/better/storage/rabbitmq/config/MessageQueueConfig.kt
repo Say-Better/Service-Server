@@ -92,16 +92,6 @@ class MessageQueueConfig
             return Jackson2JsonMessageConverter()
         }
 
-        protected fun rabbitListenerContainerFactory(
-            connectionFactory: ConnectionFactory?,
-        ): SimpleRabbitListenerContainerFactory {
-            val factory: SimpleRabbitListenerContainerFactory = SimpleRabbitListenerContainerFactory()
-            factory.setConnectionFactory(connectionFactory)
-            factory.setAcknowledgeMode(AcknowledgeMode.AUTO)
-
-            return factory
-        }
-
         /**
          * RabbitTemplate 빈 세팅
          */
