@@ -1,0 +1,20 @@
+{
+    "name": "say-better-server",
+    "version": "1.0.0",
+    "description": "A server for Say Better",
+    "repository": "https://github.com/Say-Better/Service-Server.git",
+    "devDependencies": {
+        "@commitlint/cli": "^19.3.0",
+        "@commitlint/config-conventional": "^19.2.2",
+        "commitlint": "^19.3.0",
+        "commitlint-config-gitmoji": "^2.3.1",
+        "commitlint-plugin-function-rules": "^4.0.0",
+        "husky": "^9.0.11"
+    },
+    "scripts": {
+        "prepare": "husky install"
+    },
+    "main": "index.js",
+    "author": "luke0408 <zjvl324@gmail.com>",
+    "license": "MIT"
+}
