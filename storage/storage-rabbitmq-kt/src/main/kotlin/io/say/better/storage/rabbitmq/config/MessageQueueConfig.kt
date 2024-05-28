@@ -42,7 +42,7 @@ class MessageQueueConfig
         }
 
         /**
-         * yml의 큐 이름을 이용햐 큐 생성 (Bean
+         * yml의 큐 이름을 이용해 큐 생성 (Bean)
          * Queue(QueueName, durable, exclusive, autoDelete)
          * durable: 데이터 저장 위치 (true: Disk, false: Memory)
          * exclusive: 특정 클라이언트만 연결 허용할지 여부 (true: 허용, false: 미허용)
