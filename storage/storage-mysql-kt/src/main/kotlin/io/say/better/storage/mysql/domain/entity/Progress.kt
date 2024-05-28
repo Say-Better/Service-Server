@@ -13,7 +13,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 
-@Entity(name = "ASSIGN")
+@Entity(name = "PROGRESS")
 class Progress(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
