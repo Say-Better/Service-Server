@@ -71,12 +71,22 @@ jobs:
           ./gradlew clean build --stacktrace --info -x test
         shell: bash
 
-      # 5. Docker 이미지 빌드 및 푸시
+      # 5. Docker 로그인
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+
+      # 6. Docker 이미지 빌드 및 푸시
       - name: Docker Image Build & Push
+        env:
+          NAME: saybetter # 계정 명
+          REPO: springboot-dev # 레포 이름
         run: |
-          docker login -u ${{ env.DOCKER_USERNAME }} -p ${{ env.DOCKER_PASSWORD }}
-          docker build -t saybetter/springboot-dev .
-          docker push saybetter/springboot-dev
+          docker build -t $REPO .
+          docker tag $REPO:latest $NAME/$REPO:latest
+          docker push $NAME/$REPO:latest
 
       # 6. AWS SSM을 통한 Run-Command 실행
       - name: AWS SSM Send-Command
