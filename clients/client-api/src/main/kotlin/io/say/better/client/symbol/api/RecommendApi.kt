@@ -1,16 +1,21 @@
 package io.say.better.client.symbol.api
 
-import io.say.better.client.symbol.api.dto.RecommendRequest
-import io.say.better.client.symbol.api.dto.RecommendResponse
+import io.say.better.client.symbol.config.SymbolFeignConfiguration
+import io.say.better.client.symbol.dto.RecommendRequest
+import io.say.better.client.symbol.dto.RecommendResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 
-@FeignClient(name = "recommend", url = "\${recommend.api.base-url}")
+@FeignClient(
+    name = "recommend",
+    url = "\${recommend.api.base-url}",
+    configuration = [SymbolFeignConfiguration::class]
+)
 fun interface RecommendApi {
-    @PostMapping(value = ["/recommend"], consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("/recommend")
     fun recommend(
         @RequestHeader("Authorization") identityToken: String,
         @RequestBody request: RecommendRequest.SymbolRecommend,

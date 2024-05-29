@@ -1,4 +1,4 @@
-package io.say.better.client.symbol.api.dto
+package io.say.better.client.symbol.dto
 
 class RecommendRequest private constructor() {
     init {
