@@ -8,23 +8,4 @@ class LearnerConverter private constructor() {
         throw IllegalStateException("Utility class")
     }
 
-    companion object {
-        fun toLearner(
-            email: String,
-            birthDate: String?,
-            provider: Provider,
-            providerId: String,
-            loginId: String,
-            name: String,
-        ): Learner {
-            return Learner.createLearner(
-                email = email,
-                birthDate = birthDate!!,
-                provider = provider,
-                providerId = providerId,
-                loginId = loginId,
-                name = name,
-            )
-        }
-    }
 }
