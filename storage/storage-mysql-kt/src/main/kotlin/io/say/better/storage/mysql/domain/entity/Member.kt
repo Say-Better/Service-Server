@@ -4,36 +4,62 @@ import io.say.better.core.enums.Provider
 import io.say.better.core.enums.RoleType
 import io.say.better.core.enums.Status
 import jakarta.persistence.Column
+import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
-import jakarta.persistence.MappedSuperclass
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType.IDENTITY
+import jakarta.persistence.Id
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 
-@MappedSuperclass
-abstract class Member : BaseTimeEntity() {
+@Entity(name = "MEMBER")
+class Member(
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @JdbcTypeCode(SqlTypes.BIGINT)
+    @Column(name = "member_id", nullable = false)
+    val memberId: Long? = null,
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
-    var status: Status? = null
-
+    val status: Status = Status.ACTIVE,
     @Column(name = "email", nullable = false, length = 100)
-    var email: String? = null
-
+    val email: String = "",
     @Column(name = "birth_date")
-    var birthDate: String? = null
-
+    val birthDate: String = "",
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 20)
-    var role: RoleType? = null
-
+    val role: RoleType = RoleType.NONE,
     @Enumerated(EnumType.STRING)
     @Column(name = "provider", nullable = false, length = 20)
-    var provider: Provider? = null
-
+    val provider: Provider? = null,
     @Column(name = "provider_id", nullable = false)
-    var providerId: String? = null
-
+    val providerId: String? = null,
     @Column(name = "login_id", nullable = false)
-    var loginId: String? = null
-
+    val loginId: String? = null,
     @Column(name = "name", nullable = false, length = 100)
-    var name: String? = null
+    val name: String? = null,
+) : BaseTimeEntity() {
+
+    companion object {
+        fun createMember(
+            email: String,
+            birthDate: String,
+            role: RoleType,
+            provider: Provider,
+            providerId: String,
+            loginId: String,
+            name: String,
+        ): Member {
+            return Member(
+                email = email,
+                birthDate = birthDate,
+                role = role,
+                provider = provider,
+                providerId = providerId,
+                loginId = loginId,
+                name = name,
+            )
+        }
+    }
 }
