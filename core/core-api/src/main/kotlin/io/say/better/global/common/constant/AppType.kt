@@ -1,5 +1,7 @@
 package io.say.better.global.common.constant
 
+import com.fasterxml.jackson.annotation.JsonValue
+
 enum class AppType(
     val description: String,
 ) {
@@ -12,5 +14,10 @@ enum class AppType(
         fun fromString(value: String): AppType {
             return valueOf(value.uppercase())
         }
+    }
+
+    @JsonValue
+    fun getAppType(): String {
+        return description
     }
 }

@@ -1,5 +1,6 @@
 package io.say.better.core.enums
 
+import com.fasterxml.jackson.annotation.JsonValue
 import java.util.Optional
 import java.util.stream.Stream
 
@@ -18,5 +19,10 @@ enum class Provider(
                 .filter { it.description == description }
                 .findFirst()
         }
+    }
+
+    @JsonValue
+    fun getProvider(): String {
+        return description
     }
 }
