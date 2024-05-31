@@ -1,9 +1,9 @@
-package io.say.better.client.oauth.google.converter
+package io.say.better.client.oauth.strategy.converter
 
 import io.say.better.client.oauth.google.dto.GoogleOauth2Response
-import io.say.better.client.oauth.google.dto.GoogleOauth2Result
+import io.say.better.client.oauth.strategy.dto.OauthResult
 
-class GoogleOauth2ResultConverter private constructor() {
+class OauthResultConverter private constructor() {
     init {
         throw IllegalStateException("Utility class")
     }
@@ -11,8 +11,8 @@ class GoogleOauth2ResultConverter private constructor() {
     companion object {
         fun toGoogleUserInfo(
             response: GoogleOauth2Response.GoogleUserInfo
-        ): GoogleOauth2Result.GoogleUserInfo {
-            return GoogleOauth2Result.GoogleUserInfo(
+        ): OauthResult.GoogleUserInfo {
+            return OauthResult.GoogleUserInfo(
                 sub = response.sub,
                 name = response.name,
                 email = response.email

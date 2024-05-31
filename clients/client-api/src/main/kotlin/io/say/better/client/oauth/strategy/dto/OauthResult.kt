@@ -1,6 +1,6 @@
-package io.say.better.client.oauth.google.dto
+package io.say.better.client.oauth.strategy.dto
 
-class GoogleOauth2Result private constructor() {
+class OauthResult private constructor() {
     init {
         throw IllegalStateException("Utility class")
     }
