@@ -1,7 +1,7 @@
 package io.say.better.client.oauth.google.api
 
 import io.say.better.client.oauth.google.config.GoogleOauth2FeignConfiguration
-import io.say.better.client.oauth.google.dto.GoogleOauth2Response
+import io.say.better.core.enums.auth.info.GoogleOAuth2UserInfo
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -13,5 +13,5 @@ import org.springframework.web.bind.annotation.RequestParam
 )
 fun interface GoogleOauth2Api {
     @GetMapping("/tokeninfo")
-    fun verifyToken(@RequestParam("id_token") idToken: String) : GoogleOauth2Response.GoogleUserInfo
+    fun verifyToken(@RequestParam("id_token") idToken: String) : GoogleOAuth2UserInfo
 }

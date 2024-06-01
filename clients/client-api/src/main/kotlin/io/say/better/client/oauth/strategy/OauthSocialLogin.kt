@@ -1,7 +1,10 @@
 package io.say.better.client.oauth.strategy
 
-import io.say.better.client.oauth.strategy.dto.OauthResult
+import io.say.better.core.enums.Provider
+import io.say.better.core.enums.auth.info.OAuth2UserInfo
 
-fun interface OauthSocialLogin {
-    fun verifyToken(idToken: String): OauthResult.GoogleUserInfo
+interface OauthSocialLogin {
+    val provider: Provider
+
+    fun verifyToken(idToken: String): OAuth2UserInfo
 }
