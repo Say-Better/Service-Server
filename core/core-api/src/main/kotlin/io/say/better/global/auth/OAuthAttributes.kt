@@ -6,8 +6,8 @@ import io.say.better.domain.member.application.converter.EducatorConverter
 import io.say.better.domain.member.application.converter.LearnerConverter
 import io.say.better.domain.member.application.converter.MemberConverter
 import io.say.better.global.auth.exception.AuthException
-import io.say.better.global.auth.info.GoogleOAuth2UserInfo
-import io.say.better.global.auth.info.OAuth2UserInfo
+import io.say.better.core.enums.auth.info.GoogleOAuth2UserInfo
+import io.say.better.core.enums.auth.info.OAuth2UserInfo
 import io.say.better.global.common.code.status.ErrorStatus
 import io.say.better.storage.mysql.domain.entity.Educator
 import io.say.better.storage.mysql.domain.entity.Learner
