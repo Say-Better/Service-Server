@@ -1,4 +1,4 @@
-package io.say.better.global.auth.info
+package io.say.better.core.enums.auth.info
 
 import io.say.better.core.enums.Provider
 
