@@ -1,24 +1,25 @@
 package io.say.better.global.common.constant
 
-import com.fasterxml.jackson.annotation.JsonValue
+import com.fasterxml.jackson.annotation.JsonCreator
+import org.apache.commons.lang3.EnumUtils
 
 enum class AppType(
-    private val lowerCase: String,
     val description: String,
 ) {
-    EDUCATOR("educator", "교육자"),
-    LEARNER("learner", "학습자"),
+    EDUCATOR( "교육자"),
+    LEARNER( "학습자"),
 
     ;
 
     companion object {
+        @JvmStatic
+        @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+        fun from(
+            value: String
+        ): AppType = value.let { EnumUtils.getEnumIgnoreCase(AppType::class.java, it.trim()) }
+
         fun fromString(value: String): AppType {
             return valueOf(value.uppercase())
         }
-    }
-
-    @JsonValue
-    fun getAppType(): String {
-        return lowerCase
     }
 }
