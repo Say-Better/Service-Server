@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 @PropertySource("classpath:client-api.yml")
-class RecommendClient(
+class RecommendClient internal constructor(
     private val recommendApi: RecommendApi,
     @Value("\${recommend.api.identity-token}") private val identityToken: String,
 ) {

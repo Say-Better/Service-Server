@@ -7,7 +7,7 @@ import io.say.better.core.enums.auth.info.GoogleOAuth2UserInfo
 import org.springframework.stereotype.Component
 
 @Component
-class GoogleOauthClient(
+class GoogleOauthClient internal constructor(
     private val googleOauth2Api: GoogleOauth2Api,
 ) : OauthSocialLogin {
     override val provider: Provider

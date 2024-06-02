@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader
     url = "\${recommend.api.base-url}",
     configuration = [SymbolFeignConfiguration::class],
 )
-fun interface RecommendApi {
+internal fun interface RecommendApi {
     @PostMapping("/recommend")
     fun recommend(
         @RequestHeader("Authorization") identityToken: String,
