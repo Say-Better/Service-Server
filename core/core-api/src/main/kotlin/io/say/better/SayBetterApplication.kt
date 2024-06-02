@@ -6,7 +6,7 @@ import org.springframework.boot.runApplication
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
-open class SayBetterApplication
+class SayBetterApplication
 
 fun main(args: Array<String>) {
     runApplication<SayBetterApplication>(*args)
