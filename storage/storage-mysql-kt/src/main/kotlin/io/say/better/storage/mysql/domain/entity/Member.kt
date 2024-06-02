@@ -40,7 +40,6 @@ class Member(
     @Column(name = "name", nullable = false, length = 100)
     val name: String? = null,
 ) : BaseTimeEntity() {
-
     companion object {
         fun createMember(
             email: String,

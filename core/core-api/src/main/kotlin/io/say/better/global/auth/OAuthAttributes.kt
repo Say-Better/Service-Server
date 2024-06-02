@@ -2,15 +2,11 @@ package io.say.better.global.auth
 
 import io.say.better.core.enums.Provider
 import io.say.better.core.enums.RoleType
-import io.say.better.domain.member.application.converter.EducatorConverter
-import io.say.better.domain.member.application.converter.LearnerConverter
-import io.say.better.domain.member.application.converter.MemberConverter
-import io.say.better.global.auth.exception.AuthException
 import io.say.better.core.enums.auth.info.GoogleOAuth2UserInfo
 import io.say.better.core.enums.auth.info.OAuth2UserInfo
+import io.say.better.domain.member.application.converter.MemberConverter
+import io.say.better.global.auth.exception.AuthException
 import io.say.better.global.common.code.status.ErrorStatus
-import io.say.better.storage.mysql.domain.entity.Educator
-import io.say.better.storage.mysql.domain.entity.Learner
 import io.say.better.storage.mysql.domain.entity.Member
 
 data class OAuthAttributes(
@@ -26,7 +22,10 @@ data class OAuthAttributes(
      * @param oauth2UserInfo 소셜 로그인 유저 정보
      * @return Member
      */
-    fun toEntity(provider: Provider, oauth2UserInfo: OAuth2UserInfo): Member {
+    fun toEntity(
+        provider: Provider,
+        oauth2UserInfo: OAuth2UserInfo,
+    ): Member {
         val loginId = oauth2UserInfo.provider + "_" + oauth2UserInfo.providerId
 
         return MemberConverter.toMember(
@@ -36,12 +35,11 @@ data class OAuthAttributes(
             provider = provider,
             providerId = oauth2UserInfo.providerId,
             loginId = loginId,
-            name = oauth2UserInfo.name
+            name = oauth2UserInfo.name,
         )
     }
 
     companion object {
-
         /**
          * OAuth2User의 attribute를 담은 Map
          *
@@ -53,7 +51,7 @@ data class OAuthAttributes(
         fun of(
             provider: Provider,
             userNameAttributeName: String,
-            attributes: Map<String, Any>?
+            attributes: Map<String, Any>?,
         ): OAuthAttributes {
             if (provider == Provider.GOOGLE) {
                 return ofGoogle(userNameAttributeName, attributes)
@@ -64,7 +62,7 @@ data class OAuthAttributes(
 
         private fun ofGoogle(
             userNameAttributeName: String,
-            attributes: Map<String, Any>?
+            attributes: Map<String, Any>?,
         ): OAuthAttributes {
             return OAuthAttributes(userNameAttributeName, GoogleOAuth2UserInfo(attributes))
         }

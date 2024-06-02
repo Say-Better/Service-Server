@@ -58,28 +58,40 @@ class MemberService(
             .orElseThrow { MemberException(ErrorStatus.LEARNER_NOT_FOUND) }
     }
 
-    fun getMember(provider: Provider, userInfo: OAuth2UserInfo): Member {
+    fun getMember(
+        provider: Provider,
+        userInfo: OAuth2UserInfo,
+    ): Member {
         val loginId = getLoginId(provider, userInfo)
-        val findUser = memberReadRepository.findByProviderAndLoginId(provider, loginId).orElse(null)
-            ?: return saveMember(userInfo, provider)
+        val findUser =
+            memberReadRepository.findByProviderAndLoginId(provider, loginId).orElse(null)
+                ?: return saveMember(userInfo, provider)
 
         return findUser
     }
 
-    private fun getLoginId(provider: Provider, userInfo: OAuth2UserInfo): String {
+    private fun getLoginId(
+        provider: Provider,
+        userInfo: OAuth2UserInfo,
+    ): String {
         val providerId = userInfo.providerId
         return "$provider-$providerId"
     }
 
-    private fun saveMember(attributes: OAuth2UserInfo, provider: Provider): Member {
-        val createdUser = Member.createMember(
-            email = attributes.email,
-            birthDate = "",
-            role = RoleType.NONE,
-            provider = provider,
-            providerId = attributes.providerId,
-            loginId = getLoginId(provider, attributes),
-            name = attributes.name)
+    private fun saveMember(
+        attributes: OAuth2UserInfo,
+        provider: Provider,
+    ): Member {
+        val createdUser =
+            Member.createMember(
+                email = attributes.email,
+                birthDate = "",
+                role = RoleType.NONE,
+                provider = provider,
+                providerId = attributes.providerId,
+                loginId = getLoginId(provider, attributes),
+                name = attributes.name,
+            )
 
         return memberWriteRepository.save(createdUser)
     }

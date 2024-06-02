@@ -16,5 +16,4 @@ class GoogleOauthClient(
     override fun verifyToken(idToken: String): GoogleOAuth2UserInfo {
         return googleOauth2Api.verifyToken(idToken)
     }
-
 }

@@ -5,8 +5,6 @@ import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.member.exception.MemberException
 import io.say.better.global.common.code.status.ErrorStatus
 import io.say.better.global.utils.CodeUtil
-import io.say.better.storage.mysql.domain.entity.Educator
-import io.say.better.storage.mysql.domain.entity.Learner
 import io.say.better.storage.redis.RedisUtil
 import org.springframework.stereotype.Component
 
@@ -26,7 +24,8 @@ class MemberFacade(
     }
 
     fun connect(code: String) {
-        val email = redisUtil.getData(code)
+        val email =
+            redisUtil.getData(code)
                 ?: throw MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID)
 
         redisUtil.deleteData(code)
@@ -35,7 +34,7 @@ class MemberFacade(
         val learnerMember = memberService.getMember(email)
         connectService.connect(
             educator = memberService.getEducator(educatorMember),
-            learner = memberService.getLearner(learnerMember)
+            learner = memberService.getLearner(learnerMember),
         )
     }
 }

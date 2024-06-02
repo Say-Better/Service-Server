@@ -34,10 +34,12 @@ class CustomOAuth2UserService(
 
         // registrationId : OAuth2 로그인을 처리하는 서비스를 구분하는 코드
         val registrationId = userRequest.clientRegistration.registrationId
-        val provider = Provider.find(registrationId)
-            .orElseThrow { AuthException(ErrorStatus.INTERNAL_SERVER_ERROR) }
-        val userNameAttributeName = userRequest.clientRegistration
-            .providerDetails.userInfoEndpoint.userNameAttributeName // OAuth2 로그인 시 키(PK)가 되는 값
+        val provider =
+            Provider.find(registrationId)
+                .orElseThrow { AuthException(ErrorStatus.INTERNAL_SERVER_ERROR) }
+        val userNameAttributeName =
+            userRequest.clientRegistration
+                .providerDetails.userInfoEndpoint.userNameAttributeName // OAuth2 로그인 시 키(PK)가 되는 값
         val attributes = oAuth2User.attributes // 소셜 로그인에서 API가 제공하는 userInfo의 Json 값(유저 정보들)
 
         // socialType에 따라 유저 정보를 통해 OAuthAttributes 객체 생성
@@ -52,7 +54,7 @@ class CustomOAuth2UserService(
             attributes,
             extractAttributes.key,
             createdUser.email,
-            createdUser.role
+            createdUser.role,
         )
     }
 
@@ -64,10 +66,14 @@ class CustomOAuth2UserService(
      * @param provider   Provider 객체
      * @return Educator
      */
-    private fun getMember(attributes: OAuthAttributes, provider: Provider): Member {
+    private fun getMember(
+        attributes: OAuthAttributes,
+        provider: Provider,
+    ): Member {
         val loginId = attributes.userInfo.provider + "_" + attributes.userInfo.providerId
-        val findUser = memberReadRepository.findByProviderAndLoginId(provider, loginId).orElse(null)
-            ?: return saveMember(attributes, provider)
+        val findUser =
+            memberReadRepository.findByProviderAndLoginId(provider, loginId).orElse(null)
+                ?: return saveMember(attributes, provider)
 
         return findUser
     }
@@ -79,7 +85,10 @@ class CustomOAuth2UserService(
      * @param provider   Provider 객체
      * @return Member
      */
-    private fun saveMember(attributes: OAuthAttributes, provider: Provider): Member {
+    private fun saveMember(
+        attributes: OAuthAttributes,
+        provider: Provider,
+    ): Member {
         val createdUser = attributes.toEntity(provider, attributes.userInfo)
         return memberWriteRepository!!.save(createdUser)
     }

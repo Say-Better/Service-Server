@@ -7,5 +7,6 @@ import java.util.*
 
 interface EducatorReadRepository : JpaRepository<Educator, Long> {
     fun findByEducatorId(educatorId: Long): Optional<Educator>
+
     fun findByMemberId(member: Member): Optional<Educator>
 }

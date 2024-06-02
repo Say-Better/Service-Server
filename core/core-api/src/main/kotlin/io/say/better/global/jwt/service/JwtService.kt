@@ -26,7 +26,7 @@ class JwtService(
     private val log = logger()
     private val signingKey = Keys.hmacShaKeyFor(jwtProperties.secret.toByteArray(StandardCharset.UTF_8))
 
-    fun createServiceToken(member: Member) : JwtToken {
+    fun createServiceToken(member: Member): JwtToken {
         val accessToken = createAccessToken(member.email)
         val refreshToken = createRefreshToken()
         updateRefreshToken(member.email, refreshToken)

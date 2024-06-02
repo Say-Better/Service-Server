@@ -5,7 +5,7 @@ class AuthResponse private constructor() {
         throw IllegalStateException("Utility class")
     }
 
-    data class LoginDTO (
+    data class LoginDTO(
         val memberId: Long,
         val accessToken: String,
         val refreshToken: String,

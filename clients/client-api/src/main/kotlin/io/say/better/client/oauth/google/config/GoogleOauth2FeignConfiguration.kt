@@ -4,7 +4,6 @@ import feign.RequestInterceptor
 import org.springframework.context.annotation.Bean
 
 class GoogleOauth2FeignConfiguration {
-
     @Bean
     fun requestInterceptor(): RequestInterceptor {
         return RequestInterceptor {

@@ -3,7 +3,7 @@ package io.say.better.global.common.constant
 import com.fasterxml.jackson.annotation.JsonValue
 
 enum class AppType(
-    private val lowerCase : String,
+    private val lowerCase: String,
     val description: String,
 ) {
     EDUCATOR("educator", "교육자"),

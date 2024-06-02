@@ -4,5 +4,4 @@ class OauthResultConverter private constructor() {
     init {
         throw IllegalStateException("Utility class")
     }
-
 }

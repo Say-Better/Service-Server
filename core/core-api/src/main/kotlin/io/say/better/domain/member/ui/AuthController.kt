@@ -20,13 +20,12 @@ import org.springframework.web.bind.annotation.RestController
 class AuthController(
     private val authFacade: AuthFacade,
 ) {
-
     @PostMapping("/login/{appType}/{socialType}")
     fun login(
         @PathVariable appType: AppType,
         @PathVariable socialType: Provider,
         @RequestBody request: AuthRequest.LoginDTO,
-    ) : ResponseDto<AuthResponse.LoginDTO> {
+    ): ResponseDto<AuthResponse.LoginDTO> {
         return ResponseDto.onSuccess(authFacade.login(appType, socialType, request))
     }
 

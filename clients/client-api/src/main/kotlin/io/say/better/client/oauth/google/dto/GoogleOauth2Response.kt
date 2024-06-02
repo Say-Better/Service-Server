@@ -5,11 +5,12 @@ class GoogleOauth2Response private constructor() {
         throw IllegalStateException("Utility class")
     }
 
-    data class GoogleUserInfo (
+    data class GoogleUserInfo(
         val iss: String,
         val azp: String,
         val aud: String,
-        val sub: String, // user id
+        // user id
+        val sub: String,
         val email: String,
         val email_verified: Boolean,
         val at_hash: String,

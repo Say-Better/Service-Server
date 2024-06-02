@@ -17,7 +17,7 @@ class MemberConverter private constructor() {
             provider: Provider,
             providerId: String,
             loginId: String,
-            name: String
+            name: String,
         ): Member {
             return Member.createMember(
                 email,
@@ -26,7 +26,7 @@ class MemberConverter private constructor() {
                 provider,
                 providerId,
                 loginId,
-                name
+                name,
             )
         }
     }

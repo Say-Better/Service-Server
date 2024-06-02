@@ -10,7 +10,10 @@ class AuthResponseConverter private constructor() {
     }
 
     companion object {
-        fun toLoginDTO(member: Member, token: JwtToken): AuthResponse.LoginDTO {
+        fun toLoginDTO(
+            member: Member,
+            token: JwtToken,
+        ): AuthResponse.LoginDTO {
             return AuthResponse.LoginDTO(
                 member.memberId!!,
                 token.accessToken,

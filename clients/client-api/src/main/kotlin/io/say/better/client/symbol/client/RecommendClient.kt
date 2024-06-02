@@ -1,9 +1,9 @@
 package io.say.better.client.symbol.client
 
 import io.say.better.client.symbol.api.RecommendApi
+import io.say.better.client.symbol.converter.RecommendResultConverter
 import io.say.better.client.symbol.dto.RecommendRequest
 import io.say.better.client.symbol.dto.RecommendResult
-import io.say.better.client.symbol.converter.RecommendResultConverter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.PropertySource
 import org.springframework.stereotype.Component

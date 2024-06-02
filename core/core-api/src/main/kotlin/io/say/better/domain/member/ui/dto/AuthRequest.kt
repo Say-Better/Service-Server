@@ -5,7 +5,7 @@ class AuthRequest private constructor() {
         throw IllegalStateException("Utility class")
     }
 
-    data class LoginDTO (
+    data class LoginDTO(
         val identityToken: String,
     )
 }

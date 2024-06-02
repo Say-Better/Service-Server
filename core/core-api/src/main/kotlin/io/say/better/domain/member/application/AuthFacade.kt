@@ -35,5 +35,4 @@ class AuthFacade(
 
         return AuthResponseConverter.toLoginDTO(member, token)
     }
-
 }
