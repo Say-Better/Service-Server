@@ -68,6 +68,7 @@ class SecurityConfig(
                     .requestMatchers(*noneUserRoleUrls).hasRole(RoleType.NONE.name)
                     .requestMatchers(*educatorUrls).hasRole(RoleType.EDUCATOR.name)
                     .requestMatchers(*leanerUrls).hasRole(RoleType.LEARNER.name)
+                    .requestMatchers(*educatorUrls, *leanerUrls).hasRole(RoleType.EDUCATOR_LEARNER.name)
                     .anyRequest().authenticated()
             }
             .oauth2Login {
