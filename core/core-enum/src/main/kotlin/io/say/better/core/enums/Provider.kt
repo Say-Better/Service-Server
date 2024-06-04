@@ -2,7 +2,7 @@ package io.say.better.core.enums
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import org.apache.commons.lang3.EnumUtils
-import java.util.Optional
+import java.util.*
 import java.util.stream.Stream
 
 enum class Provider(
@@ -17,9 +17,7 @@ enum class Provider(
     companion object {
         @JvmStatic
         @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-        fun from(
-            value: String
-        ): Provider = value.let { EnumUtils.getEnumIgnoreCase(Provider::class.java, it.trim()) }
+        fun from(value: String): Provider = value.let { EnumUtils.getEnumIgnoreCase(Provider::class.java, it.trim()) }
 
         fun find(description: String): Optional<Provider> {
             return Stream.of(*entries.toTypedArray())
