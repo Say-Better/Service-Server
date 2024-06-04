@@ -16,6 +16,8 @@ dependencies {
     implementation(project(":storage:storage-rabbitmq-kt"))
     implementation(project(":clients:client-api"))
 
+    testImplementation(project(":tests:api-docs"))
+
     // application
     implementation("org.springframework.boot:spring-boot-starter-web")
 
@@ -30,11 +32,16 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    // jackson
+    // json
     implementation("io.jsonwebtoken:jjwt-api:${property("jjwtVersion")}")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:${property("jjwtVersion")}")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:${property("jjwtVersion")}")
 
+    compileOnly("com.fasterxml.jackson.core:jackson-databind")
+    testImplementation("com.jayway.jsonpath:json-path:2.9.0")
+    testImplementation("com.google.code.gson:gson:2.10.1")
+
     // test
-    testImplementation(project(":tests:api-docs"))
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.assertj:assertj-core:3.25.1")
 }
