@@ -3,9 +3,9 @@ rootProject.name = "say-better-spring-boot"
 include(
     ":core:core-api",
     ":core:core-enum",
-    "storage:storage-mysql-kt",
-    "storage:storage-rabbitmq-kt",
-    "storage:storage-redis-kt",
+    ":storage:storage-mysql-kt",
+    ":storage:storage-rabbitmq-kt",
+    ":storage:storage-redis-kt",
     ":clients:client-api",
     ":support:logging",
     ":support:monitoring",

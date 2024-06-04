@@ -6,12 +6,9 @@ import io.say.better.global.auth.OAuthAttributes
 import io.say.better.global.auth.exception.AuthException
 import io.say.better.global.common.code.status.ErrorStatus
 import io.say.better.global.config.logger.logger
-import io.say.better.storage.mysql.dao.repository.EducatorReadRepository
-import io.say.better.storage.mysql.dao.repository.EducatorWriteRepository
-import io.say.better.storage.mysql.dao.repository.LearnerReadRepository
-import io.say.better.storage.mysql.dao.repository.LearnerWriteRepository
-import io.say.better.storage.mysql.domain.entity.Educator
-import io.say.better.storage.mysql.domain.entity.Learner
+import io.say.better.storage.mysql.dao.repository.MemberReadRepository
+import io.say.better.storage.mysql.dao.repository.MemberWriteRepository
+import io.say.better.storage.mysql.domain.entity.Member
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
@@ -22,10 +19,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class CustomOAuth2UserService(
-    private val educatorReadRepository: EducatorReadRepository,
-    private val educatorWriteRepository: EducatorWriteRepository,
-    private val learnerReadRepository: LearnerReadRepository,
-    private val learnerWriteRepository: LearnerWriteRepository,
+    private val memberReadRepository: MemberReadRepository,
+    private val memberWriteRepository: MemberWriteRepository,
 ) : OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private val log = logger()
 
@@ -51,14 +46,15 @@ class CustomOAuth2UserService(
         val extractAttributes: OAuthAttributes =
             OAuthAttributes.of(provider, userNameAttributeName, attributes)
 
-        val createdUser = getEducator(extractAttributes, provider) // getUser() 메소드로 User 객체 생성 후 반환
+        val createdUser = getMember(extractAttributes, provider) // getUser() 메소드로 User 객체 생성 후 반환
 
         // DefaultOAuth2User를 구현한 CustomOAuth2User 객체를 생성해서 반환
         return CustomOAuth2User(
-            setOf(SimpleGrantedAuthority(createdUser.role?.description)),
+            setOf(SimpleGrantedAuthority(createdUser.role.description)),
             attributes,
             extractAttributes.key,
-            createdUser.email!!,
+            createdUser.email,
+            createdUser.role,
         )
     }
 
@@ -70,57 +66,30 @@ class CustomOAuth2UserService(
      * @param provider   Provider 객체
      * @return Educator
      */
-    private fun getEducator(
+    private fun getMember(
         attributes: OAuthAttributes,
         provider: Provider,
-    ): Educator {
+    ): Member {
         val loginId = attributes.userInfo.provider + "_" + attributes.userInfo.providerId
         val findUser =
-            educatorReadRepository.findByProviderAndLoginId(provider, loginId)
-                .orElse(null) ?: return saveEducator(attributes, provider)
-
-        return findUser
-    }
-
-    private fun getLearner(
-        attributes: OAuthAttributes,
-        provider: Provider,
-    ): Learner {
-        val loginId = attributes.userInfo.provider + "_" + attributes.userInfo.providerId
-        val findUser =
-            learnerReadRepository.findByProviderAndLoginId(provider, loginId)
-                .orElse(null) ?: return saveLearner(attributes, provider)
+            memberReadRepository.findByProviderAndLoginId(provider, loginId).orElse(null)
+                ?: return saveMember(attributes, provider)
 
         return findUser
     }
 
     /**
-     * OAuthAttributes 객체를 통해 Educator 객체 생성 후 DB에 저장
+     * OAuthAttributes 객체를 통해 User 객체 생성 후 DB에 저장
      *
      * @param attributes OAuthAttributes 객체
      * @param provider   Provider 객체
-     * @return Educator
+     * @return Member
      */
-    private fun saveEducator(
+    private fun saveMember(
         attributes: OAuthAttributes,
         provider: Provider,
-    ): Educator {
-        val createdUser = attributes.toEducatorEntity(provider, attributes.userInfo)
-        return educatorWriteRepository.save(createdUser)
-    }
-
-    /**
-     * OAuthAttributes 객체를 통해 Learner 객체 생성 후 DB에 저장
-     *
-     * @param attributes OAuthAttributes 객체
-     * @param provider   Provider 객체
-     * @return Learner
-     */
-    private fun saveLearner(
-        attributes: OAuthAttributes,
-        provider: Provider,
-    ): Learner {
-        val createdUser = attributes.toLearnerEntity(provider, attributes.userInfo)
-        return learnerWriteRepository.save(createdUser)
+    ): Member {
+        val createdUser = attributes.toEntity(provider, attributes.userInfo)
+        return memberWriteRepository!!.save(createdUser)
     }
 }

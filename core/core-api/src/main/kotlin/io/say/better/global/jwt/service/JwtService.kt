@@ -7,8 +7,10 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.UnsupportedJwtException
 import io.jsonwebtoken.security.Keys
+import io.say.better.core.enums.auth.jwt.JwtToken
 import io.say.better.global.config.logger.logger
 import io.say.better.global.config.properties.JwtProperties
+import io.say.better.storage.mysql.domain.entity.Member
 import io.say.better.storage.redis.RedisUtil
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -23,6 +25,13 @@ class JwtService(
 ) {
     private val log = logger()
     private val signingKey = Keys.hmacShaKeyFor(jwtProperties.secret.toByteArray(StandardCharset.UTF_8))
+
+    fun createServiceToken(member: Member): JwtToken {
+        val accessToken = createAccessToken(member.email)
+        val refreshToken = createRefreshToken()
+        updateRefreshToken(member.email, refreshToken)
+        return JwtToken(accessToken, refreshToken)
+    }
 
     /**
      * AccessToken 생성 메소드

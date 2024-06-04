@@ -1,4 +1,6 @@
-package io.say.better.global.auth.info
+package io.say.better.core.enums.auth.info
+
+import io.say.better.core.enums.Provider
 
 data class GoogleOAuth2UserInfo(
     val attributes: Map<String, Any>?,
@@ -7,7 +9,7 @@ data class GoogleOAuth2UserInfo(
         get() = (attributes!!["sub"] as String)
 
     override val provider: String
-        get() = "google"
+        get() = Provider.GOOGLE.name.lowercase()
 
     override val email: String
         get() = attributes!!["email"] as String

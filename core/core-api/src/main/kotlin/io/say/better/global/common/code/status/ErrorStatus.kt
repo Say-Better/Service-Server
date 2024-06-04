@@ -43,6 +43,12 @@ enum class ErrorStatus(
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_001", "해당 회원을 찾을 수 없습니다."),
     MEMBER_EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_002", "해당 이메일을 가진 회원이 존재하지 않습니다."),
 
+    // Educator Error
+    EDUCATOR_NOT_FOUND(HttpStatus.NOT_FOUND, "EDUCATOR_404_001", "해당 교육자를 찾을 수 없습니다."),
+
+    // Learner Error
+    LEARNER_NOT_FOUND(HttpStatus.NOT_FOUND, "LEARNER_404_001", "해당 학습자를 찾을 수 없습니다."),
+
     // Solution Error
     START_SOLUTION_NOT_FOUND(HttpStatus.NOT_FOUND, "SOLUTION_404_001", "시작 요청한 솔루션을 찾을 수 없습니다."),
     END_PROGRESS_NOT_FOUND(HttpStatus.NOT_FOUND, "SOLUTION_404_002", "솔루션 진행 데이터를 찾을 수 없습니다."),

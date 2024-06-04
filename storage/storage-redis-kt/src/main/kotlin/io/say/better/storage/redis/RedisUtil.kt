@@ -10,9 +10,9 @@ class RedisUtil(
     private val stringRedisTemplate: StringRedisTemplate,
 ) {
     // key 에 해당하는 데이터 얻어오는 메소드
-    fun getData(key: String?): String? {
+    fun getData(key: String): String {
         val valueOperations = stringStringValueOperations
-        return valueOperations[key!!]
+        return valueOperations[key]!!
     }
 
     // key - value 데이터 설정하는 메소드

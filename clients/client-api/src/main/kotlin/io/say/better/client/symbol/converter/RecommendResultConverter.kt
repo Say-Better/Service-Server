@@ -1,7 +1,7 @@
 package io.say.better.client.symbol.converter
 
-import io.say.better.client.symbol.api.dto.RecommendResponse
-import io.say.better.client.symbol.api.dto.RecommendResult
+import io.say.better.client.symbol.dto.RecommendResponse
+import io.say.better.client.symbol.dto.RecommendResult
 
 class RecommendResultConverter private constructor() {
     init {

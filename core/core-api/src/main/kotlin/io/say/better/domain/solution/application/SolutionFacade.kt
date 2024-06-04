@@ -1,6 +1,6 @@
 package io.say.better.domain.solution.application
 
-import io.say.better.client.symbol.api.RecommendClient
+import io.say.better.client.symbol.client.RecommendClient
 import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.review.application.impl.ReviewService
 import io.say.better.domain.solution.application.converter.ProgressConverter
