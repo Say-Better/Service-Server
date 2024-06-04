@@ -1,7 +1,6 @@
-package io.say.better.test.api.review
+package io.say.better.domain.review.ui
 
 import io.say.better.domain.review.application.ReviewFacade
-import io.say.better.domain.review.ui.ReviewController
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean

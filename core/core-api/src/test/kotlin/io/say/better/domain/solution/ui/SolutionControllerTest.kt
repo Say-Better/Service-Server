@@ -1,8 +1,7 @@
-package io.say.better.test.api.solution
+package io.say.better.domain.solution.ui
 
 import com.google.gson.Gson
 import io.say.better.domain.solution.application.SolutionFacade
-import io.say.better.domain.solution.ui.SolutionController
 import io.say.better.domain.solution.ui.dto.SolutionRequest
 import io.say.better.domain.solution.ui.dto.SolutionResponse
 import io.say.better.global.common.code.status.SuccessStatus
@@ -22,7 +21,7 @@ import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @WebMvcTest(SolutionController::class)
-class SolutionInfoControllerTest
+class SolutionControllerTest
     @Autowired
     constructor(
         private val mockMvc: MockMvc,

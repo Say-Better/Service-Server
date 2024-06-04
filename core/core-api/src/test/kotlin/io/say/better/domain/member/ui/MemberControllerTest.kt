@@ -1,8 +1,7 @@
-package io.say.better.test.api.member
+package io.say.better.domain.member.ui
 
 import io.say.better.domain.member.application.MemberFacade
 import io.say.better.domain.member.exception.MemberException
-import io.say.better.domain.member.ui.MemberController
 import io.say.better.global.common.code.status.ErrorStatus
 import io.say.better.global.common.code.status.SuccessStatus
 import io.say.better.global.utils.CodeUtil
