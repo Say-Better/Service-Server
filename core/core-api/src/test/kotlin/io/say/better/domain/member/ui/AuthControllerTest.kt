@@ -1,62 +1,84 @@
 package io.say.better.domain.member.ui
 
+import io.mockk.every
+import io.mockk.mockk
+import io.restassured.http.ContentType
+import io.say.better.core.enums.RoleType
 import io.say.better.domain.member.application.AuthFacade
-import io.say.better.domain.member.ui.AuthController
-import io.say.better.global.common.code.status.SuccessStatus
+import io.say.better.test.api.RestDocsTest
+import io.say.better.test.api.RestDocsUtils.requestPreprocessor
+import io.say.better.test.api.RestDocsUtils.responsePreprocessor
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
+import org.springframework.http.HttpStatus
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.payload.JsonFieldType
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
+import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.security.test.context.support.WithMockUser
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.ResultActions
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-@WebMvcTest(AuthController::class)
-class AuthControllerTest
-@Autowired
-constructor(
-    private val mockMvc: MockMvc,
-    @MockBean val authFacade: AuthFacade,
-) {
+class AuthControllerTest : RestDocsTest() {
+    private lateinit var authFacade: AuthFacade
+    private lateinit var controller: AuthController
+
+    @BeforeEach
+    fun setUp() {
+        authFacade = mockk()
+        controller = AuthController(authFacade)
+        mockMvc = mockController(controller)
+    }
+
     @Test
     @DisplayName("유저에게 EDUCATOR 권한을 부여한다.")
     @WithMockUser
     fun assignEducatorTest() {
-        // When
-        val actions: ResultActions =
-            mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/api/auth/assign/educator")
-                    .with(SecurityMockMvcRequestPostProcessors.csrf()),
+        every { authFacade.assignUserRole(RoleType.EDUCATOR) } returns Unit
+
+        given()
+            .contentType(ContentType.JSON)
+            .post("/api/auth/assign/educator")
+            .then()
+            .status(HttpStatus.OK)
+            .apply(
+                document(
+                    "assign-educator",
+                    requestPreprocessor(),
+                    responsePreprocessor(),
+                    responseFields(
+                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
+                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
+                        fieldWithPath("result").type(JsonFieldType.NULL).ignored()
+                    ),
+                )
             )
 
-        // Then
-        actions.andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.isSuccess", true).exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.code", SuccessStatus.OK.code).exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.message", SuccessStatus.OK.message).exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.result").doesNotExist())
     }
 
     @Test
     @DisplayName("유저에게 LEARNER 권한을 부여한다.")
     @WithMockUser
     fun assignLearnerTest() {
-        // When
-        val actions: ResultActions =
-            mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/api/auth/assign/learner")
-                    .with(SecurityMockMvcRequestPostProcessors.csrf()),
-            )
+        every { authFacade.assignUserRole(RoleType.LEARNER) } returns Unit
 
-        // Then
-        actions.andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.isSuccess", true).exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.code", SuccessStatus.OK.code).exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.message", SuccessStatus.OK.message).exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.result").doesNotExist())
+        given()
+            .contentType(ContentType.JSON)
+            .post("/api/auth/assign/learner")
+            .then()
+            .status(HttpStatus.OK)
+            .apply(
+                document(
+                    "assign-learner",
+                    requestPreprocessor(),
+                    responsePreprocessor(),
+                    responseFields(
+                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
+                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
+                        fieldWithPath("result").type(JsonFieldType.NULL).ignored()
+                    ),
+                )
+            )
     }
 }
