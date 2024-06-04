@@ -1,4 +1,4 @@
-package io.say.better.test.api.solution
+package io.say.better.storage.solution
 
 import io.say.better.core.enums.Provider
 import io.say.better.domain.solution.application.converter.SolutionConverter
