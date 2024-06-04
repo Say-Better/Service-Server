@@ -158,4 +158,31 @@ class SolutionInfoControllerTest
                 .andExpect(MockMvcResultMatchers.jsonPath("$.message", SuccessStatus.OK.message).exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.result").doesNotExist())
         }
+
+        @Test
+        @DisplayName("symbol 추천 결과 리스트를 반환한다. 추천 결과가 없을 경우 빈 리스트를 반환한다.")
+        @WithMockUser
+        fun recommendSymbolTest() {
+            // Given
+            val word = "testWord"
+            val recommendList = arrayListOf(
+                SolutionResponse.SymbolInfo("testDescription1", "testImg1.jpg"),
+                SolutionResponse.SymbolInfo("testDescription2", "testImg2.jpg")
+            )
+            BDDMockito.given(solutionFacade.recommendSymbol(word)).willReturn(SolutionResponse.SymbolList(word, recommendList))
+
+            // When
+            val actions: ResultActions =
+                mockMvc.perform(
+                    RestDocumentationRequestBuilders.get("/api/solution/symbol/recommend/{name}", word)
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()),
+                )
+
+            // Then
+            actions.andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isSuccess", true).exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.code", SuccessStatus.OK.code).exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message", SuccessStatus.OK.message).exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result", List::class).exists())
+        }
     }
