@@ -100,6 +100,7 @@ subprojects {
     }
 
     tasks.register<Test>("unitTest") {
+        description = "Run unit tests"
         group = "verification"
         useJUnitPlatform {
             excludeTags("develop", "context", "restdocs")
@@ -107,27 +108,35 @@ subprojects {
     }
 
     tasks.register<Test>("contextTest") {
+        description = "Run tests that require a context"
         group = "verification"
         useJUnitPlatform {
             includeTags("context")
         }
     }
 
-    tasks.register<Test>("restDocsTest") {
-        group = "verification"
-        useJUnitPlatform {
-            includeTags("restdocs")
-        }
-    }
-
     tasks.register<Test>("developTest") {
+        description = "Run tests that are in development"
         group = "verification"
         useJUnitPlatform {
             includeTags("develop")
         }
     }
 
+    // AsciiDoc Directory Setting
+    val snippetsDir by extra { file("build/generated-snippets") }
+
+    tasks.register<Test>("restDocsTest") {
+        description = "Run tests that generate REST documentation"
+        group = "verification"
+        useJUnitPlatform {
+            includeTags("restdocs")
+        }
+        outputs.dir(snippetsDir)
+    }
+
     tasks.getByName("asciidoctor") {
         dependsOn("restDocsTest")
+        inputs.dir(snippetsDir)
     }
 }
