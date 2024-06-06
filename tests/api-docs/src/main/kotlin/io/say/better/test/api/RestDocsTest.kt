@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder
 
-@Tag("RestDocs")
+@Tag("restdocs")
 @ExtendWith(RestDocumentationExtension::class)
 abstract class RestDocsTest {
     lateinit var mockMvc: MockMvcRequestSpecification
