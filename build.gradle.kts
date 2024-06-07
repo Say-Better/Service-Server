@@ -11,6 +11,7 @@ plugins {
     id("io.spring.dependency-management")
     id("org.asciidoctor.jvm.convert") apply false
     id("org.jlleitschuh.gradle.ktlint")
+    id("com.epages.restdocs-api-spec") version "0.18.2"
 }
 
 java.sourceCompatibility = JavaVersion.valueOf("VERSION_${property("javaVersion")}")
@@ -71,9 +72,13 @@ subprojects {
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("com.ninja-squad:springmockk:${property("springMockkVersion")}")
+        testImplementation("com.epages:restdocs-api-spec-mockmvc:0.18.2")
+
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
         kapt("org.springframework.boot:spring-boot-configuration-processor")
     }
 
@@ -139,4 +144,12 @@ subprojects {
         dependsOn("restDocsTest")
         inputs.dir(snippetsDir)
     }
+}
+
+openapi3 {
+    setServer("http://localhost:8080")
+    title = "My API"
+    description = "My API description "
+    version = "0.1.0"
+    format = "yaml"
 }
