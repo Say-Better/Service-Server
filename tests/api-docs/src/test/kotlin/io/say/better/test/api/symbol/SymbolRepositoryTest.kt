@@ -38,7 +38,7 @@ class SymbolRepositoryTest
         val symbolList: List<Symbol> = symbolReadRepository.findByTitleIn(symbolNames)
 
         // Then
-        Assertions.assertThat(equals(symbols, symbolList)).isEqualTo(true)
+        Assertions.assertThat(compare(symbols, symbolList)).isEqualTo(true)
     }
 
     @Nested
@@ -62,7 +62,7 @@ class SymbolRepositoryTest
 
             // Then
             Assertions.assertThat(
-                equals(
+                compare(
                     symbols.filter { it.title.contains(symbolNames) },
                     symbolList
                 )
@@ -87,7 +87,7 @@ class SymbolRepositoryTest
 
             // Then
             Assertions.assertThat(
-                equals(
+                compare(
                     symbols.filter { it.title.contains(symbolNames) },
                     symbolList
                 )
@@ -95,7 +95,7 @@ class SymbolRepositoryTest
         }
     }
 
-    private fun equals(
+    private fun compare(
         symbols: List<Symbol>,
         comparingSymbols: List<Symbol>
     ): Boolean {
@@ -104,10 +104,7 @@ class SymbolRepositoryTest
         }
 
         for (i in symbols.indices) {
-            if (
-                symbols[i].title != comparingSymbols[i].title ||
-                symbols[i].imgUrl != comparingSymbols[i].imgUrl
-            ) {
+            if (!symbols[i].equals(comparingSymbols[i])) {
                 return false
             }
         }
