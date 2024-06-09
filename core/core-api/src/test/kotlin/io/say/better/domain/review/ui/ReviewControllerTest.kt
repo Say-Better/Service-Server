@@ -1,15 +1,18 @@
 package io.say.better.domain.review.ui
 
+import io.mockk.mockk
 import io.say.better.domain.review.application.ReviewFacade
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.test.web.servlet.MockMvc
+import io.say.better.test.api.RestDocsTest
+import org.junit.jupiter.api.BeforeEach
 
-@WebMvcTest(ReviewController::class)
-class ReviewControllerTest
-    @Autowired
-    constructor(
-        private val mockMvc: MockMvc,
-        @MockBean private val reviewFacade: ReviewFacade,
-    )
+class ReviewControllerTest : RestDocsTest() {
+    private lateinit var reviewFacade: ReviewFacade
+    private lateinit var reviewController: ReviewController
+
+    @BeforeEach
+    fun setup() {
+        reviewFacade = mockk()
+        reviewController = ReviewController(reviewFacade)
+        mockMvc = mockController(reviewController)
+    }
+}
