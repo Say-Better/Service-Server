@@ -4,32 +4,19 @@ import io.mockk.every
 import io.mockk.mockk
 import io.restassured.http.ContentType
 import io.say.better.domain.member.application.MemberFacade
-import io.say.better.domain.member.exception.MemberException
-import io.say.better.global.common.code.status.ErrorStatus
-import io.say.better.global.common.code.status.SuccessStatus
-import io.say.better.global.common.response.ResponseDto
-import io.say.better.global.utils.CodeUtil
 import io.say.better.test.api.RestDocsTest
 import io.say.better.test.api.RestDocsUtils.requestPreprocessor
 import io.say.better.test.api.RestDocsUtils.responsePreprocessor
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.BDDMockito
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.HttpStatus
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.security.test.context.support.WithMockUser
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.ResultActions
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 class MemberControllerTest : RestDocsTest() {
     private lateinit var memberFacade: MemberFacade
@@ -64,10 +51,8 @@ class MemberControllerTest : RestDocsTest() {
                         fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
                         fieldWithPath("result").type(JsonFieldType.STRING).description("생성된 학습자 연결코드"),
                     ),
-                )
+                ),
             )
-
-
     }
 
     @Test
@@ -95,7 +80,7 @@ class MemberControllerTest : RestDocsTest() {
                         fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
                         fieldWithPath("result").type(JsonFieldType.STRING).ignored(),
                     ),
-                )
+                ),
             )
     }
 

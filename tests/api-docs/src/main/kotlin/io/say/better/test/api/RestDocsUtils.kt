@@ -5,7 +5,6 @@ import org.springframework.restdocs.operation.preprocess.OperationResponsePrepro
 import org.springframework.restdocs.operation.preprocess.Preprocessors
 
 object RestDocsUtils {
-
     fun requestPreprocessor(): OperationRequestPreprocessor {
         return Preprocessors.preprocessRequest(
             Preprocessors.modifyUris().scheme("https").host("api.say.better.io").removePort(),

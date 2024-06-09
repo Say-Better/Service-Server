@@ -33,7 +33,7 @@ abstract class RestDocsTest {
 
     protected fun mockController(controller: Any): MockMvcRequestSpecification {
         val mockMvc = createMockMvc(controller)
-        return  RestAssuredMockMvc.given()
+        return RestAssuredMockMvc.given()
             .mockMvc(mockMvc)
     }
 

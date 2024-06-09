@@ -49,11 +49,10 @@ class AuthControllerTest : RestDocsTest() {
                         fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
                         fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
                         fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
-                        fieldWithPath("result").type(JsonFieldType.NULL).ignored()
+                        fieldWithPath("result").type(JsonFieldType.STRING).ignored(),
                     ),
-                )
+                ),
             )
-
     }
 
     @Test
@@ -76,9 +75,9 @@ class AuthControllerTest : RestDocsTest() {
                         fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
                         fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
                         fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
-                        fieldWithPath("result").type(JsonFieldType.NULL).ignored()
+                        fieldWithPath("result").type(JsonFieldType.STRING).ignored(),
                     ),
-                )
+                ),
             )
     }
 }
