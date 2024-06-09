@@ -11,7 +11,6 @@ plugins {
     id("io.spring.dependency-management")
     id("org.asciidoctor.jvm.convert") apply false
     id("org.jlleitschuh.gradle.ktlint")
-    id("com.epages.restdocs-api-spec") version "0.18.2"
 }
 
 java.sourceCompatibility = JavaVersion.valueOf("VERSION_${property("javaVersion")}")
@@ -53,14 +52,16 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "org.jetbrains.kotlin.jvm")
-    apply(plugin = "org.jetbrains.kotlin.kapt")
-    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
-    apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
-    apply(plugin = "org.springframework.boot")
-    apply(plugin = "io.spring.dependency-management")
-    apply(plugin = "org.asciidoctor.jvm.convert")
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply {
+        plugin("org.jetbrains.kotlin.kapt")
+        plugin("org.jetbrains.kotlin.jvm")
+        plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("org.jetbrains.kotlin.plugin.jpa")
+        plugin("org.springframework.boot")
+        plugin("io.spring.dependency-management")
+        plugin("org.asciidoctor.jvm.convert")
+        plugin("org.jlleitschuh.gradle.ktlint")
+    }
 
     dependencyManagement {
         imports {
@@ -69,16 +70,19 @@ subprojects {
     }
 
     dependencies {
+        // application
+        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+        // ktlint
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
+        // test
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("com.ninja-squad:springmockk:${property("springMockkVersion")}")
-        testImplementation("com.epages:restdocs-api-spec-mockmvc:0.18.2")
 
-        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-
+        // kapt
         kapt("org.springframework.boot:spring-boot-configuration-processor")
     }
 
@@ -144,12 +148,4 @@ subprojects {
         dependsOn("restDocsTest")
         inputs.dir(snippetsDir)
     }
-}
-
-openapi3 {
-    setServer("http://localhost:8080")
-    title = "My API"
-    description = "My API description "
-    version = "0.1.0"
-    format = "yaml"
 }
