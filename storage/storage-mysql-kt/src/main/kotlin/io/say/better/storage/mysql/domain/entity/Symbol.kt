@@ -20,4 +20,21 @@ class Symbol(
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 20)
     private val type: SymbolType,
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) {
+            return false
+        }
+
+        val that = other as Symbol
+        return title == that.title && imgUrl == that.imgUrl && type == that.type
+    }
+
+    override fun hashCode(): Int {
+        var result = title.hashCode()
+        result = 31 * result + imgUrl.hashCode()
+        result = 31 * result + type.hashCode()
+        return result
+    }
+}

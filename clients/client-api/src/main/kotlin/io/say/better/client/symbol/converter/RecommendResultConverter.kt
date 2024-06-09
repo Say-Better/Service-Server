@@ -15,7 +15,7 @@ class RecommendResultConverter private constructor() {
 
         private fun getSymbols(recommend: RecommendResponse.SymbolRecommend): List<String> {
             val symbolString = recommend.symbol
-            val symbols = symbolString.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val symbols = symbolString.split("\\s+".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             return ArrayList(listOf(*symbols))
         }
     }
