@@ -9,5 +9,4 @@ import org.springframework.test.context.TestConstructor
 @Tag("context")
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-class MysqlContextTest {
-}
+class MysqlContextTest

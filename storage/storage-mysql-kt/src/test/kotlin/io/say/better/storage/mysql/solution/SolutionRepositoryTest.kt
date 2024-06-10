@@ -24,7 +24,6 @@ class SolutionRepositoryTest(
     val educatorWriteRepository: EducatorWriteRepository,
     val learnerWriteRepository: LearnerWriteRepository,
 ) : MysqlContextTest() {
-
     private lateinit var member: Member
     private lateinit var educator: Educator
     private lateinit var learner: Learner
@@ -42,7 +41,7 @@ class SolutionRepositoryTest(
                     "testProviderId",
                     "testLoginId",
                     "testName",
-                )
+                ),
             )
 
         educator =
@@ -50,7 +49,7 @@ class SolutionRepositoryTest(
                 Educator.createEducator(
                     member,
                     "testEducatorName",
-                    "20100304"
+                    "20100304",
                 ),
             )
 
@@ -59,7 +58,7 @@ class SolutionRepositoryTest(
                 Learner.createLearner(
                     member,
                     "testLearnerName",
-                    "20100304"
+                    "20100304",
                 ),
             )
 
@@ -74,7 +73,6 @@ class SolutionRepositoryTest(
                 commOptTimes = 1,
                 commOptCnt = 1,
             )
-
     }
 
     @Nested
@@ -99,16 +97,17 @@ class SolutionRepositoryTest(
             val originalSolution = solution
             originalSolution.onActivated() //  null 방지를 위해 생성 단계에서 임의로 추가
 
-            val otherSolution = Solution(
-                nowState = ProgressState.READY,
-                educationGoal = "testEducationGoal",
-                description = "testDescription",
-                writer = educator,
-                learner = learner,
-                title = "testTitle",
-                commOptTimes = 1,
-                commOptCnt = 1,
-            )
+            val otherSolution =
+                Solution(
+                    nowState = ProgressState.READY,
+                    educationGoal = "testEducationGoal",
+                    description = "testDescription",
+                    writer = educator,
+                    learner = learner,
+                    title = "testTitle",
+                    commOptTimes = 1,
+                    commOptCnt = 1,
+                )
 
             //  When
             val savedSolution = solutionWriteRepository.save(originalSolution)

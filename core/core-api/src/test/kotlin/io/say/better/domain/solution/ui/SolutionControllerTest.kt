@@ -6,7 +6,6 @@ import io.restassured.http.ContentType
 import io.say.better.domain.solution.application.SolutionFacade
 import io.say.better.domain.solution.ui.dto.SolutionRequest
 import io.say.better.domain.solution.ui.dto.SolutionResponse
-import io.say.better.global.common.code.status.SuccessStatus
 import io.say.better.storage.mysql.domain.constant.ProgressState
 import io.say.better.test.api.RestDocsTest
 import io.say.better.test.api.RestDocsUtils.requestPreprocessor
@@ -14,19 +13,14 @@ import io.say.better.test.api.RestDocsUtils.responsePreprocessor
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.BDDMockito
 import org.springframework.http.HttpStatus
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.security.test.context.support.WithMockUser
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
-import org.springframework.test.web.servlet.ResultActions
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 class SolutionControllerTest : RestDocsTest() {
     private lateinit var solutionFacade: SolutionFacade
@@ -45,7 +39,7 @@ class SolutionControllerTest : RestDocsTest() {
     fun recommendSymbolTest() {
         val word = "testWord"
         val symbolInfo = SolutionResponse.SymbolInfo("testDescription1", "testImg1.jpg")
-        val recommendList : List<SolutionResponse.SymbolInfo> = listOf(symbolInfo)
+        val recommendList: List<SolutionResponse.SymbolInfo> = listOf(symbolInfo)
 
         every { solutionFacade.recommendSymbol(word) } returns SolutionResponse.SymbolList(word, recommendList)
 
@@ -70,8 +64,10 @@ class SolutionControllerTest : RestDocsTest() {
                         fieldWithPath("result").type(JsonFieldType.OBJECT).description("API 호출 결과"),
                         fieldWithPath("result.name").type(JsonFieldType.STRING).description("symbol 이름"),
                         fieldWithPath("result.symbols").type(JsonFieldType.ARRAY).description("symbol 추천 결과 리스트"),
-                        fieldWithPath("result.symbols[].description").type(JsonFieldType.STRING).description("symbol 설명"),
-                        fieldWithPath("result.symbols[].imageUrl").type(JsonFieldType.STRING).description("symbol 이미지 URL"),
+                        fieldWithPath("result.symbols[].description").type(JsonFieldType.STRING)
+                            .description("symbol 설명"),
+                        fieldWithPath("result.symbols[].imageUrl").type(JsonFieldType.STRING)
+                            .description("symbol 이미지 URL"),
                     ),
                 ),
             )
@@ -83,7 +79,7 @@ class SolutionControllerTest : RestDocsTest() {
     fun searchSymbolTest() {
         val symbolName = "testName"
         val symbolInfo = SolutionResponse.SymbolInfo("testDescription1", "testImg1.jpg")
-        val searchList : List<SolutionResponse.SymbolInfo> = listOf(symbolInfo)
+        val searchList: List<SolutionResponse.SymbolInfo> = listOf(symbolInfo)
         every { solutionFacade.searchSymbol(symbolName) } returns SolutionResponse.SymbolList(symbolName, searchList)
 
         given()
@@ -107,8 +103,10 @@ class SolutionControllerTest : RestDocsTest() {
                         fieldWithPath("result").type(JsonFieldType.OBJECT).description("API 호출 결과"),
                         fieldWithPath("result.name").type(JsonFieldType.STRING).description("symbol 이름"),
                         fieldWithPath("result.symbols").type(JsonFieldType.ARRAY).description("symbol 추천 결과 리스트"),
-                        fieldWithPath("result.symbols[].description").type(JsonFieldType.STRING).description("symbol 설명"),
-                        fieldWithPath("result.symbols[].imageUrl").type(JsonFieldType.STRING).description("symbol 이미지 URL"),
+                        fieldWithPath("result.symbols[].description").type(JsonFieldType.STRING)
+                            .description("symbol 설명"),
+                        fieldWithPath("result.symbols[].imageUrl").type(JsonFieldType.STRING)
+                            .description("symbol 이미지 URL"),
                     ),
                 ),
             )
@@ -246,9 +244,12 @@ class SolutionControllerTest : RestDocsTest() {
                         fieldWithPath("[].solutionId").type(JsonFieldType.NUMBER).description("솔루션 ID"),
                         fieldWithPath("[].progressId").type(JsonFieldType.NUMBER).description("진행 ID"),
                         fieldWithPath("[].orderNum").type(JsonFieldType.NUMBER).description("순서"),
-                        fieldWithPath("[].createRecordSymbols[].symbolId").type(JsonFieldType.NUMBER).description("심볼 ID"),
-                        fieldWithPath("[].createRecordSymbols[].touchOrder").type(JsonFieldType.NUMBER).description("터치 순서"),
-                        fieldWithPath("[].createRecordSymbols[].touchTime").type(JsonFieldType.STRING).description("터치 시간"),
+                        fieldWithPath("[].createRecordSymbols[].symbolId").type(JsonFieldType.NUMBER)
+                            .description("심볼 ID"),
+                        fieldWithPath("[].createRecordSymbols[].touchOrder").type(JsonFieldType.NUMBER)
+                            .description("터치 순서"),
+                        fieldWithPath("[].createRecordSymbols[].touchTime").type(JsonFieldType.STRING)
+                            .description("터치 시간"),
                         fieldWithPath("[].reviewId").type(JsonFieldType.NUMBER).description("리뷰 ID"),
                     ),
                     responseFields(
@@ -257,7 +258,7 @@ class SolutionControllerTest : RestDocsTest() {
                         fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
                         fieldWithPath("result").type(JsonFieldType.OBJECT).description("API 호출 결과").ignored(),
                     ),
-                )
+                ),
             )
     }
 }
