@@ -1,5 +1,6 @@
-package io.say.better.test.api.symbol
+package io.say.better.storage.mysql.symbol
 
+import io.say.better.storage.mysql.MysqlContextTest
 import io.say.better.storage.mysql.dao.repository.SymbolReadRepository
 import io.say.better.storage.mysql.dao.repository.SymbolWriteRepository
 import io.say.better.storage.mysql.domain.constant.SymbolType
@@ -8,15 +9,12 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
-@DataJpaTest
-class SymbolRepositoryTest
-@Autowired constructor(
-    private val symbolReadRepository: SymbolReadRepository,
-    private val symbolWriteRepository: SymbolWriteRepository
-) {
+class SymbolRepositoryTest(
+    val symbolReadRepository: SymbolReadRepository,
+    val symbolWriteRepository: SymbolWriteRepository
+) : MysqlContextTest() {
+
     @Test
     @DisplayName("symbol 이름을 탐색한 결과 리스트를 반환한다. 검색 결과가 없을 경우 빈 리스트를 반환한다.")
     fun getSymbolsByTitleInTest() {
