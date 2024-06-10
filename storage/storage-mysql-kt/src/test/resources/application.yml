@@ -1,0 +1,6 @@
+spring.application.name: mysql-test
+
+spring:
+    config:
+        import:
+            - mysql.yml
