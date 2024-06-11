@@ -52,14 +52,16 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "org.jetbrains.kotlin.jvm")
-    apply(plugin = "org.jetbrains.kotlin.kapt")
-    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
-    apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
-    apply(plugin = "org.springframework.boot")
-    apply(plugin = "io.spring.dependency-management")
-    apply(plugin = "org.asciidoctor.jvm.convert")
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply {
+        plugin("org.jetbrains.kotlin.kapt")
+        plugin("org.jetbrains.kotlin.jvm")
+        plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("org.jetbrains.kotlin.plugin.jpa")
+        plugin("org.springframework.boot")
+        plugin("io.spring.dependency-management")
+        plugin("org.asciidoctor.jvm.convert")
+        plugin("org.jlleitschuh.gradle.ktlint")
+    }
 
     dependencyManagement {
         imports {
@@ -68,12 +70,19 @@ subprojects {
     }
 
     dependencies {
+        // application
+        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+        // ktlint
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+        // test
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("com.ninja-squad:springmockk:${property("springMockkVersion")}")
-        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+        // kapt
         kapt("org.springframework.boot:spring-boot-configuration-processor")
     }
 
@@ -100,6 +109,7 @@ subprojects {
     }
 
     tasks.register<Test>("unitTest") {
+        description = "Run unit tests"
         group = "verification"
         useJUnitPlatform {
             excludeTags("develop", "context", "restdocs")
@@ -107,27 +117,35 @@ subprojects {
     }
 
     tasks.register<Test>("contextTest") {
+        description = "Run tests that require a context"
         group = "verification"
         useJUnitPlatform {
             includeTags("context")
         }
     }
 
-    tasks.register<Test>("restDocsTest") {
-        group = "verification"
-        useJUnitPlatform {
-            includeTags("restdocs")
-        }
-    }
-
     tasks.register<Test>("developTest") {
+        description = "Run tests that are in development"
         group = "verification"
         useJUnitPlatform {
             includeTags("develop")
         }
     }
 
+    // AsciiDoc Directory Setting
+    val snippetsDir by extra { file("build/generated-snippets") }
+
+    tasks.register<Test>("restDocsTest") {
+        description = "Run tests that generate REST documentation"
+        group = "verification"
+        useJUnitPlatform {
+            includeTags("restdocs")
+        }
+        outputs.dir(snippetsDir)
+    }
+
     tasks.getByName("asciidoctor") {
         dependsOn("restDocsTest")
+        inputs.dir(snippetsDir)
     }
 }

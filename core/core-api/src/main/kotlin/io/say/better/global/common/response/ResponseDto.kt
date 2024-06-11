@@ -1,6 +1,5 @@
 package io.say.better.global.common.response
 
-import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import io.say.better.global.common.code.BaseCode
@@ -15,7 +14,6 @@ data class ResponseDto<T>(
     private val code: String,
     @field:JsonProperty("message")
     private val message: String,
-    @field:JsonInclude(JsonInclude.Include.NON_NULL)
     @field:JsonProperty("result")
     private val result: T,
 ) {
