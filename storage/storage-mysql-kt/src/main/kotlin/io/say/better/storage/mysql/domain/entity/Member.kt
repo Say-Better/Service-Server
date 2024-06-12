@@ -22,14 +22,14 @@ class Member(
     val memberId: Long? = null,
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
-    val status: Status = Status.ACTIVE,
+    var status: Status = Status.ACTIVE,
     @Column(name = "email", nullable = false, length = 100)
     val email: String = "",
     @Column(name = "birth_date")
     val birthDate: String = "",
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 20)
-    val role: RoleType = RoleType.NONE,
+    var role: RoleType = RoleType.NONE,
     @Enumerated(EnumType.STRING)
     @Column(name = "provider", nullable = false, length = 20)
     val provider: Provider? = null,
@@ -40,6 +40,10 @@ class Member(
     @Column(name = "name", nullable = false, length = 100)
     val name: String? = null,
 ) : BaseTimeEntity() {
+    fun onEducatorLearner() {
+        this.role = RoleType.EDUCATOR_LEARNER
+    }
+
     companion object {
         fun createMember(
             email: String,
@@ -60,5 +64,6 @@ class Member(
                 name = name,
             )
         }
+
     }
 }
