@@ -5,7 +5,7 @@ import io.say.better.core.enums.Provider
 import io.say.better.core.enums.RoleType
 import io.say.better.domain.member.application.converter.AuthResponseConverter
 import io.say.better.domain.member.application.impl.EducatorService
-import io.say.better.domain.member.application.impl.LeanerService
+import io.say.better.domain.member.application.impl.LearnerService
 import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.member.ui.dto.AuthRequest
 import io.say.better.domain.member.ui.dto.AuthResponse
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component
 class AuthFacade(
     private val memberService: MemberService,
     private val educatorService: EducatorService,
-    private val leanerService: LeanerService,
+    private val learnerService: LearnerService,
     private val jwtService: JwtService,
     oauthSocialLogins: List<OauthSocialLogin>,
 ) {
@@ -39,7 +39,7 @@ class AuthFacade(
 
         val needMemberInfo = when (appType) {
             AppType.EDUCATOR -> educatorService.getEducator(member).name.isEmpty()
-            AppType.LEARNER -> leanerService.getLearner(member).name.isEmpty()
+            AppType.LEARNER -> learnerService.getLearner(member).name.isEmpty()
         }
 
         return AuthResponseConverter.toLoginDTO(member, token, needMemberInfo)
