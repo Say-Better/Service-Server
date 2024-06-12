@@ -31,7 +31,7 @@ class MemberFacade(
         redisUtil.deleteData(code)
 
         val educatorMember = memberService.currentMember()
-        val learnerMember = memberService.getMember(email)
+        val learnerMember = memberService.getMemberByEmail(email)
         connectService.connect(
             educator = memberService.getEducator(educatorMember),
             learner = memberService.getLearner(learnerMember),
