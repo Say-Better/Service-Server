@@ -13,11 +13,13 @@ class AuthResponseConverter private constructor() {
         fun toLoginDTO(
             member: Member,
             token: JwtToken,
+            needMemberInfo: Boolean,
         ): AuthResponse.LoginDTO {
             return AuthResponse.LoginDTO(
                 member.memberId!!,
                 token.accessToken,
                 token.refreshToken,
+                needMemberInfo,
             )
         }
     }

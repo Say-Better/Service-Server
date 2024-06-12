@@ -9,5 +9,6 @@ class AuthResponse private constructor() {
         val memberId: Long,
         val accessToken: String,
         val refreshToken: String,
+        val needMemberInfo: Boolean,
     )
 }
