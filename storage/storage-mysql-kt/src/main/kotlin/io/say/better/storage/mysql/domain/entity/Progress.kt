@@ -21,7 +21,7 @@ class Progress(
     var progressId: Long = 0,
     @JoinColumn(name = "solution_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private val solution: Solution,
+    val solution: Solution,
     @Column(name = "now_step", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private var nowAssignStep: AssignStep,
