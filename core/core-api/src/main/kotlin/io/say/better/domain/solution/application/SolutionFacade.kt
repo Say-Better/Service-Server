@@ -76,6 +76,7 @@ class SolutionFacade(
             val progress: Progress = progressService.getProgress(request[0].progressId)
             val review: Review = ReviewConverter.toReview(progress)
             val savedReview: Review = reviewService.createReview(review)
+            progress.solution.onEnd()
 
             for (endSolution in request) {
                 endSolution.reviewId = savedReview.reviewId
