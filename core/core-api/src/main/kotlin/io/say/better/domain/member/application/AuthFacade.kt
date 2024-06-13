@@ -37,10 +37,11 @@ class AuthFacade(
         val member = memberService.getMemberByEmail(appType, provider, userInfo)
         val token = jwtService.createServiceToken(member)
 
-        val needMemberInfo = when (appType) {
-            AppType.EDUCATOR -> educatorService.getEducator(member).name.isEmpty()
-            AppType.LEARNER -> learnerService.getLearner(member).name.isEmpty()
-        }
+        val needMemberInfo =
+            when (appType) {
+                AppType.EDUCATOR -> educatorService.getEducator(member).name.isEmpty()
+                AppType.LEARNER -> learnerService.getLearner(member).name.isEmpty()
+            }
 
         return AuthResponseConverter.toLoginDTO(member, token, needMemberInfo)
     }

@@ -25,9 +25,7 @@ class AuthController(
         @PathVariable appType: AppType,
         @PathVariable socialType: Provider,
         @RequestBody request: AuthRequest.LoginDTO,
-    ): ResponseDto<AuthResponse.LoginDTO> {
-        return ResponseDto.onSuccess(authFacade.login(appType, socialType, request))
-    }
+    ): ResponseDto<AuthResponse.LoginDTO> = ResponseDto.onSuccess(authFacade.login(appType, socialType, request))
 
     @PostMapping("/assign/educator")
     fun assignEducator(): ResponseDto<Nothing?> {

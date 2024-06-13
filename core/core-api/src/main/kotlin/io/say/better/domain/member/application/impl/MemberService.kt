@@ -50,25 +50,29 @@ class MemberService(
         val roleType = getRoleType(appType)
         val findUser = memberReadRepository.findByProviderAndLoginId(provider, loginId).orElse(null)
 
-        val responseUser = if (findUser == null) {
-            createMember(roleType, provider, userInfo)
-        } else {
-            updateRole(findUser, roleType)
-        }
+        val responseUser =
+            if (findUser == null) {
+                createMember(roleType, provider, userInfo)
+            } else {
+                updateRole(findUser, roleType)
+            }
 
         return responseUser
     }
 
-    private fun getRoleType(appType: AppType) = when (appType) {
-        EDUCATOR -> RoleType.EDUCATOR
-        LEARNER -> RoleType.LEARNER
-    }
+    private fun getRoleType(appType: AppType) =
+        when (appType) {
+            EDUCATOR -> RoleType.EDUCATOR
+            LEARNER -> RoleType.LEARNER
+        }
 
     private fun updateRole(
         member: Member,
         role: RoleType,
     ): Member {
-        if (member.role != role) { member.onEducatorLearner() }
+        if (member.role != role) {
+            member.onEducatorLearner()
+        }
         return memberWriteRepository.save(member)
     }
 

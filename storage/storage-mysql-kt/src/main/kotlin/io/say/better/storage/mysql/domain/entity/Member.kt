@@ -53,8 +53,8 @@ class Member(
             providerId: String,
             loginId: String,
             name: String,
-        ): Member {
-            return Member(
+        ): Member =
+            Member(
                 email = email,
                 birthDate = birthDate,
                 role = role,
@@ -63,7 +63,5 @@ class Member(
                 loginId = loginId,
                 name = name,
             )
-        }
-
     }
 }

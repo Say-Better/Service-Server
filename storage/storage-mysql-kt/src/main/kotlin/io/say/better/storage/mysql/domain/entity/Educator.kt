@@ -27,12 +27,11 @@ class Educator(
             memberId: Member,
             name: String = "",
             birthDate: String = "",
-        ): Educator {
-            return Educator(
+        ): Educator =
+            Educator(
                 memberId = memberId,
                 name = name,
                 birthDate = birthDate,
             )
-        }
     }
 }

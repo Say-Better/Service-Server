@@ -41,12 +41,13 @@ class AuthControllerTest : RestDocsTest() {
         val appType = AppType.EDUCATOR
         val provider = Provider.GOOGLE
         val request = AuthRequest.LoginDTO("identityToken")
-        val response = AuthResponse.LoginDTO(
-            1L,
-            "accessToken",
-            "refreshToken",
-            true
-        )
+        val response =
+            AuthResponse.LoginDTO(
+                1L,
+                "accessToken",
+                "refreshToken",
+                true,
+            )
 
         every { authFacade.login(appType, provider, request) } returns response
 
@@ -73,7 +74,9 @@ class AuthControllerTest : RestDocsTest() {
                         fieldWithPath("result.memberId").type(JsonFieldType.NUMBER).description("회원 아이디"),
                         fieldWithPath("result.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
                         fieldWithPath("result.refreshToken").type(JsonFieldType.STRING).description("리프레시 토큰"),
-                        fieldWithPath("result.needMemberInfo").type(JsonFieldType.BOOLEAN).description("회원 정보 입력 필요 여부"),
+                        fieldWithPath(
+                            "result.needMemberInfo",
+                        ).type(JsonFieldType.BOOLEAN).description("회원 정보 입력 필요 여부"),
                     ),
                 ),
             )
@@ -86,12 +89,13 @@ class AuthControllerTest : RestDocsTest() {
         val appType = AppType.LEARNER
         val provider = Provider.GOOGLE
         val request = AuthRequest.LoginDTO("identityToken")
-        val response = AuthResponse.LoginDTO(
-            1L,
-            "accessToken",
-            "refreshToken",
-            true
-        )
+        val response =
+            AuthResponse.LoginDTO(
+                1L,
+                "accessToken",
+                "refreshToken",
+                true,
+            )
 
         every { authFacade.login(appType, provider, request) } returns response
 
@@ -118,12 +122,13 @@ class AuthControllerTest : RestDocsTest() {
                         fieldWithPath("result.memberId").type(JsonFieldType.NUMBER).description("회원 아이디"),
                         fieldWithPath("result.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
                         fieldWithPath("result.refreshToken").type(JsonFieldType.STRING).description("리프레시 토큰"),
-                        fieldWithPath("result.needMemberInfo").type(JsonFieldType.BOOLEAN).description("회원 정보 입력 필요 여부"),
+                        fieldWithPath(
+                            "result.needMemberInfo",
+                        ).type(JsonFieldType.BOOLEAN).description("회원 정보 입력 필요 여부"),
                     ),
                 ),
             )
     }
-
 
     @Test
     @DisplayName("유저에게 EDUCATOR 권한을 부여한다.")

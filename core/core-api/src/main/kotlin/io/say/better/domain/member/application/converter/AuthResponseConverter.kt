@@ -14,13 +14,12 @@ class AuthResponseConverter private constructor() {
             member: Member,
             token: JwtToken,
             needMemberInfo: Boolean,
-        ): AuthResponse.LoginDTO {
-            return AuthResponse.LoginDTO(
+        ): AuthResponse.LoginDTO =
+            AuthResponse.LoginDTO(
                 member.memberId!!,
                 token.accessToken,
                 token.refreshToken,
                 needMemberInfo,
             )
-        }
     }
 }

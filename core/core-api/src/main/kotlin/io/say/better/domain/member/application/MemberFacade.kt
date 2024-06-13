@@ -28,8 +28,9 @@ class MemberFacade(
     }
 
     fun connect(code: String) {
-        val email = redisUtil.getData(code)
-            ?: throw MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID)
+        val email =
+            redisUtil.getData(code)
+                ?: throw MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID)
 
         val educatorMember = memberService.currentMember()
         val learnerMember = memberService.getMemberByEmail(email)

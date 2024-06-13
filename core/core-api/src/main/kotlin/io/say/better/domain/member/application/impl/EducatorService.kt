@@ -21,5 +21,4 @@ class EducatorService(
         return educatorReadRepository.findByMemberId(educatorMember)
             .orElseThrow { MemberException(ErrorStatus.EDUCATOR_NOT_FOUND) }
     }
-
 }
