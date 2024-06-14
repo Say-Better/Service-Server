@@ -53,7 +53,7 @@ class SolutionFacade(
     fun createSolution(request: SolutionRequest.CreateSolution) =
         Tx.writeable {
             val member = memberService.currentMember() as Educator
-            val learner = memberService.getMember(request.learnerEmail) as Learner
+            val learner = memberService.getMemberByEmail(request.learnerEmail) as Learner
             val newSolution = SolutionConverter.toSolution(request, member, learner)
             val savedSolution = solutionService.createSolution(newSolution)
 

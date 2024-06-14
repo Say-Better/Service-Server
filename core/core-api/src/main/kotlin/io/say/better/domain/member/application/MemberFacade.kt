@@ -1,6 +1,8 @@
 package io.say.better.domain.member.application
 
 import io.say.better.domain.member.application.impl.ConnectService
+import io.say.better.domain.member.application.impl.EducatorService
+import io.say.better.domain.member.application.impl.LearnerService
 import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.member.exception.MemberException
 import io.say.better.global.common.code.status.ErrorStatus
@@ -12,13 +14,15 @@ import org.springframework.stereotype.Component
 class MemberFacade(
     private val connectService: ConnectService,
     private val memberService: MemberService,
+    private val educatorService: EducatorService,
+    private val learnerService: LearnerService,
     private val codeUtil: CodeUtil,
     private val redisUtil: RedisUtil,
 ) {
     fun createConnectCode(): String {
         val member = memberService.currentMember()
         val code = codeUtil.createConnectCode()
-        redisUtil.setConnectCode(code, member.email!!)
+        redisUtil.setConnectCode(code, member.email)
 
         return code
     }
@@ -28,13 +32,14 @@ class MemberFacade(
             redisUtil.getData(code)
                 ?: throw MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID)
 
-        redisUtil.deleteData(code)
-
         val educatorMember = memberService.currentMember()
-        val learnerMember = memberService.getMember(email)
+        val learnerMember = memberService.getMemberByEmail(email)
+
         connectService.connect(
-            educator = memberService.getEducator(educatorMember),
-            learner = memberService.getLearner(learnerMember),
+            educator = educatorService.getEducatorByMember(educatorMember),
+            learner = learnerService.getLearnerByMember(learnerMember),
         )
+
+        redisUtil.deleteData(code)
     }
 }

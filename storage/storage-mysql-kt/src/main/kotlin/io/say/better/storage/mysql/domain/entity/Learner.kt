@@ -18,14 +18,14 @@ class Learner(
     @JoinColumn(name = "member_id")
     val memberId: Member,
     @Column(name = "name", nullable = false, length = 100)
-    val name: String? = null,
+    val name: String = "",
     @Column(name = "birth_date")
     val birthDate: String = "",
 ) : BaseTimeEntity() {
     companion object {
         fun createLearner(
             memberId: Member,
-            name: String? = null,
+            name: String = "",
             birthDate: String = "",
         ): Learner {
             return Learner(
