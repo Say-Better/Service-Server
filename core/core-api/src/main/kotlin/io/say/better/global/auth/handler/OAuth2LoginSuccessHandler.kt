@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component
 
 @Component
+@Deprecated("OAuth2LoginSuccessHandler를 사용하지 않음")
 class OAuth2LoginSuccessHandler(
     private val jwtService: JwtService,
 ) : AuthenticationSuccessHandler {
