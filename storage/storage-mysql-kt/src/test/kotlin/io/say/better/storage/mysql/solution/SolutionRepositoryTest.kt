@@ -1,7 +1,7 @@
 package io.say.better.storage.mysql.solution
 
-import io.say.better.core.enums.Provider
-import io.say.better.core.enums.RoleType
+import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.constant.RoleType
 import io.say.better.storage.mysql.MysqlContextTest
 import io.say.better.storage.mysql.dao.repository.EducatorWriteRepository
 import io.say.better.storage.mysql.dao.repository.LearnerWriteRepository

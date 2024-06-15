@@ -3,12 +3,12 @@ package io.say.better.domain.member.ui
 import io.mockk.every
 import io.mockk.mockk
 import io.restassured.http.ContentType
-import io.say.better.core.enums.Provider
-import io.say.better.core.enums.RoleType
+import io.say.better.core.common.constant.AppType
+import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.constant.RoleType
 import io.say.better.domain.member.application.AuthFacade
 import io.say.better.domain.member.ui.dto.AuthRequest
 import io.say.better.domain.member.ui.dto.AuthResponse
-import io.say.better.global.common.constant.AppType
 import io.say.better.test.api.RestDocsTest
 import io.say.better.test.api.RestDocsUtils.requestPreprocessor
 import io.say.better.test.api.RestDocsUtils.responsePreprocessor

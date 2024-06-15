@@ -1,13 +1,13 @@
 package io.say.better.domain.member.application.impl
 
-import io.say.better.core.enums.Provider
-import io.say.better.core.enums.RoleType
-import io.say.better.core.enums.auth.info.OAuth2UserInfo
+import io.say.better.core.common.auth.info.OAuth2UserInfo
+import io.say.better.core.common.code.status.ErrorStatus
+import io.say.better.core.common.constant.AppType
+import io.say.better.core.common.constant.AppType.EDUCATOR
+import io.say.better.core.common.constant.AppType.LEARNER
+import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.constant.RoleType
 import io.say.better.domain.member.exception.MemberException
-import io.say.better.global.common.code.status.ErrorStatus
-import io.say.better.global.common.constant.AppType
-import io.say.better.global.common.constant.AppType.EDUCATOR
-import io.say.better.global.common.constant.AppType.LEARNER
 import io.say.better.global.utils.SecurityUtil
 import io.say.better.storage.mysql.dao.repository.MemberReadRepository
 import io.say.better.storage.mysql.dao.repository.MemberWriteRepository
@@ -25,10 +25,10 @@ class MemberService(
         return getMemberByEmail(email)
     }
 
-    fun getMemberByEmail(email: String): Member {
-        return memberReadRepository.findByEmail(email)
+    fun getMemberByEmail(email: String): Member =
+        memberReadRepository
+            .findByEmail(email)
             .orElseThrow { MemberException(ErrorStatus.MEMBER_NOT_FOUND) }
-    }
 
     fun assignUserRole(
         userEmail: String,

@@ -1,11 +1,11 @@
 package io.say.better.domain.member.application
 
+import io.say.better.core.common.code.status.ErrorStatus
 import io.say.better.domain.member.application.impl.ConnectService
 import io.say.better.domain.member.application.impl.EducatorService
 import io.say.better.domain.member.application.impl.LearnerService
 import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.member.exception.MemberException
-import io.say.better.global.common.code.status.ErrorStatus
 import io.say.better.global.utils.CodeUtil
 import io.say.better.storage.redis.RedisUtil
 import org.springframework.stereotype.Component

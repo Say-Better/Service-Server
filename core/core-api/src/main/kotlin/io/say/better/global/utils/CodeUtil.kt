@@ -1,6 +1,6 @@
 package io.say.better.global.utils
 
-import io.say.better.global.config.logger.logger
+import io.say.better.core.common.utils.logger
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.stereotype.Component
 

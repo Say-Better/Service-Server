@@ -1,6 +1,6 @@
 package io.say.better.global.config.security
 
-import io.say.better.core.enums.RoleType
+import io.say.better.core.common.constant.RoleType
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.global.config.web.CorsConfig
 import io.say.better.global.jwt.filter.JwtAuthenticationProcessingFilter
@@ -59,37 +59,39 @@ class SecurityConfig(
             .cors { it.configurationSource(corsConfig.corsConfigurationSource) }
             .authorizeHttpRequests {
                 it
-                    .requestMatchers(*permitUrls).permitAll()
-                    .requestMatchers(*noneUserRoleUrls).hasRole(RoleType.NONE.name)
-                    .requestMatchers(*educatorUrls).hasRole(RoleType.EDUCATOR.name)
-                    .requestMatchers(*leanerUrls).hasRole(RoleType.LEARNER.name)
-                    .requestMatchers(*educatorUrls, *leanerUrls).hasRole(RoleType.EDUCATOR_LEARNER.name)
-                    .anyRequest().authenticated()
-            }
-            .headers {
+                    .requestMatchers(*permitUrls)
+                    .permitAll()
+                    .requestMatchers(*noneUserRoleUrls)
+                    .hasRole(RoleType.NONE.name)
+                    .requestMatchers(*educatorUrls)
+                    .hasRole(RoleType.EDUCATOR.name)
+                    .requestMatchers(*leanerUrls)
+                    .hasRole(RoleType.LEARNER.name)
+                    .requestMatchers(*educatorUrls, *leanerUrls)
+                    .hasRole(RoleType.EDUCATOR_LEARNER.name)
+                    .anyRequest()
+                    .authenticated()
+            }.headers {
                 it
                     .frameOptions { it.sameOrigin() }
-            }
-            .addFilterAfter(jwtAuthenticationProcessingFilter(), LogoutFilter::class.java)
+            }.addFilterAfter(jwtAuthenticationProcessingFilter(), LogoutFilter::class.java)
         return http.build()
     }
 
     @Bean
-    fun webSecurityCustomizer(): WebSecurityCustomizer {
-        return WebSecurityCustomizer {
+    fun webSecurityCustomizer(): WebSecurityCustomizer =
+        WebSecurityCustomizer {
             it
                 .ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
         }
-    }
 
     @Bean
-    fun jwtAuthenticationProcessingFilter(): JwtAuthenticationProcessingFilter {
-        return JwtAuthenticationProcessingFilter(
+    fun jwtAuthenticationProcessingFilter(): JwtAuthenticationProcessingFilter =
+        JwtAuthenticationProcessingFilter(
             memberReadRepository,
             jwtProperties,
             jwtService,
             redisUtil,
         )
-    }
 }

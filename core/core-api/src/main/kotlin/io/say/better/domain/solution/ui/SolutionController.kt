@@ -1,12 +1,12 @@
 package io.say.better.domain.solution.ui
 
+import io.say.better.core.common.response.ResponseDto
 import io.say.better.domain.solution.application.SolutionFacade
 import io.say.better.domain.solution.ui.dto.SolutionRequest.CreateSolution
 import io.say.better.domain.solution.ui.dto.SolutionRequest.EndSolution
 import io.say.better.domain.solution.ui.dto.SolutionRequest.StartSolution
 import io.say.better.domain.solution.ui.dto.SolutionResponse.ProgressInfo
 import io.say.better.domain.solution.ui.dto.SolutionResponse.SymbolList
-import io.say.better.global.common.response.ResponseDto
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -24,16 +24,12 @@ class SolutionController(
     @GetMapping("/symbol/recommend/{name}")
     fun recommendSymbol(
         @PathVariable(name = "name") name: String,
-    ): ResponseDto<SymbolList> {
-        return ResponseDto.onSuccess(solutionFacade.recommendSymbol(name))
-    }
+    ): ResponseDto<SymbolList> = ResponseDto.onSuccess(solutionFacade.recommendSymbol(name))
 
     @GetMapping("/symbol/search/{name}")
     fun searchSymbol(
         @PathVariable(name = "name") name: String,
-    ): ResponseDto<SymbolList> {
-        return ResponseDto.onSuccess(solutionFacade.searchSymbol(name))
-    }
+    ): ResponseDto<SymbolList> = ResponseDto.onSuccess(solutionFacade.searchSymbol(name))
 
     @PostMapping("")
     fun createSolution(
@@ -46,9 +42,7 @@ class SolutionController(
     @PostMapping("/start")
     fun startSolution(
         @RequestBody request: StartSolution,
-    ): ResponseDto<ProgressInfo> {
-        return ResponseDto.onSuccess(solutionFacade.startSolution(request))
-    }
+    ): ResponseDto<ProgressInfo> = ResponseDto.onSuccess(solutionFacade.startSolution(request))
 
     @PostMapping("/end")
     fun endSolution(

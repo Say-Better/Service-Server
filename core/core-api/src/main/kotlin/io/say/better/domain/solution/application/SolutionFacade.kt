@@ -1,6 +1,7 @@
 package io.say.better.domain.solution.application
 
 import io.say.better.client.symbol.client.RecommendClient
+import io.say.better.core.common.utils.logger
 import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.review.application.impl.ReviewService
 import io.say.better.domain.solution.application.converter.ProgressConverter
@@ -16,7 +17,6 @@ import io.say.better.domain.solution.ui.dto.SolutionRequest.EndSolution
 import io.say.better.domain.solution.ui.dto.SolutionRequest.StartSolution
 import io.say.better.domain.symbol.application.impl.SymbolService
 import io.say.better.global.advice.Tx
-import io.say.better.global.config.logger.logger
 import io.say.better.storage.mysql.domain.entity.Educator
 import io.say.better.storage.mysql.domain.entity.Learner
 import io.say.better.storage.mysql.domain.entity.Progress

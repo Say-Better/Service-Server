@@ -7,8 +7,8 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.UnsupportedJwtException
 import io.jsonwebtoken.security.Keys
-import io.say.better.core.enums.auth.jwt.JwtToken
-import io.say.better.global.config.logger.logger
+import io.say.better.core.common.auth.jwt.JwtToken
+import io.say.better.core.common.utils.logger
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.storage.mysql.domain.entity.Member
 import io.say.better.storage.redis.RedisUtil
@@ -42,7 +42,8 @@ class JwtService(
     fun createAccessToken(email: String): String {
         val claims = Jwts.claims(mutableMapOf<String, Any>(EMAIL_CLAIM to email))
         val now = Date()
-        return Jwts.builder() // JWT 토큰을 생성하는 빌더 반환
+        return Jwts
+            .builder() // JWT 토큰을 생성하는 빌더 반환
             .setClaims(claims) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
             .setSubject(ACCESS_TOKEN_SUBJECT)
             .setIssuedAt(now) // 토큰 발급 시간 설정
@@ -58,7 +59,8 @@ class JwtService(
      */
     fun createRefreshToken(): String {
         val now = Date()
-        return Jwts.builder()
+        return Jwts
+            .builder()
             .setSubject(REFRESH_TOKEN_SUBJECT)
             .setExpiration(Date(now.time + jwtProperties.refreshExpiration))
             .signWith(signingKey, SignatureAlgorithm.HS256)
@@ -108,11 +110,11 @@ class JwtService(
      * @param request HttpServletRequest
      * @return Optional<String> RefreshToken
      */
-    fun extractRefreshToken(request: HttpServletRequest): Optional<String> {
-        return Optional.ofNullable(request.getHeader(jwtProperties.refreshHeader))
+    fun extractRefreshToken(request: HttpServletRequest): Optional<String> =
+        Optional
+            .ofNullable(request.getHeader(jwtProperties.refreshHeader))
             .filter { refreshToken: String -> refreshToken.startsWith(BEARER) }
             .map { refreshToken: String -> refreshToken.replace(BEARER, "") }
-    }
 
     /**
      * 헤더에서 AccessToken 추출
@@ -124,11 +126,11 @@ class JwtService(
      * @param request HttpServletRequest
      * @return Optional<String> AccessToken
      </String> */
-    fun extractAccessToken(request: HttpServletRequest): Optional<String> {
-        return Optional.ofNullable(request.getHeader(jwtProperties.accessHeader))
+    fun extractAccessToken(request: HttpServletRequest): Optional<String> =
+        Optional
+            .ofNullable(request.getHeader(jwtProperties.accessHeader))
             .filter { accessToken: String -> accessToken.startsWith(BEARER) }
             .map { accessToken: String -> accessToken.replace(BEARER, "") }
-    }
 
     /**
      * AccessToken에서 Email 추출
@@ -140,11 +142,10 @@ class JwtService(
      * @param accessToken AccessToken
      * @return Optional<String> Email
      */
-    fun extractEmail(accessToken: String?): Optional<String> {
-        return Optional.ofNullable(
+    fun extractEmail(accessToken: String?): Optional<String> =
+        Optional.ofNullable(
             getJwsClaim(accessToken).get(EMAIL_CLAIM, String::class.java),
         )
-    }
 
     /**
      * AccessToken 헤더 설정
@@ -210,7 +211,8 @@ class JwtService(
     }
 
     private fun getJwsClaim(accessToken: String?): Claims =
-        Jwts.parserBuilder()
+        Jwts
+            .parserBuilder()
             .setSigningKey(signingKey)
             .build()
             .parseClaimsJws(accessToken)

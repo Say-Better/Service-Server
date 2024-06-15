@@ -2,7 +2,7 @@ rootProject.name = "say-better-spring-boot"
 
 include(
     ":core:core-api",
-    ":core:core-enum",
+    ":core:core-common",
     ":storage:storage-mysql-kt",
     ":storage:storage-rabbitmq-kt",
     ":storage:storage-redis-kt",

@@ -1,5 +1,6 @@
 package io.say.better.domain.review.application
 
+import io.say.better.core.common.utils.logger
 import io.say.better.domain.review.application.converter.RecordSymbolConverter
 import io.say.better.domain.review.application.impl.RecordService
 import io.say.better.domain.review.application.impl.RecordSymbolService
@@ -8,7 +9,6 @@ import io.say.better.domain.solution.application.converter.RecordConverter
 import io.say.better.domain.solution.ui.dto.SolutionRequest.EndSolution
 import io.say.better.domain.symbol.application.impl.SymbolService
 import io.say.better.global.advice.Tx
-import io.say.better.global.config.logger.logger
 import io.say.better.global.utils.IdUtil
 import io.say.better.storage.mysql.domain.entity.Record
 import io.say.better.storage.mysql.domain.entity.Review

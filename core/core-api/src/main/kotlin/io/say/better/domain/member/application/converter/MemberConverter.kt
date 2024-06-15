@@ -1,7 +1,7 @@
 package io.say.better.domain.member.application.converter
 
-import io.say.better.core.enums.Provider
-import io.say.better.core.enums.RoleType
+import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.constant.RoleType
 import io.say.better.storage.mysql.domain.entity.Member
 
 class MemberConverter private constructor() {
@@ -18,8 +18,8 @@ class MemberConverter private constructor() {
             providerId: String,
             loginId: String,
             name: String,
-        ): Member {
-            return Member.createMember(
+        ): Member =
+            Member.createMember(
                 email,
                 birthDate,
                 role,
@@ -28,6 +28,5 @@ class MemberConverter private constructor() {
                 loginId,
                 name,
             )
-        }
     }
 }

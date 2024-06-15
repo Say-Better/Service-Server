@@ -1,6 +1,8 @@
 package io.say.better.domain.symbol.exception
 
-import io.say.better.global.common.code.BaseErrorCode
-import io.say.better.global.common.exception.GeneralException
+import io.say.better.core.common.code.BaseErrorCode
+import io.say.better.core.common.exception.GeneralException
 
-class SymbolException(code: BaseErrorCode) : GeneralException(code)
+class SymbolException(
+    code: BaseErrorCode,
+) : GeneralException(code)

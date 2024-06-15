@@ -1,7 +1,7 @@
 package io.say.better.client.oauth.google.api
 
 import io.say.better.client.oauth.google.config.GoogleOauth2FeignConfiguration
-import io.say.better.core.enums.auth.info.GoogleOAuth2UserInfo
+import io.say.better.core.common.auth.info.GoogleOAuth2UserInfo
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam

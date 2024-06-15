@@ -1,6 +1,6 @@
 package io.say.better.global.utils
 
-import io.say.better.global.config.logger.logger
+import io.say.better.core.common.utils.logger
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
