@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component
 import java.io.IOException
 
 @Component
+@Deprecated("OAuth2LoginFailureHandler를 사용하지 않음")
 class OAuth2LoginFailureHandler : AuthenticationFailureHandler {
     private val log = logger()
 

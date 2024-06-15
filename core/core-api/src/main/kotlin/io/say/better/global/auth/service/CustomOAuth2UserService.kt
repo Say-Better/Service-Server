@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Service
 
 @Service
+@Deprecated("CustomOAuth2UserService를 사용하지 않음")
 class CustomOAuth2UserService(
     private val memberReadRepository: MemberReadRepository,
     private val memberWriteRepository: MemberWriteRepository,
