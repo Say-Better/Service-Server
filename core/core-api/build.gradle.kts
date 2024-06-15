@@ -7,7 +7,7 @@ plugins {
 
 dependencies {
     // submodules
-    implementation(project(":core:core-enum"))
+    implementation(project(":core:core-common"))
     implementation(project(":support:monitoring"))
     implementation(project(":support:logging"))
     implementation(project(":storage:storage-mysql-kt"))

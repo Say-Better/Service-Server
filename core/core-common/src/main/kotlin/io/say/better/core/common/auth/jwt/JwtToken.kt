@@ -1,4 +1,4 @@
-package io.say.better.core.enums.auth.jwt
+package io.say.better.core.common.auth.jwt
 
 data class JwtToken(
     val accessToken: String,

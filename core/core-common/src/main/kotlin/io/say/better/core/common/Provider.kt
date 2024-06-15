@@ -1,4 +1,4 @@
-package io.say.better.core.enums
+package io.say.better.core.common
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import org.apache.commons.lang3.EnumUtils

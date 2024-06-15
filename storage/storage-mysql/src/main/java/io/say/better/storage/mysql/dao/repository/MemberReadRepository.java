@@ -1,6 +1,6 @@
 package io.say.better.storage.mysql.dao.repository;
 
-import io.say.better.core.enums.Provider;
+import io.say.better.core.common.Provider;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
 package io.say.better.storage.mysql.domain.entity
 
-import io.say.better.core.enums.Status
+import io.say.better.core.common.Status
 import io.say.better.storage.mysql.domain.constant.AssignStep
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

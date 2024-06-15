@@ -3,8 +3,8 @@ package io.say.better.domain.member.ui
 import io.mockk.every
 import io.mockk.mockk
 import io.restassured.http.ContentType
-import io.say.better.core.enums.Provider
-import io.say.better.core.enums.RoleType
+import io.say.better.core.common.Provider
+import io.say.better.core.common.RoleType
 import io.say.better.domain.member.application.AuthFacade
 import io.say.better.domain.member.ui.dto.AuthRequest
 import io.say.better.domain.member.ui.dto.AuthResponse

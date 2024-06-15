@@ -1,4 +1,4 @@
-package io.say.better.core.enums.auth.info
+package io.say.better.core.common.auth.info
 
 interface OAuth2UserInfo {
     val providerId: String

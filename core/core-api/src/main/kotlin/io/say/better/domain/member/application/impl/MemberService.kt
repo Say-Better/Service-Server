@@ -1,8 +1,8 @@
 package io.say.better.domain.member.application.impl
 
-import io.say.better.core.enums.Provider
-import io.say.better.core.enums.RoleType
-import io.say.better.core.enums.auth.info.OAuth2UserInfo
+import io.say.better.core.common.Provider
+import io.say.better.core.common.RoleType
+import io.say.better.core.common.auth.info.OAuth2UserInfo
 import io.say.better.domain.member.exception.MemberException
 import io.say.better.global.common.code.status.ErrorStatus
 import io.say.better.global.common.constant.AppType
@@ -25,10 +25,10 @@ class MemberService(
         return getMemberByEmail(email)
     }
 
-    fun getMemberByEmail(email: String): Member {
-        return memberReadRepository.findByEmail(email)
+    fun getMemberByEmail(email: String): Member =
+        memberReadRepository
+            .findByEmail(email)
             .orElseThrow { MemberException(ErrorStatus.MEMBER_NOT_FOUND) }
-    }
 
     fun assignUserRole(
         userEmail: String,

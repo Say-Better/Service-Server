@@ -1,9 +1,9 @@
 package io.say.better.global.auth
 
-import io.say.better.core.enums.Provider
-import io.say.better.core.enums.RoleType
-import io.say.better.core.enums.auth.info.GoogleOAuth2UserInfo
-import io.say.better.core.enums.auth.info.OAuth2UserInfo
+import io.say.better.core.common.Provider
+import io.say.better.core.common.RoleType
+import io.say.better.core.common.auth.info.GoogleOAuth2UserInfo
+import io.say.better.core.common.auth.info.OAuth2UserInfo
 import io.say.better.domain.member.application.converter.MemberConverter
 import io.say.better.global.auth.exception.AuthException
 import io.say.better.global.common.code.status.ErrorStatus
@@ -63,8 +63,6 @@ data class OAuthAttributes(
         private fun ofGoogle(
             userNameAttributeName: String,
             attributes: Map<String, Any>?,
-        ): OAuthAttributes {
-            return OAuthAttributes(userNameAttributeName, GoogleOAuth2UserInfo(attributes))
-        }
+        ): OAuthAttributes = OAuthAttributes(userNameAttributeName, GoogleOAuth2UserInfo(attributes))
     }
 }

@@ -1,6 +1,6 @@
 package io.say.better.global.auth.service
 
-import io.say.better.core.enums.Provider
+import io.say.better.core.common.Provider
 import io.say.better.global.auth.CustomOAuth2User
 import io.say.better.global.auth.OAuthAttributes
 import io.say.better.global.auth.exception.AuthException
@@ -35,7 +35,8 @@ class CustomOAuth2UserService(
         // registrationId : OAuth2 로그인을 처리하는 서비스를 구분하는 코드
         val registrationId = userRequest.clientRegistration.registrationId
         val provider =
-            Provider.find(registrationId)
+            Provider
+                .find(registrationId)
                 .orElseThrow { AuthException(ErrorStatus.INTERNAL_SERVER_ERROR) }
         val userNameAttributeName =
             userRequest.clientRegistration
