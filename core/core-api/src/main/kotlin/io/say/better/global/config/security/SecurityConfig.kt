@@ -1,9 +1,6 @@
 package io.say.better.global.config.security
 
 import io.say.better.core.enums.RoleType
-import io.say.better.global.auth.handler.OAuth2LoginFailureHandler
-import io.say.better.global.auth.handler.OAuth2LoginSuccessHandler
-import io.say.better.global.auth.service.CustomOAuth2UserService
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.global.config.web.CorsConfig
 import io.say.better.global.jwt.filter.JwtAuthenticationProcessingFilter
@@ -25,9 +22,6 @@ class SecurityConfig(
     private val jwtService: JwtService,
     private val jwtProperties: JwtProperties,
     private val memberReadRepository: MemberReadRepository,
-    private val customOAuth2UserService: CustomOAuth2UserService,
-    private val OAuth2LoginSuccessHandler: OAuth2LoginSuccessHandler,
-    private val OAuth2LoginFailureHandler: OAuth2LoginFailureHandler,
 ) {
     private val permitUrls =
         arrayOf(
