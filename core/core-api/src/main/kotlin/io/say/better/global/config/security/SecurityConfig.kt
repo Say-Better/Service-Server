@@ -32,6 +32,7 @@ class SecurityConfig(
     private val permitUrls =
         arrayOf(
             "/v3/api-docs/**",
+            "/swagger",
             "/swagger-ui/**",
             "/h2-console/**",
             "/api/temp/**",
@@ -70,12 +71,6 @@ class SecurityConfig(
                     .requestMatchers(*leanerUrls).hasRole(RoleType.LEARNER.name)
                     .requestMatchers(*educatorUrls, *leanerUrls).hasRole(RoleType.EDUCATOR_LEARNER.name)
                     .anyRequest().authenticated()
-            }
-            .oauth2Login {
-                it
-                    .userInfoEndpoint { it.userService(customOAuth2UserService) }
-                    .successHandler(OAuth2LoginSuccessHandler)
-                    .failureHandler(OAuth2LoginFailureHandler)
             }
             .headers {
                 it
