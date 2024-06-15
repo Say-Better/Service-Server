@@ -1,7 +1,7 @@
-package io.say.better.global.common.exception
+package io.say.better.core.common.exception
 
-import io.say.better.global.common.code.BaseErrorCode
-import io.say.better.global.common.response.ResponseDto.ErrorReasonDto
+import io.say.better.core.common.code.BaseErrorCode
+import io.say.better.core.common.response.ResponseDto.ErrorReasonDto
 
 open class GeneralException(
     private val code: BaseErrorCode,

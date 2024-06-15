@@ -1,7 +1,7 @@
-package io.say.better.global.common.code.status
+package io.say.better.core.common.code.status
 
-import io.say.better.global.common.code.BaseErrorCode
-import io.say.better.global.common.response.ResponseDto.ErrorReasonDto
+import io.say.better.core.common.code.BaseErrorCode
+import io.say.better.core.common.response.ResponseDto.ErrorReasonDto
 import org.springframework.http.HttpStatus
 
 /** [ErrorStatus 작성 규칙]

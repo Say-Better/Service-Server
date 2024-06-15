@@ -1,12 +1,12 @@
 package io.say.better.global.auth
 
-import io.say.better.core.common.Provider
-import io.say.better.core.common.RoleType
 import io.say.better.core.common.auth.info.GoogleOAuth2UserInfo
 import io.say.better.core.common.auth.info.OAuth2UserInfo
+import io.say.better.core.common.code.status.ErrorStatus
+import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.constant.RoleType
 import io.say.better.domain.member.application.converter.MemberConverter
 import io.say.better.global.auth.exception.AuthException
-import io.say.better.global.common.code.status.ErrorStatus
 import io.say.better.storage.mysql.domain.entity.Member
 
 data class OAuthAttributes(

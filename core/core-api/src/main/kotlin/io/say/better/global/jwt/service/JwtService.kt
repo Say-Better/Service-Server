@@ -8,7 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.UnsupportedJwtException
 import io.jsonwebtoken.security.Keys
 import io.say.better.core.common.auth.jwt.JwtToken
-import io.say.better.global.config.logger.logger
+import io.say.better.core.common.utils.logger
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.storage.mysql.domain.entity.Member
 import io.say.better.storage.redis.RedisUtil

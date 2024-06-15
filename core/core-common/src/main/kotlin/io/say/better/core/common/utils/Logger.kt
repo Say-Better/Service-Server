@@ -1,4 +1,4 @@
-package io.say.better.global.config.logger
+package io.say.better.core.common.utils
 
 import org.slf4j.LoggerFactory
 

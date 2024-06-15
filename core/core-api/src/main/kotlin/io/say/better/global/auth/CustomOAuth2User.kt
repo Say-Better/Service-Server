@@ -1,6 +1,6 @@
 package io.say.better.global.auth
 
-import io.say.better.core.common.RoleType
+import io.say.better.core.common.constant.RoleType
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User
 

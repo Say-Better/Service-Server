@@ -1,6 +1,6 @@
 package io.say.better.core.common.auth.info
 
-import io.say.better.core.common.Provider
+import io.say.better.core.common.constant.Provider
 
 data class GoogleOAuth2UserInfo(
     val attributes: Map<String, Any>?,

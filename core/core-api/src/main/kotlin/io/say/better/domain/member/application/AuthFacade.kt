@@ -1,15 +1,15 @@
 package io.say.better.domain.member.application
 
 import io.say.better.client.oauth.strategy.OauthSocialLogin
-import io.say.better.core.common.Provider
-import io.say.better.core.common.RoleType
+import io.say.better.core.common.constant.AppType
+import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.constant.RoleType
 import io.say.better.domain.member.application.converter.AuthResponseConverter
 import io.say.better.domain.member.application.impl.EducatorService
 import io.say.better.domain.member.application.impl.LearnerService
 import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.member.ui.dto.AuthRequest
 import io.say.better.domain.member.ui.dto.AuthResponse
-import io.say.better.global.common.constant.AppType
 import io.say.better.global.jwt.service.JwtService
 import org.springframework.stereotype.Component
 

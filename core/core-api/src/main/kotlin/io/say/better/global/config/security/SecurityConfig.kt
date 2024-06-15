@@ -1,6 +1,6 @@
 package io.say.better.global.config.security
 
-import io.say.better.core.common.RoleType
+import io.say.better.core.common.constant.RoleType
 import io.say.better.global.auth.handler.OAuth2LoginFailureHandler
 import io.say.better.global.auth.handler.OAuth2LoginSuccessHandler
 import io.say.better.global.auth.service.CustomOAuth2UserService

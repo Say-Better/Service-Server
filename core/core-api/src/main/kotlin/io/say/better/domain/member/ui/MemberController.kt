@@ -1,7 +1,7 @@
 package io.say.better.domain.member.ui
 
+import io.say.better.core.common.response.ResponseDto
 import io.say.better.domain.member.application.MemberFacade
-import io.say.better.global.common.response.ResponseDto
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

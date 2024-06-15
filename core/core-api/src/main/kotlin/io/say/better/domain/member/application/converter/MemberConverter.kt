@@ -1,7 +1,7 @@
 package io.say.better.domain.member.application.converter
 
-import io.say.better.core.common.Provider
-import io.say.better.core.common.RoleType
+import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.constant.RoleType
 import io.say.better.storage.mysql.domain.entity.Member
 
 class MemberConverter private constructor() {

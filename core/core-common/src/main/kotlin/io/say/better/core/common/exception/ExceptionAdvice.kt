@@ -1,9 +1,8 @@
-package io.say.better.global.common.exception
+package io.say.better.core.common.exception
 
-import io.say.better.global.common.code.status.ErrorStatus
-import io.say.better.global.common.response.ResponseDto
-import io.say.better.global.common.response.ResponseDto.ErrorReasonDto
-import io.say.better.global.config.logger.logger
+import io.say.better.core.common.code.status.ErrorStatus
+import io.say.better.core.common.response.ResponseDto
+import io.say.better.core.common.response.ResponseDto.ErrorReasonDto
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolation
 import jakarta.validation.ConstraintViolationException
@@ -24,7 +23,7 @@ import java.util.function.Consumer
 
 @RestControllerAdvice(annotations = [RestController::class])
 class ExceptionAdvice : ResponseEntityExceptionHandler() {
-    private val log = logger()
+    private val log = logger
 
     @ExceptionHandler
     fun validation(
@@ -32,7 +31,8 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
         request: WebRequest,
     ): ResponseEntity<Any>? {
         val errorMessage =
-            violationException.constraintViolations.stream()
+            violationException.constraintViolations
+                .stream()
                 .map { obj: ConstraintViolation<*> -> obj.message }
                 .findFirst()
                 .orElseThrow { RuntimeException("ConstraintViolationException 추출 도중 에러 발생") }
@@ -61,8 +61,7 @@ class ExceptionAdvice : ResponseEntityExceptionHandler() {
                     errors.merge(
                         fieldName,
                         errorMessage,
-                    ) { existingErrorMessage: String, newErrorMessage: String,
-                        ->
+                    ) { existingErrorMessage: String, newErrorMessage: String ->
                         "$existingErrorMessage, $newErrorMessage"
                     }
                 },

@@ -1,7 +1,7 @@
 package io.say.better.global.auth.handler
 
+import io.say.better.core.common.utils.logger
 import io.say.better.global.auth.CustomOAuth2User
-import io.say.better.global.config.logger.logger
 import io.say.better.global.jwt.service.JwtService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

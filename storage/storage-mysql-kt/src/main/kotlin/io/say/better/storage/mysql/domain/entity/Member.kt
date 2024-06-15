@@ -1,8 +1,8 @@
 package io.say.better.storage.mysql.domain.entity
 
-import io.say.better.core.common.Provider
-import io.say.better.core.common.RoleType
-import io.say.better.core.common.Status
+import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.constant.RoleType
+import io.say.better.core.common.constant.Status
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType

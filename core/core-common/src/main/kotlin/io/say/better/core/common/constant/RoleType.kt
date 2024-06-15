@@ -1,4 +1,4 @@
-package io.say.better.core.common
+package io.say.better.core.common.constant
 
 enum class RoleType(
     val description: String,

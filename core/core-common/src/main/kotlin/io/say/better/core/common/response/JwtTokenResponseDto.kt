@@ -1,4 +1,4 @@
-package io.say.better.global.common.response
+package io.say.better.core.common.response
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDateTime

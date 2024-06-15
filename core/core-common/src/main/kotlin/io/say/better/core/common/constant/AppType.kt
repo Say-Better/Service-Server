@@ -1,4 +1,4 @@
-package io.say.better.global.common.constant
+package io.say.better.core.common.constant
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import org.apache.commons.lang3.EnumUtils
@@ -16,8 +16,6 @@ enum class AppType(
         @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
         fun from(value: String): AppType = value.let { EnumUtils.getEnumIgnoreCase(AppType::class.java, it.trim()) }
 
-        fun fromString(value: String): AppType {
-            return valueOf(value.uppercase())
-        }
+        fun fromString(value: String): AppType = valueOf(value.uppercase())
     }
 }

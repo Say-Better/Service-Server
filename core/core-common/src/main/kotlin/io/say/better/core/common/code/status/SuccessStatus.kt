@@ -1,7 +1,7 @@
-package io.say.better.global.common.code.status
+package io.say.better.core.common.code.status
 
-import io.say.better.global.common.code.BaseCode
-import io.say.better.global.common.response.ResponseDto.ReasonDto
+import io.say.better.core.common.code.BaseCode
+import io.say.better.core.common.response.ResponseDto.ReasonDto
 import org.springframework.http.HttpStatus
 
 enum class SuccessStatus(

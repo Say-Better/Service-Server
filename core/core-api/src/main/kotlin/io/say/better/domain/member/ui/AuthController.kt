@@ -1,12 +1,12 @@
 package io.say.better.domain.member.ui
 
-import io.say.better.core.common.Provider
-import io.say.better.core.common.RoleType
+import io.say.better.core.common.constant.AppType
+import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.constant.RoleType
+import io.say.better.core.common.response.ResponseDto
 import io.say.better.domain.member.application.AuthFacade
 import io.say.better.domain.member.ui.dto.AuthRequest
-import io.say.better.domain.member.ui.dto.AuthResponse
-import io.say.better.global.common.constant.AppType
-import io.say.better.global.common.response.ResponseDto
+import io.say.better.domain.member.ui.dto.AuthResponse.LoginDTO
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -25,7 +25,7 @@ class AuthController(
         @PathVariable appType: AppType,
         @PathVariable socialType: Provider,
         @RequestBody request: AuthRequest.LoginDTO,
-    ): ResponseDto<AuthResponse.LoginDTO> = ResponseDto.onSuccess(authFacade.login(appType, socialType, request))
+    ): ResponseDto<LoginDTO> = ResponseDto.onSuccess(authFacade.login(appType, socialType, request))
 
     @PostMapping("/assign/educator")
     fun assignEducator(): ResponseDto<Nothing?> {

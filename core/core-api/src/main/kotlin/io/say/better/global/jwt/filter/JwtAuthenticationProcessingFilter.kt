@@ -1,6 +1,6 @@
 package io.say.better.global.jwt.filter
 
-import io.say.better.global.config.logger.logger
+import io.say.better.core.common.utils.logger
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.global.jwt.service.JwtService
 import io.say.better.storage.mysql.dao.repository.MemberReadRepository
@@ -56,7 +56,8 @@ class JwtAuthenticationProcessingFilter(
 
         // RefreshToken 추출, AccessToken이 만료되지 않은 이상 RefreshToken은 null
         val refreshToken =
-            jwtService.extractRefreshToken(request)
+            jwtService
+                .extractRefreshToken(request)
                 .filter { token: String? -> jwtService.isTokenValid(token) }
                 .orElse(null)
 
@@ -83,9 +84,7 @@ class JwtAuthenticationProcessingFilter(
      * @param request HttpServletRequest
      * @return "/login"인 경우 true
      */
-    private fun isNoCheckUri(request: HttpServletRequest): Boolean {
-        return request.requestURI == NO_CHECK_URI
-    }
+    private fun isNoCheckUri(request: HttpServletRequest): Boolean = request.requestURI == NO_CHECK_URI
 
     /**
      * RefreshToken이 있는 경우, DB의 RefreshToken과 비교하여 일치하면 AccessToken 및 RefreshToken 재발급
@@ -99,7 +98,8 @@ class JwtAuthenticationProcessingFilter(
     ) {
         log.info("JwtAuthenticationProcessingFilter.checkRefreshTokenAndReIssueAccessToken() 실행 - RefreshToken 검증")
         val email = redisUtil.getData(refreshToken)
-        memberReadRepository.findByEmail(email)
+        memberReadRepository
+            .findByEmail(email)
             .ifPresent { user: Member ->
                 val reIssuedRefreshToken = reIssueRefreshToken(user)
                 jwtService.sendAccessAndRefreshToken(
@@ -144,7 +144,8 @@ class JwtAuthenticationProcessingFilter(
         filterChain: FilterChain,
     ) {
         log.info("JwtAuthenticationProcessingFilter.checkAccessTokenAndAuthentication() 실행 - AccessToken 검증")
-        jwtService.extractAccessToken(request)
+        jwtService
+            .extractAccessToken(request)
             .filter { token: String? -> jwtService.isTokenValid(token) }
             .ifPresent { accessToken: String? ->
                 jwtService.extractEmail(accessToken).ifPresent { email: String? ->
@@ -168,7 +169,8 @@ class JwtAuthenticationProcessingFilter(
         log.info("JwtAuthenticationProcessingFilter.saveAuthentication() 실행 - 인증 객체 저장")
 
         val userDetails =
-            User.builder()
+            User
+                .builder()
                 .username(member.email)
                 .password(member.loginId)
                 .roles(member.role.name)

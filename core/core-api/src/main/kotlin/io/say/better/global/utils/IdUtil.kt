@@ -1,6 +1,6 @@
 package io.say.better.global.utils
 
-import io.say.better.global.config.logger.logger
+import io.say.better.core.common.utils.logger
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -8,11 +8,7 @@ import java.util.UUID
 class IdUtil constructor() {
     private val log = logger()
 
-    fun getUUID(): UUID {
-        return UUID.randomUUID()
-    }
+    fun getUUID(): UUID = UUID.randomUUID()
 
-    fun toUUID(uuidString: String): UUID {
-        return UUID.fromString(uuidString)
-    }
+    fun toUUID(uuidString: String): UUID = UUID.fromString(uuidString)
 }

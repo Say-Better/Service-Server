@@ -1,11 +1,11 @@
 package io.say.better.global.auth.service
 
-import io.say.better.core.common.Provider
+import io.say.better.core.common.code.status.ErrorStatus
+import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.utils.logger
 import io.say.better.global.auth.CustomOAuth2User
 import io.say.better.global.auth.OAuthAttributes
 import io.say.better.global.auth.exception.AuthException
-import io.say.better.global.common.code.status.ErrorStatus
-import io.say.better.global.config.logger.logger
 import io.say.better.storage.mysql.dao.repository.MemberReadRepository
 import io.say.better.storage.mysql.dao.repository.MemberWriteRepository
 import io.say.better.storage.mysql.domain.entity.Member
