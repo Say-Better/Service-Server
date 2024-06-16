@@ -11,7 +11,7 @@ open class CorsConfig {
         get() {
             val configuration = CorsConfiguration()
             configuration.allowedOrigins =
-                mutableListOf("http://localhost:3000", "http://localhost:8080", "http://locathost:5672")
+                mutableListOf("http://localhost:3000", "http://localhost:8080", "https:///www.saybetter.store")
             configuration.allowedMethods = mutableListOf("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
 
             val source = UrlBasedCorsConfigurationSource()
