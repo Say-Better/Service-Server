@@ -4,6 +4,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.restassured.http.ContentType
 import io.say.better.domain.member.application.MemberFacade
+import io.say.better.domain.member.ui.dto.MemberResponse
+import io.say.better.storage.mysql.domain.constant.Gender
 import io.say.better.test.api.RestDocsTest
 import io.say.better.test.api.RestDocsUtils.requestPreprocessor
 import io.say.better.test.api.RestDocsUtils.responsePreprocessor
@@ -114,4 +116,62 @@ class MemberControllerTest : RestDocsTest() {
 //                )
 //            }
 //    }
+
+    @Test
+    @DisplayName("Educator 정보를 반환한다.")
+    @WithMockUser
+    fun getEducatorInfoTest() {
+        every { memberFacade.getEducatorInfo() } returns MemberResponse.createEducatorDTO("testName", "testUrl")
+
+        given()
+            .contentType(ContentType.JSON)
+            .get("/api/member/educator/info")
+            .then()
+            .status(HttpStatus.OK)
+            .apply(
+                document(
+                    "success-educator-info",
+                    requestPreprocessor(),
+                    responsePreprocessor(),
+                    responseFields(
+                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
+                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
+                        fieldWithPath("result.name").type(JsonFieldType.STRING).description("이름"),
+                        fieldWithPath("result.imgUrl").type(JsonFieldType.STRING).description("프로필 이미지 URL"),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    @DisplayName("Learner 정보를 반환한다.")
+    @WithMockUser
+    fun getLearnerInfoTest() {
+        every {
+            memberFacade.getLearnerInfo()
+        } returns MemberResponse.createLearnerDTO("testName", 10, Gender.MALE, "testUrl")
+
+        given()
+            .contentType(ContentType.JSON)
+            .get("/api/member/learner/info")
+            .then()
+            .status(HttpStatus.OK)
+            .apply(
+                document(
+                    "success-learner-info",
+                    requestPreprocessor(),
+                    responsePreprocessor(),
+                    responseFields(
+                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
+                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
+                        fieldWithPath("result.name").type(JsonFieldType.STRING).description("이름"),
+                        fieldWithPath("result.age").type(JsonFieldType.NUMBER).description("나이"),
+                        fieldWithPath("result.gender").type(JsonFieldType.STRING).description("성별"),
+                        fieldWithPath("result.imgUrl").type(JsonFieldType.STRING).description("프로필 이미지 URL"),
+                    ),
+                ),
+            )
+    }
 }
