@@ -37,8 +37,8 @@ class Learner(
             age: Int = 0,
             gender: Gender = Gender.ETC,
             imgUrl: String = "",
-        ): Learner {
-            return Learner(
+        ): Learner =
+            Learner(
                 memberId = memberId,
                 name = name,
                 birthDate = birthDate,
@@ -46,6 +46,5 @@ class Learner(
                 gender = gender,
                 imgUrl = imgUrl,
             )
-        }
     }
 }
