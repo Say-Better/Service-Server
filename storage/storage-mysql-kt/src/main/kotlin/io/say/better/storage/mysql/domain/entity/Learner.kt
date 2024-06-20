@@ -1,5 +1,6 @@
 package io.say.better.storage.mysql.domain.entity
 
+import io.say.better.storage.mysql.domain.constant.Gender
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -21,17 +22,29 @@ class Learner(
     val name: String = "",
     @Column(name = "birth_date")
     val birthDate: String = "",
+    @Column(name = "age")
+    val age: Int = 0,
+    @Column(name = "gender")
+    val gender: Gender = Gender.ETC,
+    @Column(name = "img_url")
+    val imgUrl: String = ""
 ) : BaseTimeEntity() {
     companion object {
         fun createLearner(
             memberId: Member,
             name: String = "",
             birthDate: String = "",
+            age: Int = 0,
+            gender: Gender = Gender.ETC,
+            imgUrl: String = "",
         ): Learner {
             return Learner(
                 memberId = memberId,
                 name = name,
                 birthDate = birthDate,
+                age = age,
+                gender = gender,
+                imgUrl = imgUrl,
             )
         }
     }
