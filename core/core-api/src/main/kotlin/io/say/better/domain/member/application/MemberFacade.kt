@@ -48,7 +48,7 @@ class MemberFacade(
         val member = memberService.currentMember()
         val educator = educatorService.getEducatorByMember(member)
 
-        return MemberResponse.createEducatorDTO(
+        return MemberResponse.EducatorDTO(
             educator.name,
             educator.imgUrl,
         )
@@ -58,7 +58,7 @@ class MemberFacade(
         val member = memberService.currentMember()
         val learner = learnerService.getLearnerByMember(member)
 
-        return MemberResponse.createLearnerDTO(
+        return MemberResponse.LearnerDTO(
             learner.name,
             learner.age,
             learner.gender,

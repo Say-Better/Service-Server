@@ -121,7 +121,7 @@ class MemberControllerTest : RestDocsTest() {
     @DisplayName("Educator 정보를 반환한다.")
     @WithMockUser
     fun getEducatorInfoTest() {
-        every { memberFacade.getEducatorInfo() } returns MemberResponse.createEducatorDTO("testName", "testUrl")
+        every { memberFacade.getEducatorInfo() } returns MemberResponse.EducatorDTO("testName", "testUrl")
 
         given()
             .contentType(ContentType.JSON)
@@ -150,7 +150,7 @@ class MemberControllerTest : RestDocsTest() {
     fun getLearnerInfoTest() {
         every {
             memberFacade.getLearnerInfo()
-        } returns MemberResponse.createLearnerDTO("testName", 10, Gender.MALE, "testUrl")
+        } returns MemberResponse.LearnerDTO("testName", 10, Gender.MALE, "testUrl")
 
         given()
             .contentType(ContentType.JSON)

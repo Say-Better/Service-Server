@@ -18,18 +18,4 @@ class MemberResponse private constructor() {
         val gender: Gender,
         val imgUrl: String,
     )
-
-    companion object {
-        fun createEducatorDTO(
-            name: String,
-            imgUrl: String,
-        ): EducatorDTO = EducatorDTO(name, imgUrl)
-
-        fun createLearnerDTO(
-            name: String,
-            age: Int,
-            gender: Gender,
-            imgUrl: String,
-        ): LearnerDTO = LearnerDTO(name, age, gender, imgUrl)
-    }
 }
