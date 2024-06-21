@@ -21,17 +21,21 @@ class Educator(
     val name: String = "",
     @Column(name = "birth_date")
     val birthDate: String = "",
+    @Column(name = "img_url")
+    val imgUrl: String = "",
 ) : BaseTimeEntity() {
     companion object {
         fun createEducator(
             memberId: Member,
             name: String = "",
             birthDate: String = "",
+            imgUrl: String = "",
         ): Educator =
             Educator(
                 memberId = memberId,
                 name = name,
                 birthDate = birthDate,
+                imgUrl = imgUrl,
             )
     }
 }

@@ -6,6 +6,7 @@ import io.say.better.domain.member.application.impl.EducatorService
 import io.say.better.domain.member.application.impl.LearnerService
 import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.member.exception.MemberException
+import io.say.better.domain.member.ui.dto.MemberResponse
 import io.say.better.global.utils.CodeUtil
 import io.say.better.storage.redis.RedisUtil
 import org.springframework.stereotype.Component
@@ -41,5 +42,27 @@ class MemberFacade(
         )
 
         redisUtil.deleteData(code)
+    }
+
+    fun getEducatorInfo(): MemberResponse.EducatorDTO {
+        val member = memberService.currentMember()
+        val educator = educatorService.getEducatorByMember(member)
+
+        return MemberResponse.EducatorDTO(
+            educator.name,
+            educator.imgUrl,
+        )
+    }
+
+    fun getLearnerInfo(): MemberResponse.LearnerDTO {
+        val member = memberService.currentMember()
+        val learner = learnerService.getLearnerByMember(member)
+
+        return MemberResponse.LearnerDTO(
+            learner.name,
+            learner.age,
+            learner.gender,
+            learner.imgUrl,
+        )
     }
 }

@@ -2,6 +2,7 @@ package io.say.better.domain.member.ui
 
 import io.say.better.core.common.response.ResponseDto
 import io.say.better.domain.member.application.MemberFacade
+import io.say.better.domain.member.ui.dto.MemberResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -27,5 +28,17 @@ class MemberController(
     ): ResponseDto<Nothing?> {
         memberFacade.connect(code)
         return ResponseDto.onSuccess(null)
+    }
+
+    @GetMapping("/educator/info")
+    fun getEducatorInfo(): ResponseDto<MemberResponse.EducatorDTO> {
+        val member = memberFacade.getEducatorInfo()
+        return ResponseDto.onSuccess(member)
+    }
+
+    @GetMapping("/learner/info")
+    fun getLearnerInfo(): ResponseDto<MemberResponse.LearnerDTO> {
+        val member = memberFacade.getLearnerInfo()
+        return ResponseDto.onSuccess(member)
     }
 }
