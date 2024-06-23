@@ -13,6 +13,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.mock.web.MockMultipartFile
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
@@ -154,7 +156,7 @@ class MemberControllerTest : RestDocsTest() {
 
         given()
             .contentType(ContentType.JSON)
-            .get("/api/member/learner/info")
+            .get("/api/member/learner/info/{name}", "name")
             .then()
             .status(HttpStatus.OK)
             .apply(
@@ -170,6 +172,76 @@ class MemberControllerTest : RestDocsTest() {
                         fieldWithPath("result.age").type(JsonFieldType.NUMBER).description("나이"),
                         fieldWithPath("result.gender").type(JsonFieldType.STRING).description("성별"),
                         fieldWithPath("result.imgUrl").type(JsonFieldType.STRING).description("프로필 이미지 URL"),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    @DisplayName("Educator 초기 정보를 저장한다.")
+    @WithMockUser
+    fun postEducatorInfoTest() {
+        val mockMultiPartFile =
+            MockMultipartFile("file", "test.txt", MediaType.TEXT_PLAIN_VALUE, "Test".byteInputStream())
+
+        every {
+            memberFacade.postEducatorInfo(
+                any(),
+                any(),
+            )
+        } returns Unit
+
+        given()
+            .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+            .queryParam("name", "testName")
+            .multiPart("file", "text.txt", mockMultiPartFile.bytes)
+            .post("/api/member/educator/info")
+            .then()
+            .status(HttpStatus.OK)
+            .apply(
+                document(
+                    "success-educator-info-post",
+                    requestPreprocessor(),
+                    responsePreprocessor(),
+                    responseFields(
+                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
+                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
+                        fieldWithPath("result").type(JsonFieldType.STRING).description("성공 여부"),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    @DisplayName("Learner 초기 정보를 저장한다.")
+    fun postLearnerInfoTest() {
+        val mockMultiPartFile = MockMultipartFile("file", "test.txt", "text/plain", "Test".byteInputStream())
+
+        every {
+            memberFacade.postLearnerInfo(
+                any(),
+                any(),
+            )
+        } returns Unit
+
+        given()
+            .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+            .queryParam("name", "testName")
+            .multiPart("file", "text.txt", mockMultiPartFile.bytes)
+            .post("/api/member/learner/info")
+            .then()
+            .status(HttpStatus.OK)
+            .apply(
+                document(
+                    "success-educator-info-post",
+                    requestPreprocessor(),
+                    responsePreprocessor(),
+                    responseFields(
+                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
+                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
+                        fieldWithPath("result").type(JsonFieldType.STRING).description("성공 여부"),
                     ),
                 ),
             )

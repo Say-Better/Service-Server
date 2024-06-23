@@ -1,6 +1,7 @@
 package io.say.better.domain.member.application
 
 import io.say.better.core.common.code.status.ErrorStatus
+import io.say.better.core.infra.service.AwsS3Service
 import io.say.better.domain.member.application.impl.ConnectService
 import io.say.better.domain.member.application.impl.EducatorService
 import io.say.better.domain.member.application.impl.LearnerService
@@ -10,6 +11,7 @@ import io.say.better.domain.member.ui.dto.MemberResponse
 import io.say.better.global.utils.CodeUtil
 import io.say.better.storage.redis.RedisUtil
 import org.springframework.stereotype.Component
+import org.springframework.web.multipart.MultipartFile
 
 @Component
 class MemberFacade(
@@ -19,6 +21,7 @@ class MemberFacade(
     private val learnerService: LearnerService,
     private val codeUtil: CodeUtil,
     private val redisUtil: RedisUtil,
+    private val awsS3Service: AwsS3Service,
 ) {
     fun createConnectCode(): String {
         val member = memberService.currentMember()
@@ -64,5 +67,25 @@ class MemberFacade(
             learner.gender,
             learner.imgUrl,
         )
+    }
+
+    fun postEducatorInfo(
+        file: MultipartFile,
+        name: String,
+    ) {
+        val url = awsS3Service.uploadFile(file, "member")
+
+        val member = memberService.currentMember()
+        educatorService.postEducatorInfo(member, url, name)
+    }
+
+    fun postLearnerInfo(
+        file: MultipartFile,
+        name: String,
+    ) {
+        val url = awsS3Service.uploadFile(file, "member")
+
+        val member = memberService.currentMember()
+        learnerService.postLearnerInfo(member, url, name)
     }
 }

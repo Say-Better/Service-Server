@@ -1,0 +1,11 @@
+cloud:
+    aws:
+        credentials:
+            accessKey: ${AWS_S3_ACCESS_KEY}
+            secretKey: ${AWS_S3_SECRET_KEY}
+        region:
+            static: ap-northeast-2
+        stack:
+            auto: false
+        s3:
+            bucket: sb-vpc-public-s3

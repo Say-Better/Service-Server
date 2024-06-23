@@ -22,8 +22,16 @@ class Educator(
     @Column(name = "birth_date")
     val birthDate: String = "",
     @Column(name = "img_url")
-    val imgUrl: String = "",
+    var imgUrl: String = "",
 ) : BaseTimeEntity() {
+    fun initializeEducatorInfo(
+        url: String,
+        name: String,
+    ) {
+        memberId.name = name
+        this.imgUrl = url
+    }
+
     companion object {
         fun createEducator(
             memberId: Member,

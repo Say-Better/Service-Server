@@ -3,6 +3,7 @@ rootProject.name = "say-better-spring-boot"
 include(
     ":core:core-api",
     ":core:core-common",
+    ":core:core-infra",
     ":storage:storage-mysql-kt",
     ":storage:storage-rabbitmq-kt",
     ":storage:storage-redis-kt",
@@ -38,3 +39,5 @@ pluginManagement {
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
 }
+include("core:core-infra")
+findProject(":core:core-infra")?.name = "core-infra"

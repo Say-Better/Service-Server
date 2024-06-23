@@ -4,11 +4,15 @@ import io.say.better.core.common.response.ResponseDto
 import io.say.better.domain.member.application.MemberFacade
 import io.say.better.domain.member.ui.dto.MemberResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
 
 @Tag(name = "Member", description = "Member API")
 @RestController
@@ -40,5 +44,25 @@ class MemberController(
     fun getLearnerInfo(): ResponseDto<MemberResponse.LearnerDTO> {
         val member = memberFacade.getLearnerInfo()
         return ResponseDto.onSuccess(member)
+    }
+
+    @PostMapping("/educator/info", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    fun postEducatorInfo(
+        @RequestPart(name = "file") file: MultipartFile,
+        @RequestParam("name") name: String,
+    ): ResponseDto<String> {
+        memberFacade.postEducatorInfo(file, name)
+
+        return ResponseDto.onSuccess("Success")
+    }
+
+    @PostMapping("/learner/info", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    fun postLearnerInfo(
+        @RequestPart(name = "file") file: MultipartFile,
+        @RequestParam("name") name: String,
+    ): ResponseDto<String> {
+        memberFacade.postLearnerInfo(file, name)
+
+        return ResponseDto.onSuccess("Success")
     }
 }
