@@ -1,6 +1,7 @@
 package io.say.better.domain.member.application
 
 import io.say.better.core.common.code.status.ErrorStatus
+import io.say.better.core.infra.enums.AwsS3Folder
 import io.say.better.core.infra.service.AwsS3Service
 import io.say.better.domain.member.application.impl.ConnectService
 import io.say.better.domain.member.application.impl.EducatorService
@@ -73,7 +74,7 @@ class MemberFacade(
         file: MultipartFile,
         name: String,
     ) {
-        val url = awsS3Service.uploadFile(file, "member")
+        val url = awsS3Service.uploadFile(file, AwsS3Folder.MEMBER)
 
         val member = memberService.currentMember()
         educatorService.postEducatorInfo(member, url, name)
@@ -83,7 +84,7 @@ class MemberFacade(
         file: MultipartFile,
         name: String,
     ) {
-        val url = awsS3Service.uploadFile(file, "member")
+        val url = awsS3Service.uploadFile(file, AwsS3Folder.MEMBER)
 
         val member = memberService.currentMember()
         learnerService.postLearnerInfo(member, url, name)
