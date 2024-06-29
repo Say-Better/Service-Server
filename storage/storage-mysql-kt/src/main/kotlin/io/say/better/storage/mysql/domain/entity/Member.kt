@@ -38,7 +38,7 @@ class Member(
     @Column(name = "login_id", nullable = false)
     val loginId: String? = null,
     @Column(name = "name", nullable = false, length = 100)
-    val name: String? = null,
+    var name: String? = null,
 ) : BaseTimeEntity() {
     fun onEducatorLearner() {
         this.role = RoleType.EDUCATOR_LEARNER

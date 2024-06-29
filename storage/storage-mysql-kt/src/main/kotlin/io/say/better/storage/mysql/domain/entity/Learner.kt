@@ -27,8 +27,16 @@ class Learner(
     @Column(name = "gender")
     val gender: Gender = Gender.ETC,
     @Column(name = "img_url")
-    val imgUrl: String = "",
+    var imgUrl: String = "",
 ) : BaseTimeEntity() {
+    fun initializeLearnerInfo(
+        url: String,
+        name: String,
+    ) {
+        memberId.name = name
+        imgUrl = url
+    }
+
     companion object {
         fun createLearner(
             memberId: Member,

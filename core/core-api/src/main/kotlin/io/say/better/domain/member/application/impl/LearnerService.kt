@@ -21,4 +21,14 @@ class LearnerService(
         learnerReadRepository
             .findByMemberId(learnerMember)
             .orElseThrow { MemberException(ErrorStatus.LEARNER_NOT_FOUND) }
+
+    fun postLearnerInfo(
+        member: Member,
+        url: String,
+        name: String,
+    ) {
+        val learner = getLearner(member)
+
+        learner.initializeLearnerInfo(url, name)
+    }
 }

@@ -21,4 +21,14 @@ class EducatorService(
         educatorReadRepository
             .findByMemberId(educatorMember)
             .orElseThrow { MemberException(ErrorStatus.EDUCATOR_NOT_FOUND) }
+
+    fun postEducatorInfo(
+        member: Member,
+        url: String,
+        name: String,
+    ) {
+        val educator = getEducator(member)
+
+        educator.initializeEducatorInfo(url, name)
+    }
 }
