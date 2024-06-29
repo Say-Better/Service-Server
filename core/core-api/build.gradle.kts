@@ -1,5 +1,3 @@
-import org.hidetake.gradle.swagger.generator.GenerateSwaggerUI
-
 plugins {
     id("com.epages.restdocs-api-spec") version "0.19.0"
     id("org.hidetake.swagger.generator") version "2.18.2"
@@ -40,7 +38,7 @@ dependencies {
     // document
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${property("springdocVersion")}")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-    testImplementation("com.epages:restdocs-api-spec-mockmvc:0.18.2")
+    testImplementation("com.epages:restdocs-api-spec-webtestclient:0.19.2")
 
     // test
     testImplementation("org.springframework.security:spring-security-test")
@@ -53,18 +51,17 @@ openapi3 {
     description = "My API description "
     version = "0.1.0"
     format = "yaml"
-}
-
-tasks.withType(GenerateSwaggerUI::class.java) {
-    dependsOn("openapi3")
+    snippetsDirectory = "build/generated-snippets"
+    outputDirectory = "build/docs"
 }
 
 tasks.register("copySwaggerUI", Copy::class.java) {
     description = "Copy Swagger UI to static resources"
     group = "documentation"
-    dependsOn("generateSwaggerUI")
+    dependsOn("openapi3")
 
-    from("build/resources/main/static/docs")
+    file("src/main/resources/static/docs").mkdirs()
+    from(openapi3.outputDirectory)
     into("src/main/resources/static/docs")
 }
 
