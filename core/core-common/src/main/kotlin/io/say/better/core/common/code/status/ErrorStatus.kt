@@ -43,6 +43,9 @@ enum class ErrorStatus(
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_001", "해당 회원을 찾을 수 없습니다."),
     MEMBER_EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_404_002", "해당 이메일을 가진 회원이 존재하지 않습니다."),
 
+    // Auth Error
+    FAILED_LOGIN_ID_TO_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "AUTH_500_001", "로그인 아이디에서 이메일을 추출하는데 실패했습니다."),
+
     // Educator Error
     EDUCATOR_NOT_FOUND(HttpStatus.NOT_FOUND, "EDUCATOR_404_001", "해당 교육자를 찾을 수 없습니다."),
 

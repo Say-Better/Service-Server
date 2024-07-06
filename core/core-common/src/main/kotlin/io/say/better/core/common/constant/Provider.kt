@@ -12,6 +12,7 @@ enum class Provider(
     NAVER("naver"),
     KAKAO("kakao"),
     FACEBOOK("facebook"),
+    COMMON("common"),
     ;
 
     companion object {
