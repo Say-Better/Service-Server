@@ -45,4 +45,20 @@ class AuthFacade(
 
         return AuthResponseConverter.toLoginDTO(member, token, needMemberInfo)
     }
+
+    fun login(
+        appType: AppType,
+        request: AuthRequest.CommonLoginDTO,
+    ): AuthResponse.LoginDTO {
+        val member = memberService.getMemberByEmail(appType, Provider.COMMON, request)
+        val token = jwtService.createServiceToken(member)
+
+        val needMemberInfo =
+            when (appType) {
+                AppType.EDUCATOR -> educatorService.getEducator(member).name.isEmpty()
+                AppType.LEARNER -> learnerService.getLearner(member).name.isEmpty()
+            }
+
+        return AuthResponseConverter.toLoginDTO(member, token, needMemberInfo)
+    }
 }

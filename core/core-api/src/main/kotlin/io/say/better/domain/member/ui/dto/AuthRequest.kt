@@ -8,4 +8,10 @@ class AuthRequest private constructor() {
     data class LoginDTO(
         val identityToken: String,
     )
+
+    data class CommonLoginDTO(
+        val name: String,
+        val email: String,
+        val birthDate: String = "",
+    )
 }
