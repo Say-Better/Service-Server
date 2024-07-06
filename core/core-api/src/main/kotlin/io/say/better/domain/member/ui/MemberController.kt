@@ -29,10 +29,7 @@ class MemberController(
     @PostMapping("/connect/{code}")
     fun connect(
         @PathVariable(value = "code") code: String,
-    ): ResponseDto<Nothing?> {
-        memberFacade.connect(code)
-        return ResponseDto.onSuccess(null)
-    }
+    ): ResponseDto<Boolean> = ResponseDto.onSuccess(memberFacade.connect(code))
 
     @GetMapping("/educator/info")
     fun getEducatorInfo(): ResponseDto<MemberResponse.EducatorDTO> {
