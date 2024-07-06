@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import java.time.LocalDate
 
 @Entity(name = "LEARNER")
 class Learner(
@@ -21,20 +22,51 @@ class Learner(
     @Column(name = "name", nullable = false, length = 100)
     val name: String = "",
     @Column(name = "birth_date")
-    val birthDate: String = "",
+    var birthDate: String = "",
     @Column(name = "age")
-    val age: Int = 0,
+    var age: Int = 0,
     @Column(name = "gender")
-    val gender: Gender = Gender.ETC,
+    var gender: Gender = Gender.ETC,
     @Column(name = "img_url")
     var imgUrl: String = "",
 ) : BaseTimeEntity() {
     fun initializeLearnerInfo(
         url: String,
         name: String,
+        birthDate: String,
+        gender: String,
     ) {
         memberId.name = name
         imgUrl = url
+        this.birthDate = birthDate
+        if (gender == "M") {
+            this.gender = Gender.MALE
+        } else {
+            this.gender = Gender.FEMALE
+        }
+        this.age = getAgeFromBirthday(birthDate)
+    }
+
+    private fun getAgeFromBirthday(birthDate: String): Int {
+        val year = birthDate.split(".")[0].toInt()
+        val month = birthDate.split(".")[1].toInt()
+        val date = birthDate.split(".")[2].toInt()
+
+        val now = LocalDate.now()
+
+        var age = now.year - year
+
+        if (month <= now.monthValue) { // 생일의 달이 현재보다 작거나 같을때
+            if (month == now.monthValue) { // 생일의 달이 현재와 같을때
+                if (date > now.dayOfMonth) { // 생일의 일자가 현재보다 더 크면 아직 생일이 지나지 않음
+                    age -= 1
+                }
+            } else { // 생일의 달이 현재보다 작다면
+                age -= 1 // 일자와 상관없이 생일이 지나지 않음
+            }
+        }
+
+        return age
     }
 
     companion object {
