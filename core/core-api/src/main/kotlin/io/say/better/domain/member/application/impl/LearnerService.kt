@@ -2,6 +2,7 @@ package io.say.better.domain.member.application.impl
 
 import io.say.better.core.common.code.status.ErrorStatus
 import io.say.better.domain.member.exception.MemberException
+import io.say.better.domain.member.ui.dto.MemberRequest
 import io.say.better.storage.mysql.dao.repository.LearnerReadRepository
 import io.say.better.storage.mysql.dao.repository.LearnerWriteRepository
 import io.say.better.storage.mysql.domain.entity.Learner
@@ -25,10 +26,10 @@ class LearnerService(
     fun postLearnerInfo(
         member: Member,
         url: String,
-        name: String,
+        request: MemberRequest.LearnerInitialInfoDTO,
     ) {
         val learner = getLearner(member)
 
-        learner.initializeLearnerInfo(url, name)
+        learner.initializeLearnerInfo(url, request.name, request.birthday, request.gender)
     }
 }

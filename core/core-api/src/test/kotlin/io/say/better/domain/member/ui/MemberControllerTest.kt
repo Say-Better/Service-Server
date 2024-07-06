@@ -4,6 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.restassured.http.ContentType
 import io.say.better.domain.member.application.MemberFacade
+import io.say.better.domain.member.ui.dto.MemberRequest
 import io.say.better.domain.member.ui.dto.MemberResponse
 import io.say.better.storage.mysql.domain.constant.Gender
 import io.say.better.test.api.RestDocsTest
@@ -17,8 +18,7 @@ import org.springframework.http.MediaType
 import org.springframework.mock.web.MockMultipartFile
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.payload.JsonFieldType
-import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
-import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
+import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.security.test.context.support.WithMockUser
 
@@ -225,10 +225,17 @@ class MemberControllerTest : RestDocsTest() {
             )
         } returns Unit
 
+        val request =
+            MemberRequest.LearnerInitialInfoDTO(
+                "학습자",
+                "2014.01.02",
+                "M",
+            )
+
         given()
             .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-            .queryParam("name", "testName")
             .multiPart("file", "text.txt", mockMultiPartFile.bytes)
+            .multiPart("dto", request, MediaType.APPLICATION_JSON_VALUE)
             .post("/api/member/learner/info")
             .then()
             .status(HttpStatus.OK)
@@ -237,6 +244,12 @@ class MemberControllerTest : RestDocsTest() {
                     "success-educator-info-post",
                     requestPreprocessor(),
                     responsePreprocessor(),
+                    requestPartFields(
+                        "dto",
+                        fieldWithPath("name").type(JsonFieldType.STRING).description("학습자 이름"),
+                        fieldWithPath("birthday").type(JsonFieldType.STRING).description("생일(형식: yyyy.MM.dd"),
+                        fieldWithPath("gender").type(JsonFieldType.STRING).description("성별(M: 남성, F: 여성)"),
+                    ),
                     responseFields(
                         fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
                         fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),

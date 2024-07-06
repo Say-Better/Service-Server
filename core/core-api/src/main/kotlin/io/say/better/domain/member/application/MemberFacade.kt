@@ -8,6 +8,7 @@ import io.say.better.domain.member.application.impl.EducatorService
 import io.say.better.domain.member.application.impl.LearnerService
 import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.member.exception.MemberException
+import io.say.better.domain.member.ui.dto.MemberRequest
 import io.say.better.domain.member.ui.dto.MemberResponse
 import io.say.better.global.utils.CodeUtil
 import io.say.better.storage.redis.RedisUtil
@@ -82,11 +83,11 @@ class MemberFacade(
 
     fun postLearnerInfo(
         file: MultipartFile,
-        name: String,
+        request: MemberRequest.LearnerInitialInfoDTO,
     ) {
         val url = awsS3Service.uploadFile(file, AwsS3Folder.MEMBER)
 
         val member = memberService.currentMember()
-        learnerService.postLearnerInfo(member, url, name)
+        learnerService.postLearnerInfo(member, url, request)
     }
 }
