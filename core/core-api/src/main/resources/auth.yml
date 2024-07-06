@@ -15,6 +15,12 @@ jwt:
   refresh-expiration: ${JWT_REFRESH_EXPIRE:86400000} # 1일
   refresh-header: ${JWT_REFRESH_HEADER:Authorization-refresh} # Refresh Token 헤더
 
+auth:
+  aes:
+    key: ${SECURITY_AES_SYMMETRIC_KEY:SayBetterTestSymmetricKey}
+    salt: ${SECURITY_AES_SALT:SayBetterTestSalt}
+
+
 ---
 spring.config.activate.on-profile: local
 
