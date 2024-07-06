@@ -32,7 +32,7 @@ class MemberFacade(
         return code
     }
 
-    fun connect(code: String) {
+    fun connect(code: String): Boolean {
         val email =
             redisUtil.getData(code)
                 ?: throw MemberException(ErrorStatus.CONNECT_CODE_NOT_VALID)
@@ -46,6 +46,8 @@ class MemberFacade(
         )
 
         redisUtil.deleteData(code)
+
+        return true
     }
 
     fun getEducatorInfo(): MemberResponse.EducatorDTO {

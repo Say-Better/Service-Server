@@ -63,7 +63,7 @@ class MemberControllerTest : RestDocsTest() {
     @DisplayName("유효한 코드일 경우 새로운 educator-learner 관계가 생성된다.")
     @WithMockUser
     fun connectSuccessTest() {
-        every { memberFacade.connect(any()) } returns Unit
+        every { memberFacade.connect(any()) } returns true
 
         given()
             .contentType(ContentType.JSON)
@@ -82,7 +82,9 @@ class MemberControllerTest : RestDocsTest() {
                         fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
                         fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
                         fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
-                        fieldWithPath("result").type(JsonFieldType.STRING).ignored(),
+                        fieldWithPath("result")
+                            .type(JsonFieldType.BOOLEAN)
+                            .description("코드 검사 및 educator-learner 관계 성립 성공 여부"),
                     ),
                 ),
             )
