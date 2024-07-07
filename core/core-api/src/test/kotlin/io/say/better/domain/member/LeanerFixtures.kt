@@ -16,8 +16,10 @@ fun createLearner(
     birthDay: String = LEARNER_BIRTH_DAY,
     gender: Gender = GENDER,
     profileUrl: String = LEARNER_PROFILE_URL,
+    id: Long = 0L,
 ): Learner =
-    Learner.createLearner(
+    Learner(
+        learnerId = id,
         memberId = member,
         name = name,
         birthDate = birthDay,

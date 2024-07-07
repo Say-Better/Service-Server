@@ -21,8 +21,10 @@ fun createCommonMember(
     providerId: String = COMMON_PROVIDER_ID,
     birthDay: String = MEMBER_BIRTH_DAY,
     role: RoleType = EDUCATOR_ROLE,
+    id: Long = 0L,
 ): Member =
-    Member.createMember(
+    Member(
+        memberId = id,
         name = name,
         email = email,
         provider = Provider.COMMON,
@@ -39,8 +41,10 @@ fun createSocialMember(
     birthDay: String = MEMBER_BIRTH_DAY,
     role: RoleType = EDUCATOR_ROLE,
     provider: Provider = Provider.GOOGLE,
+    id: Long = 0L,
 ): Member =
-    Member.createMember(
+    Member(
+        memberId = id,
         name = name,
         email = email,
         provider = provider,

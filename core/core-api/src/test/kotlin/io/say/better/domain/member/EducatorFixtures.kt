@@ -12,8 +12,10 @@ fun createEducator(
     name: String = EDUCATOR_NAME,
     birthDay: String = EDUCATOR_BIRTH_DAY,
     profileUrl: String = EDUCATOR_PROFILE_URL,
+    id: Long = 0L,
 ): Educator =
-    Educator.createEducator(
+    Educator(
+        educatorId = id,
         memberId = member,
         name = name,
         birthDate = birthDay,
