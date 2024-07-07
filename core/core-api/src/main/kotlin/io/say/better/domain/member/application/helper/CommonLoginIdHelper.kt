@@ -22,6 +22,6 @@ class CommonLoginIdHelper(
 
     fun toEmail(loginId: String): String {
         if (!loginId.startsWith(PREFIX)) throw AuthException(ErrorStatus.FAILED_LOGIN_ID_TO_EMAIL)
-        return loginId.substring(PREFIX.length)
+        return emailEncoderHelper.decoder(loginId.substringAfter(PREFIX))
     }
 }
