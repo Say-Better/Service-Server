@@ -13,6 +13,7 @@ import io.say.better.domain.member.application.impl.LearnerService
 import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.member.createCommonLoginRequest
 import io.say.better.domain.member.createCommonMember
+import io.say.better.domain.member.createEducator
 import io.say.better.domain.member.createJwtToken
 import io.say.better.domain.member.createLearner
 import io.say.better.domain.member.ui.dto.AuthRequest
@@ -56,6 +57,37 @@ class AuthFacadeTest :
                 every { learnerService.getLearner(member) } returns createLearner(member, name = "")
 
                 Then("로그인을 성공하고 학습자 정보를 입력할 필요가 있다") {
+                    val result = authFacade.login(appType, request)
+
+                    result.memberId shouldBe member.memberId
+                    result.needMemberInfo shouldBe true
+                }
+            }
+        }
+
+        Given("교육자 App에서 일반 로그인을 하는 경우") {
+            val appType: AppType = AppType.EDUCATOR
+            val request: AuthRequest.CommonLoginDTO = createCommonLoginRequest()
+            val member: Member = createCommonMember()
+
+            every { memberService.getMemberByEmail(appType, any<Provider>(), request) } returns member
+            every { jwtService.createServiceToken(member) } returns createJwtToken()
+
+            When("교육자로 가입한 정보가 있으면") {
+                every { educatorService.getEducator(member) } returns createEducator(member)
+
+                Then("로그인을 성공하고 교육자 정보를 입력할 필요가 없다") {
+                    val result = authFacade.login(appType, request)
+
+                    result.memberId shouldBe member.memberId
+                    result.needMemberInfo shouldBe false
+                }
+            }
+
+            When("교육자로 가입한 정보가 없으면") {
+                every { educatorService.getEducator(member) } returns createEducator(member, name = "")
+
+                Then("로그인을 성공하고 교육자 정보를 입력할 필요가 있다") {
                     val result = authFacade.login(appType, request)
 
                     result.memberId shouldBe member.memberId
