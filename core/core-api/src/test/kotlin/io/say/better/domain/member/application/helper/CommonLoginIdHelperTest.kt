@@ -1,14 +1,15 @@
 package io.say.better.domain.member.application.helper
 
-import io.say.better.DevelopTest
 import io.say.better.global.utils.AesEncryptUtil
+import io.say.better.support.test.DevelopTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.security.crypto.encrypt.AesBytesEncryptor
 
-class CommonLoginIdHelperTest : DevelopTest() {
+@DevelopTest
+class CommonLoginIdHelperTest {
     private lateinit var aesBytesEncryptor: AesBytesEncryptor
     private lateinit var aesEncryptUtil: AesEncryptUtil
     private lateinit var emailEncoderHelper: EmailEncoderHelper
