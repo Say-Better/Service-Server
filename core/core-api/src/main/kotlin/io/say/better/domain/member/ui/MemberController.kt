@@ -2,6 +2,7 @@ package io.say.better.domain.member.ui
 
 import io.say.better.core.common.response.ResponseDto
 import io.say.better.domain.member.application.MemberFacade
+import io.say.better.domain.member.ui.dto.MemberRequest
 import io.say.better.domain.member.ui.dto.MemberResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.MediaType
@@ -29,10 +30,7 @@ class MemberController(
     @PostMapping("/connect/{code}")
     fun connect(
         @PathVariable(value = "code") code: String,
-    ): ResponseDto<Nothing?> {
-        memberFacade.connect(code)
-        return ResponseDto.onSuccess(null)
-    }
+    ): ResponseDto<Boolean> = ResponseDto.onSuccess(memberFacade.connect(code))
 
     @GetMapping("/educator/info")
     fun getEducatorInfo(): ResponseDto<MemberResponse.EducatorDTO> {
@@ -59,9 +57,9 @@ class MemberController(
     @PostMapping("/learner/info", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun postLearnerInfo(
         @RequestPart(name = "file") file: MultipartFile,
-        @RequestParam("name") name: String,
+        @RequestPart(name = "dto") request: MemberRequest.LearnerInitialInfoDTO,
     ): ResponseDto<String> {
-        memberFacade.postLearnerInfo(file, name)
+        memberFacade.postLearnerInfo(file, request)
 
         return ResponseDto.onSuccess("Success")
     }
