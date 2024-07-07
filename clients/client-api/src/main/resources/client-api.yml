@@ -1,8 +1,8 @@
 ## recommend
 recommend:
   api:
-    base-url: ${RECOMMEND_API_BASE_URL}
-    identity-token: ${RECOMMEND_API_IDENTITY_TOKEN}
+    base-url: ${RECOMMEND_API_BASE_URL:testBase}
+    identity-token: ${RECOMMEND_API_IDENTITY_TOKEN:testToken}
 
 spring.cloud.openfeign:
   client:

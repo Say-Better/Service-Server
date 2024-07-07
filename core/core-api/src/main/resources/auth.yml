@@ -9,7 +9,7 @@ spring.security.oauth2:
 
 jwt:
   bearer: ${JWT_BEARER:Bearer}
-  secret: ${JWT_SECRET_KEY}
+  secret: ${JWT_SECRET_KEY:exampleSecretKeyForSayBetterSystemSecretKeyTestForPadding}
   access-expiration: ${JWT_ACCESS_EXPIRE:3600000} # 1시간
   access-header: ${JWT_ACCESS_HEADER:Authorization} # Access Token 헤더
   refresh-expiration: ${JWT_REFRESH_EXPIRE:86400000} # 1일
@@ -18,7 +18,7 @@ jwt:
 auth:
   aes:
     key: ${SECURITY_AES_SYMMETRIC_KEY:SayBetterTestSymmetricKey}
-    salt: ${SECURITY_AES_SALT:SayBetterTestSalt}
+    salt: ${SECURITY_AES_SALT:deadbeef}
 
 
 ---
