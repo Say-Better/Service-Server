@@ -35,8 +35,8 @@ class AuthControllerTest : RestDocsTest() {
     }
 
     @Test
-    @DisplayName("교육자앱에서 소셜 로그인을 한다.")
-    fun educatorLoginSuccess() {
+    @DisplayName("교육자앱에서 소셜 로그인을 성공한다.")
+    fun educatorSocialLoginSuccess() {
         // given
         val appType = AppType.EDUCATOR
         val provider = Provider.GOOGLE
@@ -83,8 +83,8 @@ class AuthControllerTest : RestDocsTest() {
     }
 
     @Test
-    @DisplayName("학습자앱에서 소셜 로그인을 한다.")
-    fun learnerLoginSuccess() {
+    @DisplayName("학습자앱에서 소셜 로그인을 성공한다.")
+    fun learnerSocialLoginSuccess() {
         // given
         val appType = AppType.LEARNER
         val provider = Provider.GOOGLE
@@ -114,6 +114,98 @@ class AuthControllerTest : RestDocsTest() {
                     RequestDocumentation.pathParameters(
                         RequestDocumentation.parameterWithName("appType").description("앱 타입"),
                         RequestDocumentation.parameterWithName("socialType").description("소셜 타입"),
+                    ),
+                    responseFields(
+                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
+                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
+                        fieldWithPath("result.memberId").type(JsonFieldType.NUMBER).description("회원 아이디"),
+                        fieldWithPath("result.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                        fieldWithPath("result.refreshToken").type(JsonFieldType.STRING).description("리프레시 토큰"),
+                        fieldWithPath(
+                            "result.needMemberInfo",
+                        ).type(JsonFieldType.BOOLEAN).description("회원 정보 입력 필요 여부"),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    @DisplayName("교육자앱에서 일반 로그인을 성공한다.")
+    fun educatorCommonLoginSuccess() {
+        // given
+        val appType = AppType.EDUCATOR
+        val request = AuthRequest.CommonLoginDTO("email", "password")
+        val response =
+            AuthResponse.LoginDTO(
+                1L,
+                "accessToken",
+                "refreshToken",
+                true,
+            )
+
+        every { authFacade.login(appType, request) } returns response
+
+        // when
+        given()
+            .contentType(ContentType.JSON)
+            .body(request)
+            .post("/api/auth/login/{appType}/common", appType.name)
+            .then()
+            .status(HttpStatus.OK)
+            .apply(
+                document(
+                    "educator-common-login",
+                    requestPreprocessor(),
+                    responsePreprocessor(),
+                    RequestDocumentation.pathParameters(
+                        RequestDocumentation.parameterWithName("appType").description("앱 타입"),
+                    ),
+                    responseFields(
+                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
+                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
+                        fieldWithPath("result.memberId").type(JsonFieldType.NUMBER).description("회원 아이디"),
+                        fieldWithPath("result.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                        fieldWithPath("result.refreshToken").type(JsonFieldType.STRING).description("리프레시 토큰"),
+                        fieldWithPath(
+                            "result.needMemberInfo",
+                        ).type(JsonFieldType.BOOLEAN).description("회원 정보 입력 필요 여부"),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    @DisplayName("학습자앱에서 일반 로그인을 성공한다.")
+    fun learnerCommonLoginSuccess() {
+        // given
+        val appType = AppType.LEARNER
+        val request = AuthRequest.CommonLoginDTO("email", "password")
+        val response =
+            AuthResponse.LoginDTO(
+                1L,
+                "accessToken",
+                "refreshToken",
+                true,
+            )
+
+        every { authFacade.login(appType, request) } returns response
+
+        // when
+        given()
+            .contentType(ContentType.JSON)
+            .body(request)
+            .post("/api/auth/login/{appType}/common", appType.name)
+            .then()
+            .status(HttpStatus.OK)
+            .apply(
+                document(
+                    "learner-common-login",
+                    requestPreprocessor(),
+                    responsePreprocessor(),
+                    RequestDocumentation.pathParameters(
+                        RequestDocumentation.parameterWithName("appType").description("앱 타입"),
                     ),
                     responseFields(
                         fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),

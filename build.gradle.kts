@@ -46,7 +46,7 @@ allprojects {
     // ktlint report directory location setting
     tasks.withType<GenerateReportsTask> {
         reportsOutputDirectory.set(
-            rootProject.layout.buildDirectory.dir("reports/ktlint/${project.name}")
+            rootProject.layout.buildDirectory.dir("reports/ktlint/${project.name}"),
         )
     }
 }
@@ -65,7 +65,9 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudDependenciesVersion")}")
+            mavenBom(
+                "org.springframework.cloud:spring-cloud-dependencies:${property("springCloudDependenciesVersion")}",
+            )
         }
     }
 
@@ -81,6 +83,8 @@ subprojects {
         // test
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("com.ninja-squad:springmockk:${property("springMockkVersion")}")
+        testImplementation("io.kotest:kotest-runner-junit5:5.4.2")
+        testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
 
         // kapt
         kapt("org.springframework.boot:spring-boot-configuration-processor")

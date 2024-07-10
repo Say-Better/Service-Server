@@ -7,7 +7,11 @@ import io.say.better.core.common.constant.AppType.EDUCATOR
 import io.say.better.core.common.constant.AppType.LEARNER
 import io.say.better.core.common.constant.Provider
 import io.say.better.core.common.constant.RoleType
+import io.say.better.core.common.utils.logger
+import io.say.better.domain.member.application.helper.CommonLoginIdHelper
+import io.say.better.domain.member.application.helper.EmailEncoderHelper
 import io.say.better.domain.member.exception.MemberException
+import io.say.better.domain.member.ui.dto.AuthRequest
 import io.say.better.global.utils.SecurityUtil
 import io.say.better.storage.mysql.dao.repository.MemberReadRepository
 import io.say.better.storage.mysql.dao.repository.MemberWriteRepository
@@ -17,9 +21,13 @@ import org.springframework.stereotype.Service
 @Service
 class MemberService(
     private val securityUtil: SecurityUtil,
+    private val commonLoginIdHelper: CommonLoginIdHelper,
+    private val emailEncoderHelper: EmailEncoderHelper,
     private val memberReadRepository: MemberReadRepository,
     private val memberWriteRepository: MemberWriteRepository,
 ) {
+    private val log = logger()
+
     fun currentMember(): Member {
         val email = securityUtil.currentUserEmail
         return getMemberByEmail(email)
@@ -53,6 +61,25 @@ class MemberService(
         val responseUser =
             if (findUser == null) {
                 createMember(roleType, provider, userInfo)
+            } else {
+                updateRole(findUser, roleType)
+            }
+
+        return responseUser
+    }
+
+    fun getMemberByEmail(
+        appType: AppType,
+        provider: Provider,
+        request: AuthRequest.CommonLoginDTO,
+    ): Member {
+        val loginId = commonLoginIdHelper.getLoginId(request.email)
+        val roleType = getRoleType(appType)
+        val findUser = memberReadRepository.findByProviderAndLoginId(provider, loginId).orElse(null)
+
+        val responseUser =
+            if (findUser == null) {
+                createMember(roleType, provider, loginId, request)
             } else {
                 updateRole(findUser, roleType)
             }
@@ -97,6 +124,26 @@ class MemberService(
                 provider = provider,
                 providerId = attributes.providerId,
                 loginId = getLoginId(provider, attributes),
+                name = attributes.name,
+            )
+
+        return memberWriteRepository.save(createdUser)
+    }
+
+    private fun createMember(
+        role: RoleType,
+        provider: Provider,
+        loginId: String,
+        attributes: AuthRequest.CommonLoginDTO,
+    ): Member {
+        val createdUser =
+            Member.createMember(
+                email = attributes.email,
+                birthDate = "",
+                role = role,
+                provider = provider,
+                providerId = emailEncoderHelper.encoder(attributes.email),
+                loginId = loginId,
                 name = attributes.name,
             )
 
