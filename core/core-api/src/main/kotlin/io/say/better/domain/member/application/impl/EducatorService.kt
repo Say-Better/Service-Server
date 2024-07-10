@@ -1,6 +1,7 @@
 package io.say.better.domain.member.application.impl
 
 import io.say.better.core.common.code.status.ErrorStatus
+import io.say.better.core.common.utils.logger
 import io.say.better.domain.member.exception.MemberException
 import io.say.better.storage.mysql.dao.repository.EducatorReadRepository
 import io.say.better.storage.mysql.dao.repository.EducatorWriteRepository
@@ -13,9 +14,16 @@ class EducatorService(
     private val educatorReadRepository: EducatorReadRepository,
     private val educatorWriteRepository: EducatorWriteRepository,
 ) {
-    fun getEducator(educatorMember: Member): Educator =
-        educatorReadRepository.findByMemberId(educatorMember).orElse(null)
-            ?: Educator.createEducator(educatorMember)
+    private val log = logger()
+
+    fun getEducator(educatorMember: Member): Educator {
+        val educator = (
+            educatorReadRepository.findByMemberId(educatorMember).orElse(null)
+                ?: Educator.createEducator(educatorMember)
+        )
+
+        return educatorWriteRepository.save(educator)
+    }
 
     fun getEducatorByMember(educatorMember: Member): Educator =
         educatorReadRepository

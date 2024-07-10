@@ -7,6 +7,7 @@ import io.say.better.core.common.constant.AppType.EDUCATOR
 import io.say.better.core.common.constant.AppType.LEARNER
 import io.say.better.core.common.constant.Provider
 import io.say.better.core.common.constant.RoleType
+import io.say.better.core.common.utils.logger
 import io.say.better.domain.member.application.helper.CommonLoginIdHelper
 import io.say.better.domain.member.application.helper.EmailEncoderHelper
 import io.say.better.domain.member.exception.MemberException
@@ -25,6 +26,8 @@ class MemberService(
     private val memberReadRepository: MemberReadRepository,
     private val memberWriteRepository: MemberWriteRepository,
 ) {
+    private val log = logger()
+
     fun currentMember(): Member {
         val email = securityUtil.currentUserEmail
         return getMemberByEmail(email)
