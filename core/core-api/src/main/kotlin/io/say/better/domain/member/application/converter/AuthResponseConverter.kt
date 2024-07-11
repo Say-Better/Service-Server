@@ -2,7 +2,7 @@ package io.say.better.domain.member.application.converter
 
 import io.say.better.core.common.auth.jwt.JwtToken
 import io.say.better.domain.member.ui.dto.AuthResponse
-import io.say.better.storage.mysql.domain.entity.Member
+import io.say.better.storage.mysql.domains.account.entity.Member
 
 class AuthResponseConverter private constructor() {
     init {

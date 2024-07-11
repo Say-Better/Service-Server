@@ -6,7 +6,7 @@ import io.restassured.http.ContentType
 import io.say.better.domain.solution.application.SolutionFacade
 import io.say.better.domain.solution.ui.dto.SolutionRequest
 import io.say.better.domain.solution.ui.dto.SolutionResponse
-import io.say.better.storage.mysql.domain.constant.ProgressState
+import io.say.better.storage.mysql.domains.solution.type.ProgressState
 import io.say.better.test.api.RestDocsTest
 import io.say.better.test.api.RestDocsUtils.requestPreprocessor
 import io.say.better.test.api.RestDocsUtils.responsePreprocessor

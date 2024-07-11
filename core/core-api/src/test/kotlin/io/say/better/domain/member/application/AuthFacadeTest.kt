@@ -18,7 +18,7 @@ import io.say.better.domain.member.createJwtToken
 import io.say.better.domain.member.createLearner
 import io.say.better.domain.member.ui.dto.AuthRequest
 import io.say.better.global.jwt.service.JwtService
-import io.say.better.storage.mysql.domain.entity.Member
+import io.say.better.storage.mysql.domains.account.entity.Member
 import io.say.better.support.test.DevelopTest
 import io.say.better.support.test.spec.afterRootTest
 

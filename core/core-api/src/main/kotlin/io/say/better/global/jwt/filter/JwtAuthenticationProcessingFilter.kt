@@ -3,8 +3,8 @@ package io.say.better.global.jwt.filter
 import io.say.better.core.common.utils.logger
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.global.jwt.service.JwtService
-import io.say.better.storage.mysql.dao.repository.MemberReadRepository
-import io.say.better.storage.mysql.domain.entity.Member
+import io.say.better.storage.mysql.domains.account.repository.MemberReadRepository
+import io.say.better.storage.mysql.domains.account.entity.Member
 import io.say.better.storage.redis.RedisUtil
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException

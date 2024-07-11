@@ -1,8 +1,8 @@
 package io.say.better.domain.member
 
-import io.say.better.storage.mysql.domain.constant.Gender
-import io.say.better.storage.mysql.domain.entity.Learner
-import io.say.better.storage.mysql.domain.entity.Member
+import io.say.better.storage.mysql.domains.account.type.Gender
+import io.say.better.storage.mysql.domains.account.entity.Learner
+import io.say.better.storage.mysql.domains.account.entity.Member
 
 const val LEARNER_NAME: String = "leaner_name"
 const val LEARNER_BIRTH_DAY: String = "2010-01-01"

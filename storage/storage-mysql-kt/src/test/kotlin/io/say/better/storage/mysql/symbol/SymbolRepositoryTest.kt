@@ -1,10 +1,10 @@
 package io.say.better.storage.mysql.symbol
 
 import io.say.better.storage.mysql.MysqlContextTest
-import io.say.better.storage.mysql.dao.repository.SymbolReadRepository
-import io.say.better.storage.mysql.dao.repository.SymbolWriteRepository
-import io.say.better.storage.mysql.domain.constant.SymbolType
-import io.say.better.storage.mysql.domain.entity.Symbol
+import io.say.better.storage.mysql.domains.symbol.repository.SymbolReadRepository
+import io.say.better.storage.mysql.domains.symbol.repository.SymbolWriteRepository
+import io.say.better.storage.mysql.domains.symbol.type.SymbolType.BASIC
+import io.say.better.storage.mysql.domains.symbol.entity.Symbol
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -20,9 +20,9 @@ class SymbolRepositoryTest(
         // Given
         val symbols: List<Symbol> =
             arrayListOf(
-                Symbol(1L, "testTitle1", "testUrl1", SymbolType.BASIC),
-                Symbol(2L, "testTitle2", "testUrl2", SymbolType.BASIC),
-                Symbol(3L, "testTitle3", "testUrl3", SymbolType.BASIC),
+                Symbol(1L, "testTitle1", "testUrl1", BASIC),
+                Symbol(2L, "testTitle2", "testUrl2", BASIC),
+                Symbol(3L, "testTitle3", "testUrl3", BASIC),
             )
         symbolWriteRepository.saveAll(symbols)
 
@@ -49,9 +49,9 @@ class SymbolRepositoryTest(
             // Given
             val symbols: List<Symbol> =
                 arrayListOf(
-                    Symbol(1L, "testTitle1", "testUrl1", SymbolType.BASIC),
-                    Symbol(2L, "sampleTestTitle2", "testUrl2", SymbolType.BASIC),
-                    Symbol(3L, "sampleTitle3", "testUrl3", SymbolType.BASIC),
+                    Symbol(1L, "testTitle1", "testUrl1", BASIC),
+                    Symbol(2L, "sampleTestTitle2", "testUrl2", BASIC),
+                    Symbol(3L, "sampleTitle3", "testUrl3", BASIC),
                 )
             symbolWriteRepository.saveAll(symbols)
 
@@ -75,9 +75,9 @@ class SymbolRepositoryTest(
             // Given
             val symbols: List<Symbol> =
                 arrayListOf(
-                    Symbol(1L, "testTitle1", "testUrl1", SymbolType.BASIC),
-                    Symbol(2L, "sampletestTitle2", "testUrl2", SymbolType.BASIC),
-                    Symbol(3L, "sampleTitle3", "testUrl3", SymbolType.BASIC),
+                    Symbol(1L, "testTitle1", "testUrl1", BASIC),
+                    Symbol(2L, "sampletestTitle2", "testUrl2", BASIC),
+                    Symbol(3L, "sampleTitle3", "testUrl3", BASIC),
                 )
             symbolWriteRepository.saveAll(symbols)
 

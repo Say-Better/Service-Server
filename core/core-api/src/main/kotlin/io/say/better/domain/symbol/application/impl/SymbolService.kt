@@ -1,8 +1,8 @@
 package io.say.better.domain.symbol.application.impl
 
-import io.say.better.storage.mysql.dao.repository.SymbolReadRepository
-import io.say.better.storage.mysql.dao.repository.SymbolWriteRepository
-import io.say.better.storage.mysql.domain.entity.Symbol
+import io.say.better.storage.mysql.domains.symbol.repository.SymbolReadRepository
+import io.say.better.storage.mysql.domains.symbol.repository.SymbolWriteRepository
+import io.say.better.storage.mysql.domains.symbol.entity.Symbol
 import org.springframework.stereotype.Service
 
 @Service
