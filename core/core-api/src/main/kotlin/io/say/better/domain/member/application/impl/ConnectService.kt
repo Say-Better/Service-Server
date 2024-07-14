@@ -1,10 +1,10 @@
 package io.say.better.domain.member.application.impl
 
 import io.say.better.domain.member.application.converter.ConnectConverter
-import io.say.better.storage.mysql.domains.account.repository.ConnectReadRepository
-import io.say.better.storage.mysql.domains.account.repository.ConnectWriteRepository
 import io.say.better.storage.mysql.domains.account.entity.Educator
 import io.say.better.storage.mysql.domains.account.entity.Learner
+import io.say.better.storage.mysql.domains.account.repository.ConnectReadRepository
+import io.say.better.storage.mysql.domains.account.repository.ConnectWriteRepository
 import org.springframework.stereotype.Service
 
 @Service

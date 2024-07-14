@@ -1,4 +1,3 @@
 package io.say.better.storage.mysql
 
-interface DomainPackageLocation {
-}
+interface DomainPackageLocation

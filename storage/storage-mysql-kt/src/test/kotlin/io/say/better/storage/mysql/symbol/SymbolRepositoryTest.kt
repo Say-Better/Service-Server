@@ -1,10 +1,10 @@
 package io.say.better.storage.mysql.symbol
 
 import io.say.better.storage.mysql.MysqlContextTest
+import io.say.better.storage.mysql.domains.symbol.entity.Symbol
 import io.say.better.storage.mysql.domains.symbol.repository.SymbolReadRepository
 import io.say.better.storage.mysql.domains.symbol.repository.SymbolWriteRepository
 import io.say.better.storage.mysql.domains.symbol.type.SymbolType.BASIC
-import io.say.better.storage.mysql.domains.symbol.entity.Symbol
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -61,12 +61,13 @@ class SymbolRepositoryTest(
             val symbolList: List<Symbol> = symbolReadRepository.findByTitleStartingWith(symbolNames)
 
             // Then
-            Assertions.assertThat(
-                compare(
-                    symbols.filter { it.title.contains(symbolNames) },
-                    symbolList,
-                ),
-            ).isEqualTo(true)
+            Assertions
+                .assertThat(
+                    compare(
+                        symbols.filter { it.title.contains(symbolNames) },
+                        symbolList,
+                    ),
+                ).isEqualTo(true)
         }
 
         @Test
@@ -87,12 +88,13 @@ class SymbolRepositoryTest(
             val symbolList: List<Symbol> = symbolReadRepository.findByTitleStartingWith(symbolNames)
 
             // Then
-            Assertions.assertThat(
-                compare(
-                    symbols.filter { it.title.contains(symbolNames) },
-                    symbolList,
-                ),
-            ).isEqualTo(false)
+            Assertions
+                .assertThat(
+                    compare(
+                        symbols.filter { it.title.contains(symbolNames) },
+                        symbolList,
+                    ),
+                ).isEqualTo(false)
         }
     }
 

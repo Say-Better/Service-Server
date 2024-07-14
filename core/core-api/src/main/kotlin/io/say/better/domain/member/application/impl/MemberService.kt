@@ -13,9 +13,9 @@ import io.say.better.domain.member.application.helper.EmailEncoderHelper
 import io.say.better.domain.member.exception.MemberException
 import io.say.better.domain.member.ui.dto.AuthRequest
 import io.say.better.global.utils.SecurityUtil
+import io.say.better.storage.mysql.domains.account.entity.Member
 import io.say.better.storage.mysql.domains.account.repository.MemberReadRepository
 import io.say.better.storage.mysql.domains.account.repository.MemberWriteRepository
-import io.say.better.storage.mysql.domains.account.entity.Member
 import org.springframework.stereotype.Service
 
 @Service
