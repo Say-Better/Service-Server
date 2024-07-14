@@ -1,8 +1,8 @@
 package io.say.better.domain.review.application.impl
 
-import io.say.better.storage.mysql.dao.repository.RecordSymbolReadRepository
-import io.say.better.storage.mysql.dao.repository.RecordSymbolWriteRepository
-import io.say.better.storage.mysql.domain.entity.RecordSymbol
+import io.say.better.storage.mysql.domains.review.entity.RecordSymbol
+import io.say.better.storage.mysql.domains.review.repository.RecordSymbolReadRepository
+import io.say.better.storage.mysql.domains.review.repository.RecordSymbolWriteRepository
 import org.springframework.stereotype.Service
 
 @Service

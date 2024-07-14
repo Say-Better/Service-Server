@@ -1,9 +1,10 @@
 package io.say.better.domain.member
 
 import io.say.better.core.common.constant.Provider
+import io.say.better.core.common.constant.Provider.COMMON
 import io.say.better.core.common.constant.RoleType
 import io.say.better.domain.member.ui.dto.AuthRequest
-import io.say.better.storage.mysql.domain.entity.Member
+import io.say.better.storage.mysql.domains.account.entity.Member
 
 const val MEMBER_NAME: String = "name"
 const val EMAIL: String = "test@gmail.com"
@@ -27,9 +28,9 @@ fun createCommonMember(
         memberId = id,
         name = name,
         email = email,
-        provider = Provider.COMMON,
+        provider = COMMON,
         providerId = providerId,
-        loginId = "${Provider.COMMON}-$providerId",
+        loginId = "$COMMON-$providerId",
         birthDate = birthDay,
         role = role,
     )

@@ -3,15 +3,15 @@ package io.say.better.storage.mysql.solution
 import io.say.better.core.common.constant.Provider
 import io.say.better.core.common.constant.RoleType
 import io.say.better.storage.mysql.MysqlContextTest
-import io.say.better.storage.mysql.dao.repository.EducatorWriteRepository
-import io.say.better.storage.mysql.dao.repository.LearnerWriteRepository
-import io.say.better.storage.mysql.dao.repository.MemberWriteRepository
-import io.say.better.storage.mysql.dao.repository.SolutionWriteRepository
-import io.say.better.storage.mysql.domain.constant.ProgressState
-import io.say.better.storage.mysql.domain.entity.Educator
-import io.say.better.storage.mysql.domain.entity.Learner
-import io.say.better.storage.mysql.domain.entity.Member
-import io.say.better.storage.mysql.domain.entity.Solution
+import io.say.better.storage.mysql.domains.account.entity.Educator
+import io.say.better.storage.mysql.domains.account.entity.Learner
+import io.say.better.storage.mysql.domains.account.entity.Member
+import io.say.better.storage.mysql.domains.account.repository.EducatorWriteRepository
+import io.say.better.storage.mysql.domains.account.repository.LearnerWriteRepository
+import io.say.better.storage.mysql.domains.account.repository.MemberWriteRepository
+import io.say.better.storage.mysql.domains.solution.entity.Solution
+import io.say.better.storage.mysql.domains.solution.repository.SolutionWriteRepository
+import io.say.better.storage.mysql.domains.solution.type.ProgressState.READY
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -64,7 +64,7 @@ class SolutionRepositoryTest(
 
         solution =
             Solution(
-                nowState = ProgressState.READY,
+                nowState = READY,
                 educationGoal = "testEducationGoal",
                 description = "testDescription",
                 writer = educator,
@@ -99,7 +99,7 @@ class SolutionRepositoryTest(
 
             val otherSolution =
                 Solution(
-                    nowState = ProgressState.READY,
+                    nowState = READY,
                     educationGoal = "testEducationGoal",
                     description = "testDescription",
                     writer = educator,

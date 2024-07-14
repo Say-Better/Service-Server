@@ -1,9 +1,9 @@
 package io.say.better.domain.solution.application.converter
 
 import io.say.better.domain.solution.ui.dto.SolutionRequest.CreateSolution
-import io.say.better.storage.mysql.domain.entity.Educator
-import io.say.better.storage.mysql.domain.entity.Learner
-import io.say.better.storage.mysql.domain.entity.Solution
+import io.say.better.storage.mysql.domains.account.entity.Educator
+import io.say.better.storage.mysql.domains.account.entity.Learner
+import io.say.better.storage.mysql.domains.solution.entity.Solution
 
 class SolutionConverter private constructor() {
     init {

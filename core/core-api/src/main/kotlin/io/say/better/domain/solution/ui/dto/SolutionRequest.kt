@@ -1,6 +1,6 @@
 package io.say.better.domain.solution.ui.dto
 
-import io.say.better.storage.mysql.domain.constant.ProgressState
+import io.say.better.storage.mysql.domains.solution.type.ProgressState
 
 class SolutionRequest private constructor() {
     init {

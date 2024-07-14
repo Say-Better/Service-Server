@@ -10,9 +10,9 @@ import io.say.better.domain.solution.ui.dto.SolutionRequest.EndSolution
 import io.say.better.domain.symbol.application.impl.SymbolService
 import io.say.better.global.advice.Tx
 import io.say.better.global.utils.IdUtil
-import io.say.better.storage.mysql.domain.entity.Record
-import io.say.better.storage.mysql.domain.entity.Review
-import io.say.better.storage.mysql.domain.entity.Symbol
+import io.say.better.storage.mysql.domains.review.entity.Record
+import io.say.better.storage.mysql.domains.review.entity.Review
+import io.say.better.storage.mysql.domains.symbol.entity.Symbol
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.stereotype.Component
 

@@ -1,8 +1,8 @@
 package io.say.better.domain.solution.application.converter
 
-import io.say.better.storage.mysql.domain.entity.Solution
-import io.say.better.storage.mysql.domain.entity.SolutionSymbol
-import io.say.better.storage.mysql.domain.entity.Symbol
+import io.say.better.storage.mysql.domains.solution.entity.Solution
+import io.say.better.storage.mysql.domains.solution.entity.SolutionSymbol
+import io.say.better.storage.mysql.domains.symbol.entity.Symbol
 
 class SolutionSymbolConverter private constructor() {
     init {

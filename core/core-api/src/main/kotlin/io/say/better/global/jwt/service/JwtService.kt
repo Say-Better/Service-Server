@@ -10,7 +10,7 @@ import io.jsonwebtoken.security.Keys
 import io.say.better.core.common.auth.jwt.JwtToken
 import io.say.better.core.common.utils.logger
 import io.say.better.global.config.properties.JwtProperties
-import io.say.better.storage.mysql.domain.entity.Member
+import io.say.better.storage.mysql.domains.account.entity.Member
 import io.say.better.storage.redis.RedisUtil
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
