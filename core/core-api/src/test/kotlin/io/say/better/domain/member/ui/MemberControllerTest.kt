@@ -160,7 +160,7 @@ class MemberControllerTest : RestDocsTest() {
 
         given()
             .contentType(ContentType.JSON)
-            .get("/api/member/learner/info/{name}", "name")
+            .get("/api/member/learner/info")
             .then()
             .status(HttpStatus.OK)
             .apply(
