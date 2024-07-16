@@ -17,11 +17,11 @@ import io.say.better.domain.solution.ui.dto.SolutionRequest.EndSolution
 import io.say.better.domain.solution.ui.dto.SolutionRequest.StartSolution
 import io.say.better.domain.symbol.application.impl.SymbolService
 import io.say.better.global.advice.Tx
-import io.say.better.storage.mysql.domain.entity.Educator
-import io.say.better.storage.mysql.domain.entity.Learner
-import io.say.better.storage.mysql.domain.entity.Progress
-import io.say.better.storage.mysql.domain.entity.Review
-import io.say.better.storage.mysql.domain.entity.Solution
+import io.say.better.storage.mysql.domains.account.entity.Educator
+import io.say.better.storage.mysql.domains.account.entity.Learner
+import io.say.better.storage.mysql.domains.progress.entity.Progress
+import io.say.better.storage.mysql.domains.review.entity.Review
+import io.say.better.storage.mysql.domains.solution.entity.Solution
 import org.springframework.stereotype.Component
 
 @Component

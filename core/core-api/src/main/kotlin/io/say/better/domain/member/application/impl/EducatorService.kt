@@ -3,10 +3,10 @@ package io.say.better.domain.member.application.impl
 import io.say.better.core.common.code.status.ErrorStatus
 import io.say.better.core.common.utils.logger
 import io.say.better.domain.member.exception.MemberException
-import io.say.better.storage.mysql.dao.repository.EducatorReadRepository
-import io.say.better.storage.mysql.dao.repository.EducatorWriteRepository
-import io.say.better.storage.mysql.domain.entity.Educator
-import io.say.better.storage.mysql.domain.entity.Member
+import io.say.better.storage.mysql.domains.account.entity.Educator
+import io.say.better.storage.mysql.domains.account.entity.Member
+import io.say.better.storage.mysql.domains.account.repository.EducatorReadRepository
+import io.say.better.storage.mysql.domains.account.repository.EducatorWriteRepository
 import org.springframework.stereotype.Service
 
 @Service

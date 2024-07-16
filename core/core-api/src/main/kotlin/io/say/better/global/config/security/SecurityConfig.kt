@@ -5,7 +5,7 @@ import io.say.better.global.config.properties.JwtProperties
 import io.say.better.global.config.web.CorsConfig
 import io.say.better.global.jwt.filter.JwtAuthenticationProcessingFilter
 import io.say.better.global.jwt.service.JwtService
-import io.say.better.storage.mysql.dao.repository.MemberReadRepository
+import io.say.better.storage.mysql.domains.account.repository.MemberReadRepository
 import io.say.better.storage.redis.RedisUtil
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean

@@ -1,8 +1,8 @@
 package io.say.better.domain.member.application.converter
 
-import io.say.better.storage.mysql.domain.entity.Connect
-import io.say.better.storage.mysql.domain.entity.Educator
-import io.say.better.storage.mysql.domain.entity.Learner
+import io.say.better.storage.mysql.domains.account.entity.Connect
+import io.say.better.storage.mysql.domains.account.entity.Educator
+import io.say.better.storage.mysql.domains.account.entity.Learner
 
 class ConnectConverter private constructor() {
     init {

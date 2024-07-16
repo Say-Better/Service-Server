@@ -1,6 +1,6 @@
 package io.say.better.domain.member.ui.dto
 
-import io.say.better.storage.mysql.domain.constant.Gender
+import io.say.better.storage.mysql.domains.account.type.Gender
 
 class MemberResponse private constructor() {
     init {
