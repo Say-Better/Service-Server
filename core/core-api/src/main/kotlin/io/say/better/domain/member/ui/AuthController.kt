@@ -7,14 +7,12 @@ import io.say.better.core.common.response.ResponseDto
 import io.say.better.domain.member.application.AuthFacade
 import io.say.better.domain.member.ui.dto.AuthRequest
 import io.say.better.domain.member.ui.dto.AuthResponse
-import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "Auth", description = "Auth API")
 @RestController
 @RequestMapping("/api/auth")
 class AuthController(
