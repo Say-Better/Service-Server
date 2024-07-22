@@ -90,15 +90,10 @@ subprojects {
         kapt("org.springframework.boot:spring-boot-configuration-processor")
     }
 
-    tasks.getByName("bootJar") {
-        enabled = false
-    }
-
-    tasks.getByName("jar") {
-        enabled = true
-    }
-
+    val asciidoctorExt: Configuration by configurations.creating
+    val snippetsDir by extra { file("build/generated-snippets") }
     java.sourceCompatibility = JavaVersion.valueOf("VERSION_${property("javaVersion")}")
+
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
@@ -136,9 +131,6 @@ subprojects {
         }
     }
 
-    // AsciiDoc Directory Setting
-    val snippetsDir by extra { file("build/generated-snippets") }
-
     tasks.register<Test>("restDocsTest") {
         description = "Run tests that generate REST documentation"
         group = "verification"
@@ -149,7 +141,24 @@ subprojects {
     }
 
     tasks.getByName("asciidoctor") {
-        dependsOn("restDocsTest")
         inputs.dir(snippetsDir)
+        dependsOn("restDocsTest")
+    }
+
+    tasks.register<Copy>("copyDocs") {
+        description = "Copy generated documentation to static resources"
+        group = "documentation"
+        dependsOn(tasks.getByName("asciidoctor"))
+
+        from("build/docs/asciidoc")
+        into("src/main/resources/static/docs")
+    }
+
+    tasks.getByName("bootJar") {
+        enabled = false
+    }
+
+    tasks.getByName("jar") {
+        enabled = true
     }
 }
