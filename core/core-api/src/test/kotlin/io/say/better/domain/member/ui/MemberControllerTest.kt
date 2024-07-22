@@ -48,7 +48,7 @@ class MemberControllerTest : RestControllerTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-connect-code",
+                    "get-connect-code",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     responseFields(
@@ -74,7 +74,7 @@ class MemberControllerTest : RestControllerTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-connect",
+                    "post-connect-code",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     RequestDocumentation.pathParameters(
@@ -92,37 +92,6 @@ class MemberControllerTest : RestControllerTest() {
             )
     }
 
-    // TODO: 2024-06-07 실패 경우에 대한 테스트코드 작성 방식 확인
-//    @Test
-//    @DisplayName("유효하지 않은 코드일 경우 400 에러가 반환된다.")
-//    @WithMockUser
-//    fun connectFailTest() {
-//        every { memberFacade.connect(any()) } returns Unit
-//
-//        given()
-//            .contentType(ContentType.JSON)
-//            .post("/api/member/connect/{code}", "testCode")
-//            .then()
-//            .status(ErrorStatus.CONNECT_CODE_NOT_VALID.httpStatus)
-//            .extract()
-//            .also {
-//                document(
-//                    "fail-connect",
-//                    requestPreprocessor(),
-//                    responsePreprocessor(),
-//                    RequestDocumentation.pathParameters(
-//                        RequestDocumentation.parameterWithName("code").description("생성된 학습자 연결코드"),
-//                    ),
-//                    responseFields(
-//                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
-//                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
-//                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
-//                        fieldWithPath("result").type(JsonFieldType.STRING).ignored(),
-//                    ),
-//                )
-//            }
-//    }
-
     @Test
     @DisplayName("Educator 정보를 반환한다.")
     @WithMockUser
@@ -136,7 +105,7 @@ class MemberControllerTest : RestControllerTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-educator-info",
+                    "get-educator-info",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     responseFields(
@@ -165,7 +134,7 @@ class MemberControllerTest : RestControllerTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-learner-info",
+                    "get-learner-info",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     responseFields(
@@ -204,7 +173,7 @@ class MemberControllerTest : RestControllerTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-educator-info-post",
+                    "post-educator-info",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     responseFields(
@@ -245,7 +214,7 @@ class MemberControllerTest : RestControllerTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-educator-info-post",
+                    "post-learner-info",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     requestPartFields(

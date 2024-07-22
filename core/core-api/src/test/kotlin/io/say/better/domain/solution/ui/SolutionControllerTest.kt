@@ -52,7 +52,7 @@ class SolutionControllerTest : RestControllerTest() {
             .all()
             .apply(
                 document(
-                    "success-recommend-symbol",
+                    "get-symbol-recommend-list",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     RequestDocumentation.pathParameters(
@@ -93,7 +93,7 @@ class SolutionControllerTest : RestControllerTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-search-symbol",
+                    "get-symbol-search-list",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     RequestDocumentation.pathParameters(
@@ -142,7 +142,7 @@ class SolutionControllerTest : RestControllerTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-create-solution",
+                    "post-new-solution",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     requestFields(
@@ -189,7 +189,7 @@ class SolutionControllerTest : RestControllerTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-start-solution",
+                    "post-start-solution",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     requestFields(
@@ -242,7 +242,7 @@ class SolutionControllerTest : RestControllerTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-end-solution",
+                    "post-end-solution",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     requestFields(
