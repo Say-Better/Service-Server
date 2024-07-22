@@ -9,9 +9,9 @@ import io.say.better.core.common.constant.RoleType
 import io.say.better.domain.member.application.AuthFacade
 import io.say.better.domain.member.ui.dto.AuthRequest
 import io.say.better.domain.member.ui.dto.AuthResponse
-import io.say.better.test.api.RestDocsTest
-import io.say.better.test.api.RestDocsUtils.requestPreprocessor
-import io.say.better.test.api.RestDocsUtils.responsePreprocessor
+import io.say.better.support.test.docs.RestControllerTest
+import io.say.better.support.util.RestDocsUtils.requestPreprocessor
+import io.say.better.support.util.RestDocsUtils.responsePreprocessor
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -23,7 +23,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.security.test.context.support.WithMockUser
 
-class AuthControllerTest : RestDocsTest() {
+class AuthControllerTest : RestControllerTest() {
     private lateinit var authFacade: AuthFacade
     private lateinit var controller: AuthController
 

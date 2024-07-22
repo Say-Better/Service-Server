@@ -7,9 +7,9 @@ import io.say.better.domain.solution.application.SolutionFacade
 import io.say.better.domain.solution.ui.dto.SolutionRequest
 import io.say.better.domain.solution.ui.dto.SolutionResponse
 import io.say.better.storage.mysql.domains.solution.type.ProgressState
-import io.say.better.test.api.RestDocsTest
-import io.say.better.test.api.RestDocsUtils.requestPreprocessor
-import io.say.better.test.api.RestDocsUtils.responsePreprocessor
+import io.say.better.support.test.docs.RestControllerTest
+import io.say.better.support.util.RestDocsUtils.requestPreprocessor
+import io.say.better.support.util.RestDocsUtils.responsePreprocessor
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -22,7 +22,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.security.test.context.support.WithMockUser
 
-class SolutionControllerTest : RestDocsTest() {
+class SolutionControllerTest : RestControllerTest() {
     private lateinit var solutionFacade: SolutionFacade
     private lateinit var solutionController: SolutionController
 
@@ -48,7 +48,8 @@ class SolutionControllerTest : RestDocsTest() {
             .get("/api/solution/symbol/recommend/{name}", word)
             .then()
             .status(HttpStatus.OK)
-            .log().all()
+            .log()
+            .all()
             .apply(
                 document(
                     "success-recommend-symbol",
@@ -64,9 +65,11 @@ class SolutionControllerTest : RestDocsTest() {
                         fieldWithPath("result").type(JsonFieldType.OBJECT).description("API 호출 결과"),
                         fieldWithPath("result.name").type(JsonFieldType.STRING).description("symbol 이름"),
                         fieldWithPath("result.symbols").type(JsonFieldType.ARRAY).description("symbol 추천 결과 리스트"),
-                        fieldWithPath("result.symbols[].description").type(JsonFieldType.STRING)
+                        fieldWithPath("result.symbols[].description")
+                            .type(JsonFieldType.STRING)
                             .description("symbol 설명"),
-                        fieldWithPath("result.symbols[].imageUrl").type(JsonFieldType.STRING)
+                        fieldWithPath("result.symbols[].imageUrl")
+                            .type(JsonFieldType.STRING)
                             .description("symbol 이미지 URL"),
                     ),
                 ),
@@ -103,9 +106,11 @@ class SolutionControllerTest : RestDocsTest() {
                         fieldWithPath("result").type(JsonFieldType.OBJECT).description("API 호출 결과"),
                         fieldWithPath("result.name").type(JsonFieldType.STRING).description("symbol 이름"),
                         fieldWithPath("result.symbols").type(JsonFieldType.ARRAY).description("symbol 추천 결과 리스트"),
-                        fieldWithPath("result.symbols[].description").type(JsonFieldType.STRING)
+                        fieldWithPath("result.symbols[].description")
+                            .type(JsonFieldType.STRING)
                             .description("symbol 설명"),
-                        fieldWithPath("result.symbols[].imageUrl").type(JsonFieldType.STRING)
+                        fieldWithPath("result.symbols[].imageUrl")
+                            .type(JsonFieldType.STRING)
                             .description("symbol 이미지 URL"),
                     ),
                 ),
@@ -244,11 +249,14 @@ class SolutionControllerTest : RestDocsTest() {
                         fieldWithPath("[].solutionId").type(JsonFieldType.NUMBER).description("솔루션 ID"),
                         fieldWithPath("[].progressId").type(JsonFieldType.NUMBER).description("진행 ID"),
                         fieldWithPath("[].orderNum").type(JsonFieldType.NUMBER).description("순서"),
-                        fieldWithPath("[].createRecordSymbols[].symbolId").type(JsonFieldType.NUMBER)
+                        fieldWithPath("[].createRecordSymbols[].symbolId")
+                            .type(JsonFieldType.NUMBER)
                             .description("심볼 ID"),
-                        fieldWithPath("[].createRecordSymbols[].touchOrder").type(JsonFieldType.NUMBER)
+                        fieldWithPath("[].createRecordSymbols[].touchOrder")
+                            .type(JsonFieldType.NUMBER)
                             .description("터치 순서"),
-                        fieldWithPath("[].createRecordSymbols[].touchTime").type(JsonFieldType.STRING)
+                        fieldWithPath("[].createRecordSymbols[].touchTime")
+                            .type(JsonFieldType.STRING)
                             .description("터치 시간"),
                         fieldWithPath("[].reviewId").type(JsonFieldType.NUMBER).description("리뷰 ID"),
                     ),

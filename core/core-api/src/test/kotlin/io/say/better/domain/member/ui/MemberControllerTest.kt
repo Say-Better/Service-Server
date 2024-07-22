@@ -7,9 +7,9 @@ import io.say.better.domain.member.application.MemberFacade
 import io.say.better.domain.member.ui.dto.MemberRequest
 import io.say.better.domain.member.ui.dto.MemberResponse
 import io.say.better.storage.mysql.domains.account.type.Gender
-import io.say.better.test.api.RestDocsTest
-import io.say.better.test.api.RestDocsUtils.requestPreprocessor
-import io.say.better.test.api.RestDocsUtils.responsePreprocessor
+import io.say.better.support.test.docs.RestControllerTest
+import io.say.better.support.util.RestDocsUtils.requestPreprocessor
+import io.say.better.support.util.RestDocsUtils.responsePreprocessor
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -24,7 +24,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.security.test.context.support.WithMockUser
 
-class MemberControllerTest : RestDocsTest() {
+class MemberControllerTest : RestControllerTest() {
     private lateinit var memberFacade: MemberFacade
     private lateinit var memberController: MemberController
 
