@@ -10,7 +10,6 @@ include(
     ":clients:client-api",
     ":support:logging",
     ":support:monitoring",
-    ":tests:api-docs",
 )
 
 pluginManagement {

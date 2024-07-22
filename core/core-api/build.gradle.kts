@@ -13,8 +13,6 @@ dependencies {
     implementation(project(":storage:storage-rabbitmq-kt"))
     implementation(project(":clients:client-api"))
 
-    testImplementation(project(":tests:api-docs"))
-
     // application
     implementation("org.springframework.boot:spring-boot-starter-web")
 
@@ -37,7 +35,12 @@ dependencies {
     testImplementation("com.google.code.gson:gson:2.10.1")
 
     // test
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+
+    testImplementation("org.springframework.restdocs:spring-restdocs-restassured")
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testImplementation("io.rest-assured:spring-mock-mvc")
     testImplementation("org.assertj:assertj-core:3.25.1")
 }
 
