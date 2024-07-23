@@ -1,0 +1,27 @@
+= 솔루션 API
+
+솔루션 관련 API 목록입니다.
+
+== 솔루션 생성 API
+
+=== Request __
+operation::post-new-solution[snippets='http-request,request-fields']
+
+=== Response __
+operation::post-new-solution[snippets='http-response,response-fields']
+
+== 솔루션 진행 API
+
+=== Request __
+operation::post-start-solution[snippets='http-request,request-fields']
+
+=== Response __
+operation::post-start-solution[snippets='http-response,response-fields']
+
+== 솔루션 완료 API
+
+=== Request __
+operation::post-end-solution[snippets='http-request,request-fields']
+
+=== Response __
+operation::post-end-solution[snippets='http-response,response-fields']

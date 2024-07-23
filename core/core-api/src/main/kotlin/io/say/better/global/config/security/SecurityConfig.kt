@@ -25,14 +25,11 @@ class SecurityConfig(
 ) {
     private val permitUrls =
         arrayOf(
-            "/v3/api-docs/**",
-            "/swagger",
-            "/swagger-ui/**",
-            "/h2-console/**",
             "/api/temp/**",
             "/api/auth/**",
             "/sing-up",
             "/api/tests/**",
+            "/docs/index.html",
         )
 
     private val noneUserRoleUrls =

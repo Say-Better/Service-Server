@@ -1,0 +1,44 @@
+= 학습자 API
+
+학습자 관련 API 목록입니다.
+
+== 학습자 일반 로그인 API
+
+=== Request __
+operation::post-learner-common-login[snippets='http-request,path-parameters']
+
+=== Response __
+operation::post-learner-common-login[snippets='http-response,response-fields']
+
+
+== 학습자 소셜 로그인 API
+
+=== Request __
+operation::post-learner-social-login[snippets='http-request,path-parameters']
+
+=== Response __
+operation::post-learner-social-login[snippets='http-response,response-fields']
+
+== 학습자 유저 정보 등록 API
+
+=== Request __
+operation::post-learner-info[snippets='http-request,request-part-dto-fields']
+
+=== Response __
+operation::post-learner-info[snippets='http-response,response-fields']
+
+== 학습자 유저 정보 조회 API
+
+=== Request __
+operation::get-learner-info[snippets='http-request']
+
+=== Response __
+operation::get-learner-info[snippets='http-response,response-fields']
+
+== 학습자 코드 발급 API
+
+=== Request __
+operation::post-connect-code[snippets='http-request']
+
+=== Response __
+operation::post-connect-code[snippets='http-response,response-fields']

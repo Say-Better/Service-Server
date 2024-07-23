@@ -4,7 +4,6 @@ import io.say.better.core.common.response.ResponseDto
 import io.say.better.domain.member.application.MemberFacade
 import io.say.better.domain.member.ui.dto.MemberRequest
 import io.say.better.domain.member.ui.dto.MemberResponse
-import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 
-@Tag(name = "Member", description = "Member API")
 @RestController
 @RequestMapping("/api/member")
 class MemberController(

@@ -1,7 +1,8 @@
-package io.say.better.test.api
+package io.say.better.support.test.docs
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
+import com.fasterxml.jackson.databind.SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.restassured.module.mockmvc.RestAssuredMockMvc
 import io.restassured.module.mockmvc.specification.MockMvcRequestSpecification
@@ -18,7 +19,7 @@ import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder
 
 @Tag("restdocs")
 @ExtendWith(RestDocumentationExtension::class)
-abstract class RestDocsTest {
+abstract class RestControllerTest {
     lateinit var mockMvc: MockMvcRequestSpecification
     private lateinit var restDocumentation: RestDocumentationContextProvider
 
@@ -27,29 +28,28 @@ abstract class RestDocsTest {
         this.restDocumentation = restDocumentation
     }
 
-    protected fun given(): MockMvcRequestSpecification {
-        return mockMvc
-    }
+    protected fun given(): MockMvcRequestSpecification = mockMvc
 
     protected fun mockController(controller: Any): MockMvcRequestSpecification {
         val mockMvc = createMockMvc(controller)
-        return RestAssuredMockMvc.given()
+        return RestAssuredMockMvc
+            .given()
             .mockMvc(mockMvc)
     }
 
     private fun createMockMvc(controller: Any): MockMvc {
         val converter = MappingJackson2HttpMessageConverter(objectMapper())
 
-        return MockMvcBuilders.standaloneSetup(controller)
+        return MockMvcBuilders
+            .standaloneSetup(controller)
             .apply<StandaloneMockMvcBuilder>(MockMvcRestDocumentation.documentationConfiguration(restDocumentation))
             .setMessageConverters(converter)
             .build()
     }
 
-    private fun objectMapper(): ObjectMapper {
-        return jacksonObjectMapper()
+    private fun objectMapper(): ObjectMapper =
+        jacksonObjectMapper()
             .findAndRegisterModules()
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-            .disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS)
-    }
+            .disable(WRITE_DATES_AS_TIMESTAMPS)
+            .disable(WRITE_DURATIONS_AS_TIMESTAMPS)
 }

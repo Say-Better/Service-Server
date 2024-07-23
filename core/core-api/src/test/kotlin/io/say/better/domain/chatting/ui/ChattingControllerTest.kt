@@ -6,9 +6,9 @@ import io.restassured.http.ContentType
 import io.say.better.domain.chatting.application.ChattingFacade
 import io.say.better.domain.chatting.ui.dto.ChattingRequest
 import io.say.better.domain.chatting.ui.dto.ChattingResponse
-import io.say.better.test.api.RestDocsTest
-import io.say.better.test.api.RestDocsUtils.requestPreprocessor
-import io.say.better.test.api.RestDocsUtils.responsePreprocessor
+import io.say.better.support.test.docs.RestControllerTest
+import io.say.better.support.util.RestDocsUtils.requestPreprocessor
+import io.say.better.support.util.RestDocsUtils.responsePreprocessor
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -20,7 +20,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.security.test.context.support.WithMockUser
 
-class ChattingControllerTest : RestDocsTest() {
+class ChattingControllerTest : RestControllerTest() {
     private lateinit var chattingFacade: ChattingFacade
     private lateinit var chattingController: ChattingController
 
@@ -45,7 +45,7 @@ class ChattingControllerTest : RestDocsTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-chatting",
+                    "get-chatting-response",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     requestFields(

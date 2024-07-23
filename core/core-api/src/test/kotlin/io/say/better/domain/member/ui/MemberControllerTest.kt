@@ -7,9 +7,9 @@ import io.say.better.domain.member.application.MemberFacade
 import io.say.better.domain.member.ui.dto.MemberRequest
 import io.say.better.domain.member.ui.dto.MemberResponse
 import io.say.better.storage.mysql.domains.account.type.Gender
-import io.say.better.test.api.RestDocsTest
-import io.say.better.test.api.RestDocsUtils.requestPreprocessor
-import io.say.better.test.api.RestDocsUtils.responsePreprocessor
+import io.say.better.support.test.docs.RestControllerTest
+import io.say.better.support.util.RestDocsUtils.requestPreprocessor
+import io.say.better.support.util.RestDocsUtils.responsePreprocessor
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -24,7 +24,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.security.test.context.support.WithMockUser
 
-class MemberControllerTest : RestDocsTest() {
+class MemberControllerTest : RestControllerTest() {
     private lateinit var memberFacade: MemberFacade
     private lateinit var memberController: MemberController
 
@@ -48,7 +48,7 @@ class MemberControllerTest : RestDocsTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-connect-code",
+                    "get-connect-code",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     responseFields(
@@ -74,7 +74,7 @@ class MemberControllerTest : RestDocsTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-connect",
+                    "post-connect-code",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     RequestDocumentation.pathParameters(
@@ -92,37 +92,6 @@ class MemberControllerTest : RestDocsTest() {
             )
     }
 
-    // TODO: 2024-06-07 실패 경우에 대한 테스트코드 작성 방식 확인
-//    @Test
-//    @DisplayName("유효하지 않은 코드일 경우 400 에러가 반환된다.")
-//    @WithMockUser
-//    fun connectFailTest() {
-//        every { memberFacade.connect(any()) } returns Unit
-//
-//        given()
-//            .contentType(ContentType.JSON)
-//            .post("/api/member/connect/{code}", "testCode")
-//            .then()
-//            .status(ErrorStatus.CONNECT_CODE_NOT_VALID.httpStatus)
-//            .extract()
-//            .also {
-//                document(
-//                    "fail-connect",
-//                    requestPreprocessor(),
-//                    responsePreprocessor(),
-//                    RequestDocumentation.pathParameters(
-//                        RequestDocumentation.parameterWithName("code").description("생성된 학습자 연결코드"),
-//                    ),
-//                    responseFields(
-//                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
-//                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
-//                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
-//                        fieldWithPath("result").type(JsonFieldType.STRING).ignored(),
-//                    ),
-//                )
-//            }
-//    }
-
     @Test
     @DisplayName("Educator 정보를 반환한다.")
     @WithMockUser
@@ -136,7 +105,7 @@ class MemberControllerTest : RestDocsTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-educator-info",
+                    "get-educator-info",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     responseFields(
@@ -160,12 +129,12 @@ class MemberControllerTest : RestDocsTest() {
 
         given()
             .contentType(ContentType.JSON)
-            .get("/api/member/learner/info/{name}", "name")
+            .get("/api/member/learner/info")
             .then()
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-learner-info",
+                    "get-learner-info",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     responseFields(
@@ -204,7 +173,7 @@ class MemberControllerTest : RestDocsTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-educator-info-post",
+                    "post-educator-info",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     responseFields(
@@ -245,7 +214,7 @@ class MemberControllerTest : RestDocsTest() {
             .status(HttpStatus.OK)
             .apply(
                 document(
-                    "success-educator-info-post",
+                    "post-learner-info",
                     requestPreprocessor(),
                     responsePreprocessor(),
                     requestPartFields(
