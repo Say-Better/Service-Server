@@ -4,12 +4,17 @@ recommend:
     base-url: ${RECOMMEND_API_BASE_URL:testBase}
     identity-token: ${RECOMMEND_API_IDENTITY_TOKEN:testToken}
 
+## chatbot
+chatbot:
+    api:
+      base-url: ${CHATBOT_API_BASE_URL}
+
 spring.cloud.openfeign:
   client:
     config:
       default:
         connectTimeout: 2100
-        readTimeout: 5000
+        readTimeout: 6000
         loggerLevel: full
   compression:
     response:
