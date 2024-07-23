@@ -1,44 +1,12 @@
-= API Docs
 :doctype: book
-:icons: font
 :source-highlighter: highlightjs
 :toc: left
-:toclevels: 3
+:toclevels: 1
 :sectlinks:
-:snippets: build/generated-snippets
 
-== Introduce
+== Say Better Core-API
 
-This is the Core API documentation.
-
-== Auth API
-
-=== Assign Educator API
-==== Curl Request
-include::{snippets}/assign-educator/curl-request.adoc[]
-==== Http Response
-include::{snippets}/assign-educator/http-response.adoc[]
-==== Response Fields
-include::{snippets}/assign-educator/response-fields.adoc[]
-
-'''
-
-=== Assign Learner API
-==== Curl Request
-include::{snippets}/assign-learner/curl-request.adoc[]
-==== Http Response
-include::{snippets}/assign-learner/http-response.adoc[]
-==== Response Fields
-include::{snippets}/assign-learner/response-fields.adoc[]
-
-'''
-
-== Member API
-
-=== Get Connect Code API
-==== Curl Request
-include::{snippets}/get-connect-code/curl-request.adoc[]
-==== Http Response
-include::{snippets}/get-connect-code/http-response.adoc[]
-==== Response Fields
-include::{snippets}/get-connect-code/response-fields.adoc[]
+include::educator.adoc[]
+include::leaner.adoc[]
+include::solution.adoc[]
+include::symbol.adoc[]

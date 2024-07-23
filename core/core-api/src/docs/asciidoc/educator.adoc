@@ -1,0 +1,45 @@
+= 교육자 API
+
+교육자 관련 API 목록입니다.
+
+== 교육자 일반 로그인 API
+
+=== Request __
+operation::post-educator-common-login[snippets='http-request,path-parameters']
+
+=== Response __
+operation::post-educator-common-login[snippets='http-response,response-fields']
+
+== 교육자 소셜 로그인 API
+
+=== Request __
+operation::post-educator-social-login[snippets='http-request,path-parameters']
+
+=== Response __
+operation::post-educator-social-login[snippets='http-response,response-fields']
+
+== 교육자 유저 정보 등록 API
+
+=== Request __
+operation::post-educator-info[snippets='http-request']
+
+=== Response __
+operation::post-educator-info[snippets='http-response,response-fields']
+
+== 교육자 유저 정보 조회 API
+
+=== Request __
+operation::get-educator-info[snippets='http-request']
+
+=== Response __
+operation::get-educator-info[snippets='http-response,response-fields']
+
+== 학습자 코드 등록 API
+
+=== Request __
+operation::post-connect-code[snippets='http-request']
+
+=== Response __
+operation::post-connect-code[snippets='http-response,response-fields']
+
+

@@ -1,0 +1,19 @@
+= 심볼 API
+
+심볼 관련 API 목록입니다.
+
+== 심볼 추천 API
+
+=== Request __
+operation::get-symbol-recommend-list[snippets='http-request,path-parameters']
+
+=== Response __
+operation::get-symbol-recommend-list[snippets='http-response,response-fields']
+
+== 심볼 검색 API
+
+=== Request __
+operation::get-symbol-search-list[snippets='http-request,path-parameters']
+
+=== Response __
+operation::get-symbol-search-list[snippets='http-response,response-fields']
