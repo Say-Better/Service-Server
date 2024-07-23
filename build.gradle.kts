@@ -9,7 +9,7 @@ plugins {
     kotlin("plugin.jpa") apply false
     id("org.springframework.boot") apply false
     id("io.spring.dependency-management")
-    id("org.asciidoctor.jvm.convert") apply false
+    id("org.asciidoctor.jvm.convert")
     id("org.jlleitschuh.gradle.ktlint")
 }
 
@@ -71,6 +71,9 @@ subprojects {
         }
     }
 
+    val asciidoctorExt: Configuration by configurations.creating
+    val snippetsDir by extra { file("build/generated-snippets") }
+
     dependencies {
         // application
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -81,6 +84,7 @@ subprojects {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
         // test
+        asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("com.ninja-squad:springmockk:${property("springMockkVersion")}")
         testImplementation("io.kotest:kotest-runner-junit5:5.4.2")
@@ -90,75 +94,77 @@ subprojects {
         kapt("org.springframework.boot:spring-boot-configuration-processor")
     }
 
-    val asciidoctorExt: Configuration by configurations.creating
-    val snippetsDir by extra { file("build/generated-snippets") }
     java.sourceCompatibility = JavaVersion.valueOf("VERSION_${property("javaVersion")}")
 
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "${project.property("javaVersion")}"
+    tasks {
+        withType<KotlinCompile> {
+            kotlinOptions {
+                freeCompilerArgs = listOf("-Xjsr305=strict")
+                jvmTarget = "${project.property("javaVersion")}"
+            }
         }
-    }
 
-    tasks.test {
-        useJUnitPlatform {
-            excludeTags("develop", "restdocs")
+        test {
+            useJUnitPlatform {
+                excludeTags("develop", "restdocs")
+            }
         }
-    }
 
-    tasks.register<Test>("unitTest") {
-        description = "Run unit tests"
-        group = "verification"
-        useJUnitPlatform {
-            excludeTags("develop", "context", "restdocs")
+        register<Test>("unitTest") {
+            description = "Run unit tests"
+            group = "verification"
+            useJUnitPlatform {
+                excludeTags("develop", "context", "restdocs")
+            }
         }
-    }
 
-    tasks.register<Test>("contextTest") {
-        description = "Run tests that require a context"
-        group = "verification"
-        useJUnitPlatform {
-            includeTags("context")
+        register<Test>("contextTest") {
+            description = "Run tests that require a context"
+            group = "verification"
+            useJUnitPlatform {
+                includeTags("context")
+            }
         }
-    }
 
-    tasks.register<Test>("developTest") {
-        description = "Run tests that are in development"
-        group = "verification"
-        useJUnitPlatform {
-            includeTags("develop")
+        register<Test>("developTest") {
+            description = "Run tests that are in development"
+            group = "verification"
+            useJUnitPlatform {
+                includeTags("develop")
+            }
         }
-    }
 
-    tasks.register<Test>("restDocsTest") {
-        description = "Run tests that generate REST documentation"
-        group = "verification"
-        useJUnitPlatform {
-            includeTags("restdocs")
+        register<Test>("restDocsTest") {
+            description = "Run tests that generate REST documentation"
+            group = "verification"
+            useJUnitPlatform {
+                includeTags("restdocs")
+            }
+            outputs.dir(snippetsDir)
         }
-        outputs.dir(snippetsDir)
-    }
 
-    tasks.getByName("asciidoctor") {
-        inputs.dir(snippetsDir)
-        dependsOn("restDocsTest")
-    }
+        asciidoctor {
+            inputs.dir(snippetsDir)
+            configurations("asciidoctorExt")
+            dependsOn("restDocsTest")
+            baseDirFollowsSourceDir()
+        }
 
-    tasks.register<Copy>("copyDocs") {
-        description = "Copy generated documentation to static resources"
-        group = "documentation"
-        dependsOn(tasks.getByName("asciidoctor"))
+        register<Copy>("copyDocs") {
+            description = "Copy generated documentation to static resources"
+            group = "documentation"
+            dependsOn("asciidoctor")
 
-        from("build/docs/asciidoc")
-        into("src/main/resources/static/docs")
-    }
+            from("build/docs/asciidoc")
+            into("src/main/resources/static/docs")
+        }
 
-    tasks.getByName("bootJar") {
-        enabled = false
-    }
+        getByName("bootJar") {
+            enabled = false
+        }
 
-    tasks.getByName("jar") {
-        enabled = true
+        getByName("jar") {
+            enabled = true
+        }
     }
 }

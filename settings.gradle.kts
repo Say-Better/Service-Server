@@ -30,13 +30,8 @@ pluginManagement {
                 "io.spring.dependency-management" -> useVersion(springDependencyManagementVersion)
                 "org.asciidoctor.jvm.convert" -> useVersion(asciidoctorConvertVersion)
                 "org.jlleitschuh.gradle.ktlint" -> useVersion(ktlintVersion)
+                "org.gradle.toolchains.foojay-resolver-convention" -> useVersion("0.5.0")
             }
         }
     }
 }
-
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
-}
-include("core:core-infra")
-findProject(":core:core-infra")?.name = "core-infra"
