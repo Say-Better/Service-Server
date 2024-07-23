@@ -29,7 +29,7 @@ class SecurityConfig(
             "/api/auth/**",
             "/sing-up",
             "/api/tests/**",
-            "/docs/**",
+            "/docs/index.html",
         )
 
     private val noneUserRoleUrls =

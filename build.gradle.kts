@@ -147,6 +147,9 @@ subprojects {
             inputs.dir(snippetsDir)
             configurations("asciidoctorExt")
             dependsOn("restDocsTest")
+            sources {
+                include("**/index.adoc")
+            }
             baseDirFollowsSourceDir()
         }
 
@@ -155,7 +158,9 @@ subprojects {
             group = "documentation"
             dependsOn("asciidoctor")
 
-            from("build/docs/asciidoc")
+            from("build/docs/asciidoc") {
+                include("**/index.html")
+            }
             into("src/main/resources/static/docs")
         }
 
