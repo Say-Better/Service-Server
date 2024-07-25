@@ -38,5 +38,6 @@ class EducatorService(
         val educator = getEducator(member)
 
         educator.initializeEducatorInfo(url, name)
+        educatorWriteRepository.save(educator)
     }
 }

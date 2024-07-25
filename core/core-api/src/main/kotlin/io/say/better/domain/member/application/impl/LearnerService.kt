@@ -39,5 +39,6 @@ class LearnerService(
         val learner = getLearner(member)
 
         learner.initializeLearnerInfo(url, request.name, request.birthday, request.gender)
+        learnerWriteRepository.save(learner)
     }
 }
