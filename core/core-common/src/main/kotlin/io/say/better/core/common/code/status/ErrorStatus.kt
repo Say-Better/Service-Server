@@ -5,21 +5,21 @@ import io.say.better.core.common.response.ResponseDto.ErrorReasonDto
 import org.springframework.http.HttpStatus
 
 /** [ErrorStatus 작성 규칙]
-*   ErrorCode는 다음과 같은 형식으로 작성합니다.
-*
-*   1. Success 및 Common Error
-*       HTTP_STATUS: HTTP_STATUS 는 HttpStatus Enum 을 참고하여 작성합니다.
-*           ex) _OK, _BAD_REQUEST, _UNAUTHORIZED, _FORBIDDEN, _METHOD_NOT_ALLOWED, _INTERNAL_SERVER_ERROR
-*       CODE: [CATEGORY]_[HTTP_STATUS_CODE]
-*           ex) SUCCESS_200, COMMON_400, COMMON_401, COMMON_403, COMMON_405, COMMON_500
-*
-*   2. Other Error
-*       HTTP_STATUS: 에러의 상황을 잘 들어내는 HttpStatus 를 작성합니다.
-*           ex) USER_NOT_FOUND, USER_ALREADY_EXISTS
-*       CODE: [CATEGORY]_[HTTP_STATUS_CODE]_[ERROR_CODE]의 형식으로 작성합니다.
-*           ex) BAD_REQUEST -> USER_400_001,
-*               NOT_FOUND -> USER_404_001,
-*               ALREADY_EXISTS -> USER_409_001
+ *   ErrorCode는 다음과 같은 형식으로 작성합니다.
+ *
+ *   1. Success 및 Common Error
+ *       HTTP_STATUS: HTTP_STATUS 는 HttpStatus Enum 을 참고하여 작성합니다.
+ *           ex) _OK, _BAD_REQUEST, _UNAUTHORIZED, _FORBIDDEN, _METHOD_NOT_ALLOWED, _INTERNAL_SERVER_ERROR
+ *       CODE: [CATEGORY]_[HTTP_STATUS_CODE]
+ *           ex) SUCCESS_200, COMMON_400, COMMON_401, COMMON_403, COMMON_405, COMMON_500
+ *
+ *   2. Other Error
+ *       HTTP_STATUS: 에러의 상황을 잘 들어내는 HttpStatus 를 작성합니다.
+ *           ex) USER_NOT_FOUND, USER_ALREADY_EXISTS
+ *       CODE: [CATEGORY]_[HTTP_STATUS_CODE]_[ERROR_CODE]의 형식으로 작성합니다.
+ *           ex) BAD_REQUEST -> USER_400_001,
+ *               NOT_FOUND -> USER_404_001,
+ *               ALREADY_EXISTS -> USER_409_001
  */
 enum class ErrorStatus(
     val httpStatus: HttpStatus,
@@ -45,6 +45,7 @@ enum class ErrorStatus(
 
     // Auth Error
     FAILED_LOGIN_ID_TO_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "AUTH_500_001", "로그인 아이디에서 이메일을 추출하는데 실패했습니다."),
+    FAILED_TOKEN_TO_EMAIL(HttpStatus.BAD_REQUEST, "AUTH_400_001", "Token에서 이메일을 추출하는데 실패했습니다."),
 
     // Educator Error
     EDUCATOR_NOT_FOUND(HttpStatus.NOT_FOUND, "EDUCATOR_404_001", "해당 교육자를 찾을 수 없습니다."),
