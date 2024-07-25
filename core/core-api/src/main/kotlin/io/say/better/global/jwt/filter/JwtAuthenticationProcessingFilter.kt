@@ -1,6 +1,8 @@
 package io.say.better.global.jwt.filter
 
+import io.say.better.core.common.code.status.ErrorStatus
 import io.say.better.core.common.utils.logger
+import io.say.better.domain.member.exception.AuthException
 import io.say.better.global.config.properties.JwtProperties
 import io.say.better.global.jwt.service.JwtService
 import io.say.better.storage.mysql.domains.account.entity.Member
@@ -97,7 +99,7 @@ class JwtAuthenticationProcessingFilter(
         refreshToken: String,
     ) {
         log.info("JwtAuthenticationProcessingFilter.checkRefreshTokenAndReIssueAccessToken() 실행 - RefreshToken 검증")
-        val email = redisUtil.getData(refreshToken)
+        val email = redisUtil.getData(refreshToken) ?: throw AuthException(ErrorStatus.FAILED_TOKEN_TO_EMAIL)
         memberReadRepository
             .findByEmail(email)
             .ifPresent { user: Member ->
