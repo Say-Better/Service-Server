@@ -10,6 +10,7 @@ import io.say.better.domain.member.application.impl.MemberService
 import io.say.better.domain.member.exception.MemberException
 import io.say.better.domain.member.ui.dto.MemberRequest
 import io.say.better.domain.member.ui.dto.MemberResponse
+import io.say.better.global.advice.Tx
 import io.say.better.global.utils.CodeUtil
 import io.say.better.storage.redis.RedisUtil
 import org.springframework.stereotype.Component
@@ -76,7 +77,7 @@ class MemberFacade(
     fun postEducatorInfo(
         file: MultipartFile,
         name: String,
-    ) {
+    ) = Tx.writeable {
         val url = awsS3Service.uploadFile(file, AwsS3Folder.MEMBER)
 
         val member = memberService.currentMember()
@@ -86,7 +87,7 @@ class MemberFacade(
     fun postLearnerInfo(
         file: MultipartFile,
         request: MemberRequest.LearnerInitialInfoDTO,
-    ) {
+    ) = Tx.writeable {
         val url = awsS3Service.uploadFile(file, AwsS3Folder.MEMBER)
 
         val member = memberService.currentMember()

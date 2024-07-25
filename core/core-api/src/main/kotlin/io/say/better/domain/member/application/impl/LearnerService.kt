@@ -35,9 +35,10 @@ class LearnerService(
         member: Member,
         url: String,
         request: MemberRequest.LearnerInitialInfoDTO,
-    ) {
+    ): Learner {
         val learner = getLearner(member)
 
         learner.initializeLearnerInfo(url, request.name, request.birthday, request.gender)
+        return learnerWriteRepository.save(learner)
     }
 }

@@ -34,9 +34,10 @@ class EducatorService(
         member: Member,
         url: String,
         name: String,
-    ) {
+    ): Educator {
         val educator = getEducator(member)
 
         educator.initializeEducatorInfo(url, name)
+        return educatorWriteRepository.save(educator)
     }
 }
