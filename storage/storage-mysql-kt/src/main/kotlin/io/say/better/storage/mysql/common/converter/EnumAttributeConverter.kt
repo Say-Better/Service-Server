@@ -2,6 +2,7 @@ package io.say.better.storage.mysql.common.converter
 
 import io.say.better.storage.mysql.common.utils.CodedEnum
 import io.say.better.storage.mysql.common.utils.CodedEnumUtil
+import io.say.better.storage.mysql.domains.account.type.Gender
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
 import org.springframework.util.StringUtils
@@ -26,3 +27,10 @@ open class AbstractEnumAttributeConverter<E>(
         return CodedEnumUtil.toEnum(targetEnumClass, dbData!!)
     }
 }
+
+class GenderConverter :
+    AbstractEnumAttributeConverter<Gender>(
+        targetEnumClass = Gender::class.java,
+        nullable = false,
+        enumName = "성별",
+    )
