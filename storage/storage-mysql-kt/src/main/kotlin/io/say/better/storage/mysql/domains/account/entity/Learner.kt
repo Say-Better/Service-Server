@@ -1,11 +1,11 @@
 package io.say.better.storage.mysql.domains.account.entity
 
+import io.say.better.storage.mysql.common.converter.GenderConverter
 import io.say.better.storage.mysql.common.model.BaseTimeEntity
 import io.say.better.storage.mysql.domains.account.type.Gender
 import jakarta.persistence.Column
+import jakarta.persistence.Convert
 import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -29,7 +29,7 @@ class Learner(
     @Column(name = "age")
     var age: Int = 0,
     @Column(name = "gender")
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = GenderConverter::class)
     var gender: Gender = Gender.ETC,
     @Column(name = "img_url")
     var imgUrl: String = "",
