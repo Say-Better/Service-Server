@@ -82,6 +82,8 @@ class MemberFacade(
 
         val member = memberService.currentMember()
         educatorService.postEducatorInfo(member, url, name)
+
+        return@writeable
     }
 
     fun postLearnerInfo(
@@ -92,5 +94,6 @@ class MemberFacade(
 
         val member = memberService.currentMember()
         learnerService.postLearnerInfo(member, url, request)
+        return@writeable
     }
 }
