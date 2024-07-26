@@ -29,7 +29,7 @@ class AwsS3Service(
             val inputStream = file.inputStream
             amazonS3Client.putObject(bucket, "${folderName.getFolder()}/$originName", inputStream, objectMetadata)
 
-            return amazonS3Client.getUrl(bucket, originName).toString()
+            return amazonS3Client.getUrl(bucket, "${folderName.getFolder()}/$originName").toString()
         } catch (exception: Exception) {
             throw exception
         }
