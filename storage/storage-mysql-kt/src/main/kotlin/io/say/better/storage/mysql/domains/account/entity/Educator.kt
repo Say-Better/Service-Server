@@ -19,7 +19,7 @@ class Educator(
     @JoinColumn(name = "member_id")
     var memberId: Member,
     @Column(name = "name", nullable = false, length = 100)
-    val name: String = "",
+    var name: String = "",
     @Column(name = "birth_date")
     val birthDate: String = "",
     @Column(name = "img_url")
@@ -29,7 +29,7 @@ class Educator(
         url: String,
         name: String,
     ) {
-        memberId.name = name
+        this.name = name
         this.imgUrl = url
     }
 

@@ -4,6 +4,8 @@ import io.say.better.storage.mysql.common.model.BaseTimeEntity
 import io.say.better.storage.mysql.domains.account.type.Gender
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
@@ -21,12 +23,13 @@ class Learner(
     @JoinColumn(name = "member_id")
     val memberId: Member,
     @Column(name = "name", nullable = false, length = 100)
-    val name: String = "",
+    var name: String = "",
     @Column(name = "birth_date")
     var birthDate: String = "",
     @Column(name = "age")
     var age: Int = 0,
     @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
     var gender: Gender = Gender.ETC,
     @Column(name = "img_url")
     var imgUrl: String = "",
@@ -37,7 +40,7 @@ class Learner(
         birthDate: String,
         gender: String,
     ) {
-        memberId.name = name
+        this.name = name
         imgUrl = url
         this.birthDate = birthDate
         if (gender == "M") {
