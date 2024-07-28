@@ -13,5 +13,8 @@ class GoogleOauthClient internal constructor(
     override val provider: Provider
         get() = Provider.GOOGLE
 
-    override fun verifyToken(idToken: String): GoogleOAuth2UserInfo = googleOauth2Api.verifyToken(idToken)
+    override fun verifyToken(idToken: String): GoogleOAuth2UserInfo {
+        val resultMap = googleOauth2Api.verifyToken(idToken)
+        return GoogleOAuth2UserInfo(resultMap)
+    }
 }
