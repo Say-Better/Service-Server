@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/api/solution")
@@ -49,4 +51,10 @@ class SolutionController(
         solutionFacade.endSolution(request)
         return ResponseDto.onSuccess(null)
     }
+
+    @PostMapping("/voice/{progressId}", consumes = ["multipart/form-data"])
+    fun uploadVoiceFile(
+        @RequestPart voiceFile: MultipartFile,
+        @PathVariable("progressId") progressId: Long,
+    ): ResponseDto<String> = ResponseDto.onSuccess(solutionFacade.uploadVoiceFileOnRecord(voiceFile, progressId))
 }

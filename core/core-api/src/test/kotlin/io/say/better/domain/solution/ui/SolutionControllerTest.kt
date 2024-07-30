@@ -14,10 +14,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
+import org.springframework.mock.web.MockMultipartFile
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
+import org.springframework.restdocs.payload.PayloadDocumentation.requestPartBody
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.security.test.context.support.WithMockUser
@@ -265,6 +267,42 @@ class SolutionControllerTest : RestControllerTest() {
                         fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
                         fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
                         fieldWithPath("result").type(JsonFieldType.OBJECT).description("API 호출 결과").ignored(),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    @DisplayName("녹음 파일을 업로드한다. 결과로는 녹음 파일 URL을 반환한다.")
+    @WithMockUser
+    fun voiceUploadTest() {
+        val mockMultiPartFile = MockMultipartFile("voiceFile", "test.txt", "text/plain", "Test".byteInputStream())
+
+        every { solutionFacade.uploadVoiceFileOnRecord(any(), 1) } returns "Voice Url"
+
+        given()
+            .contentType(ContentType.MULTIPART)
+            .multiPart("voiceFile", "text.txt", mockMultiPartFile.bytes)
+            .post("/api/solution/voice/{progressId}", "1")
+            .then()
+            .status(HttpStatus.OK)
+            .contentType(ContentType.JSON)
+            .apply(
+                document(
+                    "post-voice-upload",
+                    requestPreprocessor(),
+                    responsePreprocessor(),
+                    RequestDocumentation.pathParameters(
+                        RequestDocumentation.parameterWithName("progressId").description("진행 ID"),
+                    ),
+                    requestPartBody(
+                        "voiceFile",
+                    ),
+                    responseFields(
+                        fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("api 호출 성공 여부"),
+                        fieldWithPath("code").type(JsonFieldType.STRING).description("api 호출 코드"),
+                        fieldWithPath("message").type(JsonFieldType.STRING).description("api 호출 코드에 따른 메세지"),
+                        fieldWithPath("result").type(JsonFieldType.STRING).description("음성 파일 URL"),
                     ),
                 ),
             )

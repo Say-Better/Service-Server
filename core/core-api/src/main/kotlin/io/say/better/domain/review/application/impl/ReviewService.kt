@@ -1,5 +1,6 @@
 package io.say.better.domain.review.application.impl
 
+import io.say.better.storage.mysql.domains.progress.entity.Progress
 import io.say.better.storage.mysql.domains.review.entity.Review
 import io.say.better.storage.mysql.domains.review.repository.ReviewReadRepository
 import io.say.better.storage.mysql.domains.review.repository.ReviewWriteRepository
@@ -13,4 +14,6 @@ class ReviewService(
     fun createReview(review: Review): Review = reviewWriteRepository.save(review)
 
     fun getReview(reviewId: Long): Review = reviewReadRepository.findById(reviewId).get()
+
+    fun getReviewByProgress(progress: Progress): Review? = reviewReadRepository.findByProgress(progress)
 }
