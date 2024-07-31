@@ -13,11 +13,10 @@ class RecordConverter private constructor() {
         fun toRecord(
             endSolution: EndSolution,
             review: Review,
-        ): Record {
-            return Record(
+        ): Record =
+            Record(
                 orderNum = endSolution.orderNum,
                 review = review,
             )
-        }
     }
 }

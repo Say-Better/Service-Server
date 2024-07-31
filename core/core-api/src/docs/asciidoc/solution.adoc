@@ -5,23 +5,39 @@
 == 솔루션 생성 API
 
 === Request __
+
 operation::post-new-solution[snippets='http-request,request-fields']
 
 === Response __
+
 operation::post-new-solution[snippets='http-response,response-fields']
 
 == 솔루션 진행 API
 
 === Request __
+
 operation::post-start-solution[snippets='http-request,request-fields']
 
 === Response __
+
 operation::post-start-solution[snippets='http-response,response-fields']
 
 == 솔루션 완료 API
 
 === Request __
+
 operation::post-end-solution[snippets='http-request,request-fields']
 
 === Response __
+
 operation::post-end-solution[snippets='http-response,response-fields']
+
+== 솔루션 완료 시 음성 파일 업로드 API
+
+=== Request __
+
+operation::post-voice-upload[snippets='http-request,path-parameters']
+
+=== Response __
+
+operation::post-voice-upload[snippets='http-response,response-fields']

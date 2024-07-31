@@ -1,8 +1,13 @@
 package io.say.better.domain.solution.application
 
 import io.say.better.client.symbol.client.RecommendClient
+import io.say.better.core.common.code.status.ErrorStatus
+import io.say.better.core.common.exception.GeneralException
 import io.say.better.core.common.utils.logger
+import io.say.better.core.infra.enums.AwsS3Folder
+import io.say.better.core.infra.service.AwsS3Service
 import io.say.better.domain.member.application.impl.MemberService
+import io.say.better.domain.review.application.impl.RecordService
 import io.say.better.domain.review.application.impl.ReviewService
 import io.say.better.domain.solution.application.converter.ProgressConverter
 import io.say.better.domain.solution.application.converter.ReviewConverter
@@ -23,6 +28,7 @@ import io.say.better.storage.mysql.domains.progress.entity.Progress
 import io.say.better.storage.mysql.domains.review.entity.Review
 import io.say.better.storage.mysql.domains.solution.entity.Solution
 import org.springframework.stereotype.Component
+import org.springframework.web.multipart.MultipartFile
 
 @Component
 class SolutionFacade(
@@ -34,6 +40,8 @@ class SolutionFacade(
     private val progressService: ProgressService,
     private val solutionProgressPublisher: SolutionProgressPublisher,
     private val reviewService: ReviewService,
+    private val recordService: RecordService,
+    private val awsS3Service: AwsS3Service,
 ) {
     private val log = logger()
 
@@ -82,5 +90,27 @@ class SolutionFacade(
                 endSolution.reviewId = savedReview.reviewId
                 solutionProgressPublisher.publishRecord(endSolution)
             }
+        }
+
+    fun uploadVoiceFileOnRecord(
+        voiceFile: MultipartFile,
+        progressId: Long,
+    ): String =
+        Tx.writeable {
+            val progress = progressService.getProgress(progressId)
+            // Rabbit MQ에서 아직 처리중일 수 있음
+            val review =
+                reviewService.getReviewByProgress(progress)
+                    ?: throw GeneralException(ErrorStatus.VOICE_SAVE_TARGET_RECORD_NOT_FOUND)
+            // Rabbit MQ에서 아직 처리중일 수 있음
+            val record =
+                recordService.getRecordByReview(review)
+                    ?: throw GeneralException(ErrorStatus.VOICE_SAVE_TARGET_RECORD_NOT_FOUND)
+
+            val voiceUrl = awsS3Service.uploadFile(voiceFile, AwsS3Folder.VOICE)
+
+            recordService.updateVoice(voiceUrl, record)
+
+            return@writeable voiceUrl
         }
 }

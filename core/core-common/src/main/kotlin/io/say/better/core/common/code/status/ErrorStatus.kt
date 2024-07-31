@@ -56,6 +56,8 @@ enum class ErrorStatus(
     // Solution Error
     START_SOLUTION_NOT_FOUND(HttpStatus.NOT_FOUND, "SOLUTION_404_001", "시작 요청한 솔루션을 찾을 수 없습니다."),
     END_PROGRESS_NOT_FOUND(HttpStatus.NOT_FOUND, "SOLUTION_404_002", "솔루션 진행 데이터를 찾을 수 없습니다."),
+    VOICE_SAVE_TARGET_REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "SOLUTION_404_003", "음성 데이터 저장 리뷰를 찾을 수 없거나 종료 처리중입니다."),
+    VOICE_SAVE_TARGET_RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "SOLUTION_404_004", "음성 데이터 저장 레코드를 찾을 수 없거나 종료 처리중입니다."),
     ;
 
     override val reason: ErrorReasonDto

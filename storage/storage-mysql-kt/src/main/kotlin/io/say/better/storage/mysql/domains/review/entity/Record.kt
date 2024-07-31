@@ -21,9 +21,22 @@ class Record(
     @JoinColumn(name = "review_id", nullable = false)
     @ManyToOne(fetch = LAZY)
     private val review: Review,
+    @Column(name = "voice", nullable = true)
+    private var voice: String?,
     @Column(name = "order_num", nullable = false, columnDefinition = "int default 0")
     private var orderNum: Int,
     @Enumerated(STRING)
     @Column(name = "reaction_type", length = 20)
     private var reactionType: ReactionType? = null,
-)
+) {
+    constructor(review: Review, orderNum: Int) : this(
+        review = review,
+        orderNum = orderNum,
+        voice = null,
+        reactionType = null,
+    )
+
+    fun saveVoice(voice: String) {
+        this.voice = voice
+    }
+}
