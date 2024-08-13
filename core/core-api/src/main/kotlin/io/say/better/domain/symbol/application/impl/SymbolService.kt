@@ -10,7 +10,18 @@ class SymbolService(
     private val symbolReadRepository: SymbolReadRepository,
     private val symbolWriteRepository: SymbolWriteRepository,
 ) {
-    fun getSymbols(symbols: List<String>?): List<Symbol> = symbolReadRepository.findByTitleIn(symbols!!)
+    fun getSymbols(symbols: List<String>?): List<Symbol> {
+        val symbolResults = hashSetOf<Symbol>()
+        if (symbols == null) {
+            return emptyList()
+        }
+
+        for (symbol in symbols) {
+            val symbolResult = symbolReadRepository.findByTitleContaining(symbol)
+            symbolResults.addAll(symbolResult)
+        }
+        return symbolResults.toList()
+    }
 
     fun getSymbols(name: String): List<Symbol> = symbolReadRepository.findByTitleStartingWith(name)
 
