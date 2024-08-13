@@ -40,7 +40,7 @@ class ChattingControllerTest : RestControllerTest() {
         given()
             .contentType(ContentType.JSON)
             .body(ChattingRequest("requestSentence"))
-            .get("/api/chatting")
+            .post("/api/chatting")
             .then()
             .status(HttpStatus.OK)
             .apply(
