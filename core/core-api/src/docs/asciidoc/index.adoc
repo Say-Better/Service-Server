@@ -9,5 +9,6 @@
 include::educator.adoc[]
 include::leaner.adoc[]
 include::solution.adoc[]
+include::review.adoc[]
 include::symbol.adoc[]
 include::chatbot.adoc[]

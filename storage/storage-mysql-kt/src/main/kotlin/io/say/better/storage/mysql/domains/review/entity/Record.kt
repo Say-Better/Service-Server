@@ -39,4 +39,8 @@ class Record(
     fun saveVoice(voice: String) {
         this.voice = voice
     }
+
+    fun updateReactionType(reactionType: ReactionType) {
+        this.reactionType = reactionType
+    }
 }
